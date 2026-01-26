@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <!-- Glow filter for the map -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Gradient for the bulb glass -->
+    <linearGradient id="glassGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a6b7c;stop-opacity:0.3"/>
+      <stop offset="50%" style="stop-color:#2d4a5a;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#1a3040;stop-opacity:0.4"/>
+    </linearGradient>
+    
+    <!-- Gradient for leaves -->
+    <linearGradient id="leafGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7dff7d"/>
+      <stop offset="100%" style="stop-color:#228b22"/>
+    </linearGradient>
+    
+    <!-- Glow for leaves -->
+    <filter id="leafGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Yellow glow gradient -->
+    <radialGradient id="yellowGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#fffacd;stop-opacity:1"/>
+      <stop offset="70%" style="stop-color:#ffd700;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#ffb800;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="500" fill="#1a3a4a"/>
+  
+  <!-- Outer glow of bulb -->
+  <ellipse cx="200" cy="180" rx="120" ry="140" fill="#ffd700" opacity="0.1" filter="url(#glow)"/>
+  
+  <!-- Light bulb glass -->
+  <path d="M200 30 
+           C280 30 330 100 330 180 
+           C330 240 290 280 270 310 
+           L270 330 
+           L130 330 
+           L130 310 
+           C110 280 70 240 70 180 
+           C70 100 120 30 200 30 Z" 
+        fill="url(#glassGradient)" 
+        stroke="#5a8a9a" 
+        stroke-width="3"/>
+  
+  <!-- Yellow outline glow -->
+  <path d="M200 35 
+           C275 35 325 102 325 180 
+           C325 238 287 277 267 307" 
+        fill="none" 
+        stroke="#ffd700" 
+        stroke-width="2" 
+        opacity="0.6"/>
+  
+  <!-- Burkina Faso map shape (simplified) - glowing -->
+  <g filter="url(#glow)">
+    <path d="M140 120 
+             L180 100 
+             L220 95 
+             L260 110 
+             L275 140 
+             L270 170 
+             L280 200 
+             L260 230 
+             L230 245 
+             L200 250 
+             L170 245 
+             L140 220 
+             L125 190 
+             L120 160 
+             L130 130 
+             Z" 
+          fill="#fffacd" 
+          stroke="#fff8dc" 
+          stroke-width="2"/>
+    
+    <!-- Internal details of the map -->
+    <path d="M160 140 L180 135 L200 140 L190 160 L165 155 Z" 
+          fill="none" 
+          stroke="#ffd700" 
+          stroke-width="1.5" 
+          opacity="0.7"/>
+    <path d="M200 150 L230 145 L245 165 L235 190 L210 185 L200 165 Z" 
+          fill="none" 
+          stroke="#ffd700" 
+          stroke-width="1.5" 
+          opacity="0.7"/>
+    <path d="M155 175 L180 170 L195 195 L175 215 L150 200 Z" 
+          fill="none" 
+          stroke="#ffd700" 
+          stroke-width="1.5" 
+          opacity="0.7"/>
+    <path d="M200 200 L230 195 L245 220 L220 235 L195 225 Z" 
+          fill="none" 
+          stroke="#ffd700" 
+          stroke-width="1.5" 
+          opacity="0.7"/>
+  </g>
+  
+  <!-- Filament wires -->
+  <line x1="200" y1="250" x2="180" y2="300" stroke="#ffd700" stroke-width="2"/>
+  <line x1="200" y1="250" x2="220" y2="300" stroke="#ffd700" stroke-width="2"/>
+  
+  <!-- Bulb base/screw -->
+  <rect x="130" y="330" width="140" height="15" fill="#708090" rx="2"/>
+  <rect x="135" y="345" width="130" height="12" fill="#5a6a7a" rx="2"/>
+  <rect x="140" y="357" width="120" height="12" fill="#708090" rx="2"/>
+  <rect x="145" y="369" width="110" height="12" fill="#5a6a7a" rx="2"/>
+  <rect x="150" y="381" width="100" height="12" fill="#708090" rx="2"/>
+  <ellipse cx="200" cy="398" rx="45" ry="8" fill="#5a6a7a"/>
+  
+  <!-- Green leaves -->
+  <g filter="url(#leafGlow)">
+    <!-- Back leaf -->
+    <path d="M310 220 
+             Q350 180 370 140 
+             Q340 170 310 180 
+             Q340 200 310 220 Z" 
+          fill="url(#leafGradient)" 
+          opacity="0.8"/>
+    
+    <!-- Front leaf -->
+    <path d="M295 250 
+             Q350 210 380 160 
+             Q340 200 310 210 
+             Q350 240 295 250 Z" 
+          fill="url(#leafGradient)"/>
+    
+    <!-- Leaf veins -->
+    <path d="M310 220 Q340 190 365 150" 
+          fill="none" 
+          stroke="#228b22" 
+          stroke-width="1.5" 
+          opacity="0.6"/>
+    <path d="M300 245 Q345 205 375 165" 
+          fill="none" 
+          stroke="#228b22" 
+          stroke-width="1.5" 
+          opacity="0.6"/>
+  </g>
+  
+  <!-- Highlight on glass -->
+  <path d="M120 120 Q140 80 180 60" 
+        fill="none" 
+        stroke="white" 
+        stroke-width="4" 
+        stroke-linecap="round" 
+        opacity="0.3"/>
+  
+  <!-- Text: InnovateBF -->
+  <text x="200" y="455" 
+        font-family="Arial, Helvetica, sans-serif" 
+        font-size="42" 
+        font-weight="bold" 
+        fill="#ffffff" 
+        text-anchor="middle">
+    <tspan fill="#ffd700">Innovate</tspan><tspan fill="#7dff7d">BF</tspan>
+  </text>
+  
+  <!-- Tagline (optional) -->
+  <text x="200" y="480" 
+        font-family="Arial, Helvetica, sans-serif" 
+        font-size="14" 
+        fill="#8ab4c4" 
+        text-anchor="middle">
+    L'innovation pour le Burkina
+  </text>
+</svg>

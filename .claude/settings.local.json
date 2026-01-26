@@ -34,7 +34,16 @@
     ],
     "deny": []
   },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ],
   "enabledPlugins": {
-    "claude-code-setup@claude-plugins-official": true
+    "claude-code-setup@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true,
+    "api-scaffolding@claude-code-workflows": true,
+    "backend-development@claude-code-workflows": true,
+    "database-design@claude-code-workflows": true,
+    "documentation-generation@claude-code-workflows": true
   }
 }

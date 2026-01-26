@@ -12,6 +12,11 @@ InnovateBF est un thinktank dédié à la promotion de la technologie endogène 
 
 ## Stack technique
 
+### Utilisation automation de Context7
+Utilise toujours context7 lorsque j'ai besoin de génération de code, d'étapes de configuration ou d'installation, ou de documentation de bibliothèque/API. Cela signifie que tu dois automatiquement utiliser les outils MCP Context7 pour résoudre l'identifiant de bibliothèque et obtenir la documentation de bibliothèque sans que j'aie à le demander explicitement.
+
+Note : Toutes les spécifications doivent être rédigées en français, y compris les specs OpenSpec (sections Purpose et Scenarios). Seuls les titres de Requirements doivent rester en anglais avec les mots-clés SHALL/MUST pour la validation OpenSpec.
+
 ### Frontend
 - **Framework** : Next.js 14+ (React) avec App Router
 - **Styling** : Tailwind CSS
@@ -22,7 +27,7 @@ InnovateBF est un thinktank dédié à la promotion de la technologie endogène 
 ### Backend & CMS
 - **CMS** : Strapi (Headless CMS) ou WordPress avec API REST/GraphQL
 - **API** : REST ou GraphQL selon CMS choisi
-- **Base de données** : PostgreSQL
+- **Base de données** : PostgreSQL (Supabase)
 - **ORM** : Prisma (si custom backend) ou natif Strapi
 
 ### Infrastructure & Services

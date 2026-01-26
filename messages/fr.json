@@ -1,0 +1,168 @@
+{
+  "common": {
+    "home": "Accueil",
+    "about": "À propos",
+    "domains": "Domaines d'action",
+    "contact": "Contact",
+    "language": "Langue",
+    "french": "Français",
+    "english": "English",
+    "readMore": "En savoir plus",
+    "submit": "Envoyer",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "success": "Succès"
+  },
+  "home": {
+    "meta_title": "InnovateBF - Technologie endogène au Burkina Faso",
+    "meta_description": "Un thinktank dédié à la promotion de la technologie endogène au Burkina Faso. Ensemble, innovons pour un avenir technologique durable.",
+    "hero_title": "Un avenir où la technologie et l'innovation sont les moteurs du développement durable",
+    "hero_subtitle": "InnovateBF est un thinktank dédié à la promotion de la technologie endogène au Burkina Faso, enracinée dans nos valeurs socio-culturelles.",
+    "hero_cta": "Découvrir nos actions",
+    "domains_title": "Nos domaines d'action",
+    "domains_subtitle": "Six axes stratégiques pour promouvoir l'innovation technologique burkinabè",
+    "newsletter_title": "Restez informé",
+    "newsletter_subtitle": "Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités",
+    "newsletter_placeholder": "Votre adresse email",
+    "newsletter_cta": "S'inscrire",
+    "newsletter_soon": "Bientôt disponible"
+  },
+  "domains": {
+    "analysis": {
+      "title": "Analyse, Concept et Conseil",
+      "short_description": "Services de consulting stratégique pour l'innovation technologique",
+      "description": "Nous offrons des services de consulting et d'analyse pour accompagner les acteurs de l'innovation au Burkina Faso."
+    },
+    "platform": {
+      "title": "Plateforme InnovonsEnsembleLeFaso",
+      "short_description": "Hub de collaboration pour projets innovants",
+      "description": "Dashboard de l'écosystème et base de données des Use Cases d'intérêt.",
+      "stats": {
+        "projects": "Projets",
+        "experts": "Experts",
+        "domains": "Domaines",
+        "pilots": "Pilotes 2026"
+      },
+      "pillars": {
+        "title": "Piliers & Leviers Stratégiques",
+        "subtitle": "Les fondations de notre action pour une transformation réelle.",
+        "federate": {
+          "title": "Fédérer",
+          "description": "Synergie Diaspora/Terroir et réseau d'experts pluridisciplinaires."
+        },
+        "train": {
+          "title": "Former",
+          "description": "Transfert de compétences et métiers technologiques du futur."
+        },
+        "finance": {
+          "title": "Financer",
+          "description": "Levée de fonds et accès au capital pour les projets endogènes."
+        },
+        "contribute": {
+          "title": "Contribuer",
+          "description": "Amélioration directe de la qualité de vie par l'innovation."
+        }
+      },
+      "table": {
+        "problem": "Problème Sociétal",
+        "solution": "Proposition de Solution",
+        "structure": "Structure Concernée",
+        "maturity": "Maturité",
+        "needs": "Besoins / Opportunités"
+      },
+      "projects_sample": {
+        "health": {
+          "problem": "Souveraineté Sanitaire",
+          "solution": "Respirateur Local \"Faso-Air\"",
+          "structure": "Ministère de la Santé",
+          "maturity": "Prototype",
+          "needs": "Expertise industrielle & Certification"
+        },
+        "security": {
+          "problem": "Sécurité Territoriale",
+          "solution": "Drones de surveillance autonomes",
+          "structure": "Défense / Sécurité",
+          "maturity": "MVP",
+          "needs": "Financement & Déploiement terrain"
+        },
+        "agriculture": {
+          "problem": "Rendement Agricole",
+          "solution": "IoT pour Irrigation Solaire",
+          "structure": "Ministère de l'Agriculture",
+          "maturity": "Idée",
+          "needs": "Partenariats technologiques"
+        }
+      },
+      "charts": {
+        "distribution": "Répartition des Projets",
+        "maturity": "Maturité Technologique"
+      },
+      "roadmap": {
+        "title": "Feuille de Route 2026",
+        "impacts": "Impacts Attendus",
+        "autonomy": {
+          "title": "Autonomie Technologique",
+          "description": "Réduction de la dépendance aux solutions importées."
+        },
+        "sovereignty": {
+          "title": "Souveraineté Économique",
+          "description": "Valorisation du génie local et création d'emplois qualifiés."
+        },
+        "q1": "T1 2026 : Lancement et cartographie des besoins étatiques.",
+        "q2": "T2 2026 : Structuration des pôles d'expertise et mentorat.",
+        "q3": "T3/T4 2026 : Déploiement des premiers use cases pilotes."
+      }
+    },
+    "conference": {
+      "title": "Conférence EBC",
+      "short_description": "Événements majeurs de l'innovation technologique",
+      "description": "Conférences et événements pour promouvoir l'innovation et le partage de connaissances."
+    },
+    "contribute": {
+      "title": "Contribuer",
+      "short_description": "Soutenez l'innovation technologique burkinabè",
+      "description": "Participez au financement de projets innovants et au développement de l'écosystème."
+    },
+    "calendar": {
+      "title": "Calendrier",
+      "short_description": "Événements et activités à venir",
+      "description": "Découvrez notre calendrier d'événements et activités dédiés à l'innovation."
+    },
+    "observatory": {
+      "title": "Observatoire",
+      "short_description": "Veille technologique et insights",
+      "description": "Suivi des tendances technologiques et analyse de l'écosystème d'innovation."
+    }
+  },
+  "about": {
+    "meta_title": "À propos - InnovateBF",
+    "meta_description": "Découvrez InnovateBF, notre vision, mission et valeurs pour promouvoir la technologie endogène au Burkina Faso.",
+    "title": "À propos d'InnovateBF",
+    "vision_title": "Notre Vision",
+    "vision_text": "Un avenir où la technologie et l'innovation, enracinées dans nos valeurs socio-culturelles, sont les moteurs du développement durable au Burkina Faso.",
+    "mission_title": "Notre Mission",
+    "mission_text": "Promouvoir et accompagner l'innovation technologique endogène au Burkina Faso à travers la recherche, le conseil, la collaboration et l'éducation."
+  },
+  "contact": {
+    "meta_title": "Contact - InnovateBF",
+    "meta_description": "Contactez-nous pour toute question ou collaboration. Nous sommes à votre écoute.",
+    "title": "Contactez-nous",
+    "subtitle": "Vous avez une question ou souhaitez collaborer avec nous ? N'hésitez pas à nous contacter.",
+    "form_name": "Nom complet",
+    "form_email": "Adresse email",
+    "form_subject": "Sujet",
+    "form_message": "Message",
+    "form_consent": "J'accepte que mes données soient utilisées pour répondre à ma demande (Politique de confidentialité)",
+    "form_submit": "Envoyer le message",
+    "success_message": "Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.",
+    "error_message": "Une erreur est survenue lors de l'envoi du message. Veuillez réessayer."
+  },
+  "footer": {
+    "description": "Un thinktank dédié à la promotion de la technologie endogène au Burkina Faso.",
+    "links_title": "Liens utiles",
+    "legal_title": "Informations légales",
+    "privacy": "Politique de confidentialité",
+    "legal": "Mentions légales",
+    "copyright": "© 2026 InnovateBF. Tous droits réservés."
+  }
+}
