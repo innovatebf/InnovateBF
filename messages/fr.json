@@ -126,7 +126,48 @@
     "calendar": {
       "title": "Calendrier",
       "short_description": "Événements et activités à venir",
-      "description": "Découvrez notre calendrier d'événements et activités dédiés à l'innovation."
+      "description": "Conférences technologiques et événements d'innovation au Burkina Faso",
+      "stats": {
+        "conferences": "Conférences",
+        "cities": "Villes",
+        "year": "Année"
+      },
+      "filters": {
+        "title": "Filtrer les conférences",
+        "city": "Ville",
+        "month": "Mois",
+        "category": "Catégorie",
+        "all_cities": "Toutes les villes",
+        "all_months": "Tous les mois",
+        "all_categories": "Toutes les catégories",
+        "results": "{count} conférence(s) trouvée(s)"
+      },
+      "categories": {
+        "technology": "Technologie",
+        "agriculture": "Agriculture",
+        "security": "Sécurité",
+        "health": "Santé",
+        "entrepreneurship": "Entrepreneuriat",
+        "energy": "Énergie",
+        "education": "Éducation",
+        "finance": "Finance"
+      },
+      "months": {
+        "march": "Mars",
+        "april": "Avril",
+        "may": "Mai",
+        "june": "Juin",
+        "july": "Juillet",
+        "september": "Septembre",
+        "october": "Octobre",
+        "november": "Novembre",
+        "december": "Décembre"
+      },
+      "attendees": "participants",
+      "event_id": "ID Événement",
+      "save": "Sauvegarder",
+      "details": "Détails",
+      "no_conferences": "Aucune conférence ne correspond à vos critères de recherche."
     },
     "observatory": {
       "title": "Observatoire",
