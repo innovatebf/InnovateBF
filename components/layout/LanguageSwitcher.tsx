@@ -1,42 +1,63 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/routing";
 import { Globe } from "lucide-react";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 
 export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const params = useParams();
+  const [isChanging, setIsChanging] = useState(false);
 
   const switchLocale = () => {
     const newLocale = locale === "fr" ? "en" : "fr";
+    setIsChanging(true);
 
-    // Construire le nouveau chemin avec la nouvelle locale
-    const segments = pathname.split("/").filter(Boolean);
+    // Utiliser le router de next-intl qui gère automatiquement les locales
+    router.replace(
+      // @ts-expect-error -- TypeScript will validate that only known `params`
+      // are used in combination with a given `pathname`. Since the two will
+      // always match for the current route, we can skip runtime checks.
+      { pathname, params },
+      { locale: newLocale }
+    );
 
-    // Si la première partie est une locale, la remplacer
-    if (segments[0] === "fr" || segments[0] === "en") {
-      segments[0] = newLocale;
-    } else {
-      // Si pas de locale dans l'URL (défaut FR), ajouter la nouvelle locale
-      if (newLocale !== "fr") {
-        segments.unshift(newLocale);
-      }
-    }
-
-    const newPath = newLocale === "fr" ? `/${segments.slice(1).join("/")}` : `/${segments.join("/")}`;
-    router.push(newPath || "/");
+    // Reset après une courte animation
+    setTimeout(() => setIsChanging(false), 500);
   };
 
   return (
-    <button
-      onClick={switchLocale}
-      className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
-      aria-label={locale === "fr" ? "Switch to English" : "Passer en français"}
-    >
-      <Globe className="size-4" />
-      <span>{locale === "fr" ? "EN" : "FR"}</span>
-    </button>
+    <div className="flex items-center gap-1 rounded-full bg-gray-100 p-1">
+      <button
+        onClick={() => locale === "en" && switchLocale()}
+        disabled={isChanging}
+        className={`rounded-full px-3 py-1.5 text-sm font-semibold transition-all ${
+          locale === "fr"
+            ? "bg-white text-gray-900 shadow-sm"
+            : "text-gray-600 hover:text-gray-900"
+        }`}
+        aria-label="Français"
+        aria-current={locale === "fr" ? "true" : "false"}
+      >
+        FR
+      </button>
+      <button
+        onClick={() => locale === "fr" && switchLocale()}
+        disabled={isChanging}
+        className={`rounded-full px-3 py-1.5 text-sm font-semibold transition-all ${
+          locale === "en"
+            ? "bg-white text-gray-900 shadow-sm"
+            : "text-gray-600 hover:text-gray-900"
+        }`}
+        aria-label="English"
+        aria-current={locale === "en" ? "true" : "false"}
+      >
+        EN
+      </button>
+    </div>
   );
 }
