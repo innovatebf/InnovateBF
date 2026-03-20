@@ -6,20 +6,31 @@ import { createServerClient } from "@supabase/ssr";
 const intlMiddleware = createIntlMiddleware(routing);
 
 // Routes protégées (sans le préfixe de locale)
-const PROTECTED_PATHS = ["/innovons/mon-espace"];
+const PROTECTED_PATHS = ["/innovons/mon-espace", "/innovons/admin"];
 
-function isProtectedPath(pathname: string): boolean {
-  // Retire le préfixe de locale si présent
-  // Avec localePrefix: "as-needed", la locale par défaut (fr) peut ne pas avoir de préfixe
+// Routes nécessitant le rôle ADMIN
+const ADMIN_PATHS = ["/innovons/admin"];
+
+function stripLocalePrefix(pathname: string): string {
   const locales = routing.locales as readonly string[];
-  let strippedPath = pathname;
   for (const locale of locales) {
     if (pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`) {
-      strippedPath = pathname.slice(locale.length + 1) || "/";
-      break;
+      return pathname.slice(locale.length + 1) || "/";
     }
   }
+  return pathname;
+}
+
+function isProtectedPath(pathname: string): boolean {
+  const strippedPath = stripLocalePrefix(pathname);
   return PROTECTED_PATHS.some(
+    (p) => strippedPath === p || strippedPath.startsWith(p + "/")
+  );
+}
+
+function isAdminPath(pathname: string): boolean {
+  const strippedPath = stripLocalePrefix(pathname);
+  return ADMIN_PATHS.some(
     (p) => strippedPath === p || strippedPath.startsWith(p + "/")
   );
 }
@@ -71,23 +82,49 @@ export async function middleware(request: NextRequest) {
       data: { session },
     } = await supabase.auth.getSession();
 
-    if (!session) {
-      // Extraire la locale depuis le pathname
-      // Avec localePrefix: "as-needed", la locale par défaut peut ne pas être dans l'URL
-      const locales = routing.locales as readonly string[];
-      let locale = routing.defaultLocale as string;
-      for (const l of locales) {
-        if (pathname.startsWith(`/${l}/`) || pathname === `/${l}`) {
-          locale = l;
-          break;
-        }
+    // Extraire la locale depuis le pathname
+    const locales = routing.locales as readonly string[];
+    let locale = routing.defaultLocale as string;
+    for (const l of locales) {
+      if (pathname.startsWith(`/${l}/`) || pathname === `/${l}`) {
+        locale = l;
+        break;
       }
+    }
+
+    if (!session) {
       const redirectUrl = new URL(
         `/${locale}/innovons/connexion`,
         request.url
       );
       redirectUrl.searchParams.set("redirect", pathname);
       return NextResponse.redirect(redirectUrl);
+    }
+
+    // Vérification du rôle ADMIN pour les routes admin
+    if (isAdminPath(pathname)) {
+      try {
+        const { data: profile } = await supabase
+          .from("ie_profiles")
+          .select("role")
+          .eq("id", session.user.id)
+          .single();
+
+        if (!profile || profile.role !== "ADMINISTRATEUR") {
+          const monEspaceUrl = new URL(
+            `/${locale}/innovons/mon-espace`,
+            request.url
+          );
+          return NextResponse.redirect(monEspaceUrl);
+        }
+      } catch {
+        // En cas d'erreur de requête, rediriger vers mon-espace par sécurité
+        const monEspaceUrl = new URL(
+          `/${locale}/innovons/mon-espace`,
+          request.url
+        );
+        return NextResponse.redirect(monEspaceUrl);
+      }
     }
   }
 
