@@ -140,6 +140,8 @@ export function NeedStepper() {
   const t = useTranslations("innovons.deposer");
   const [currentStep, setCurrentStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
     register,
@@ -326,8 +328,49 @@ export function NeedStepper() {
     setCurrentStep(Math.max(0, Math.min(STEP_COUNT - 1, step)));
   }, []);
 
-  const onSubmit = (data: NeedFormData) => {
-    setSubmitted(true);
+  const onSubmit = async (data: NeedFormData) => {
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const payload = {
+        titre: data.title,
+        domaine: data.domain,
+        secteur: data.sector,
+        pays: data.country,
+        niveau: data.level,
+        region: data.region,
+        contexte_strategique: data.strategicContext,
+        question_centrale: data.centralQuestion,
+        perimetre_inclus: data.scopeIncluded || [],
+        perimetre_exclus: data.scopeExcluded || [],
+        parties_prenantes: data.stakeholders || [],
+        obstacles: data.obstacles || [],
+        resultats: data.results || [],
+        indicateurs: data.indicators || [],
+        synthese_narrative: data.narrativeSummary,
+        coherence_score: coherenceScore,
+      };
+
+      const res = await fetch("/api/innovons/besoins", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Erreur lors de la soumission");
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Erreur soumission:", error);
+      setSubmitError(
+        error instanceof Error ? error.message : "Erreur inconnue",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -1351,6 +1394,13 @@ export function NeedStepper() {
                 </dl>
               </div>
 
+              {/* Submit error */}
+              {submitError && (
+                <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-700">
+                  {submitError}
+                </div>
+              )}
+
               {/* Publish button */}
               {coherenceScore < 5 && (
                 <p className="text-sm text-amber-600">
@@ -1394,11 +1444,11 @@ export function NeedStepper() {
             ) : (
               <button
                 type="submit"
-                disabled={coherenceScore < 5}
+                disabled={coherenceScore < 5 || isSubmitting}
                 className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <Send className="size-4" aria-hidden="true" />
-                {t("publish")}
+                {isSubmitting ? t("submitting") || "Envoi en cours..." : t("publish")}
               </button>
             )}
           </div>
