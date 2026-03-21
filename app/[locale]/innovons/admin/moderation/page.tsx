@@ -59,8 +59,8 @@ function ModerationTable({
   const filtered =
     filter === "all"
       ? needs
-      : filter === "REVISION_REQUESTED"
-        ? needs.filter((n) => n.statut === "REVISION_REQUESTED" || n.statut === "REVISION_DEMANDEE")
+      : filter === "REVISION_DEMANDEE"
+        ? needs.filter((n) => n.statut === "REVISION_DEMANDEE")
         : needs.filter((n) => n.statut === filter);
 
   if (filtered.length === 0) {
@@ -151,7 +151,7 @@ export default async function ModerationQueuePage({
     (n) => n.statut === "VALIDATION",
   ).length;
   const revisionCount = queue.filter(
-    (n) => n.statut === "REVISION_REQUESTED" || n.statut === "REVISION_DEMANDEE",
+    (n) => n.statut === "REVISION_DEMANDEE",
   ).length;
 
   const activeFilter = filtre ?? "all";

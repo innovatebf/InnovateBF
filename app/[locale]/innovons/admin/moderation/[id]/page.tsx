@@ -46,8 +46,9 @@ function formatPopulation(n: number): string {
   return n.toLocaleString("fr-FR");
 }
 
+const DEFAULT_STATUS_CONFIG = { bg: "bg-gray-800", text: "text-gray-400", label: "Brouillon" };
 const STATUS_CONFIG: Record<string, { bg: string; text: string; label: string }> = {
-  BROUILLON: { bg: "bg-gray-800", text: "text-gray-400", label: "Brouillon" },
+  BROUILLON: DEFAULT_STATUS_CONFIG,
   VALIDATION: { bg: "bg-amber-900/30", text: "text-amber-400", label: "En attente" },
   PUBLIE: { bg: "bg-green-900/30", text: "text-green-400", label: "Publie" },
   ARCHIVE: { bg: "bg-red-900/30", text: "text-red-400", label: "Archive" },
@@ -109,7 +110,7 @@ export default async function ModerationReviewPage({
   const authorName = moderationItem?.author_name ?? "Auteur inconnu";
   const authorEmail = moderationItem?.author_email ?? "";
 
-  const statusConfig = STATUS_CONFIG[need.statut] ?? STATUS_CONFIG.BROUILLON;
+  const statusConfig = STATUS_CONFIG[need.statut] ?? DEFAULT_STATUS_CONFIG;
 
   return (
     <div className="flex min-h-screen flex-col">

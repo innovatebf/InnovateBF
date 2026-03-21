@@ -21,6 +21,7 @@ interface ProfilFormProps {
   };
 }
 
+const DEFAULT_ROLE_BADGE = { label: "Utilisateur", className: "bg-gray-100 text-gray-700" };
 const ROLE_BADGE: Record<string, { label: string; className: string }> = {
   PARRAIN: { label: "Parrain", className: "bg-purple-100 text-purple-700" },
   INNOVATEUR: { label: "Innovateur", className: "bg-green-100 text-green-700" },
@@ -60,7 +61,7 @@ export function ProfilForm({ initialData }: ProfilFormProps) {
     .toUpperCase()
     .slice(0, 2);
 
-  const roleBadge = ROLE_BADGE[initialData.role] ?? ROLE_BADGE.UTILISATEUR;
+  const roleBadge = ROLE_BADGE[initialData.role] ?? DEFAULT_ROLE_BADGE;
 
   async function onSubmit(data: ProfilFormData) {
     setSaveStatus("idle");

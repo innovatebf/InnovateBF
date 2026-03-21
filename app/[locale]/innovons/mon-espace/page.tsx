@@ -47,7 +47,8 @@ function RoleBadge({ role }: { role: string }) {
     },
   };
 
-  const c = config[role] ?? config.UTILISATEUR;
+  const defaultConfig = { label: "Utilisateur", className: "bg-gray-100 text-gray-700" };
+  const c = config[role] ?? defaultConfig;
 
   return (
     <span

@@ -66,13 +66,7 @@ const MOCK_MODERATION_QUEUE: ModerationItem[] = MOCK_NEEDS.filter(
     statut: n.statut,
     created_at: n.created_at,
     updated_at: n.updated_at,
-    author_name: [
-      "Amadou Traore",
-      "Fatima Ouedraogo",
-      "Boukary Compaore",
-      "Mariam Sawadogo",
-      "Ibrahim Kabore",
-    ][i % 5],
+    author_name: (["Amadou Traore","Fatima Ouedraogo","Boukary Compaore","Mariam Sawadogo","Ibrahim Kabore"] as const)[i % 5] ?? "Auteur inconnu",
     author_email: `user${i + 1}@example.com`,
     moderation_count: Math.floor(Math.random() * 3),
   }));
@@ -155,7 +149,7 @@ export async function getModerationStats(): Promise<ModerationStats> {
  */
 export async function getNeedForReview(id: string): Promise<Need | null> {
   if (!isSupabaseConfigured()) {
-    return MOCK_NEEDS.find((n) => n.id === id || n.slug === id) ?? MOCK_NEEDS[0];
+    return MOCK_NEEDS.find((n) => n.id === id || n.slug === id) ?? MOCK_NEEDS[0] ?? null;
   }
 
   try {
@@ -170,13 +164,13 @@ export async function getNeedForReview(id: string): Promise<Need | null> {
 
     if (error) {
       console.error("[getNeedForReview] Supabase error:", error.message);
-      return MOCK_NEEDS.find((n) => n.id === id || n.slug === id) ?? MOCK_NEEDS[0];
+      return MOCK_NEEDS.find((n) => n.id === id || n.slug === id) ?? MOCK_NEEDS[0] ?? null;
     }
 
     return (data as Need) ?? null;
   } catch (err) {
     console.error("[getNeedForReview] Unexpected error:", err);
-    return MOCK_NEEDS[0];
+    return MOCK_NEEDS[0] ?? null;
   }
 }
 

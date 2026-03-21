@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const sql = getSql();
     const result = await sql`
       INSERT INTO ie_needs (
         titre, domaine, secteur, pays, niveau, region,
@@ -52,7 +53,7 @@ export async function POST(req: NextRequest) {
     `;
 
     return NextResponse.json(
-      { success: true, need: result[0] },
+      { success: true, need: Array.isArray(result) ? result[0] : null },
       { status: 201 },
     );
   } catch (error) {
