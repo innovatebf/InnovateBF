@@ -40,7 +40,7 @@ export default async function MesBesoinsPage({
   const t = await getTranslations({ locale, namespace: "innovons.mon_espace" });
 
   const user = await getCurrentUser();
-  const needs = user ? await getUserNeeds(user.id) : [];
+  const needs = user ? await getUserNeeds(user.id, user.email) : [];
 
   function getMaxCriticite(
     obstacles: { criticite: ObstacleCriticite }[],

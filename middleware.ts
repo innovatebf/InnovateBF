@@ -5,7 +5,11 @@ import { routing } from "./i18n/routing";
 const intlMiddleware = createIntlMiddleware(routing);
 
 // Routes protégées (sans le préfixe de locale)
-const PROTECTED_PATHS = ["/innovons/mon-espace", "/innovons/admin"];
+const PROTECTED_PATHS = [
+  "/innovons/mon-espace",
+  "/innovons/admin",
+  "/innovons/besoins/deposer",
+];
 
 // Routes nécessitant le rôle ADMIN
 const ADMIN_PATHS = ["/innovons/admin"];

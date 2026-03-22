@@ -69,11 +69,11 @@ export default async function MonEspacePage({
   const t = await getTranslations({ locale, namespace: "innovons.mon_espace" });
 
   const user = await getCurrentUser();
-  const needs = user ? await getUserNeeds(user.id) : [];
+  const needs = user ? await getUserNeeds(user.id, user.email) : [];
   const proposals = user ? await getUserProposals(user.id) : [];
   const calls = await getOpenCalls();
 
-  const userName = user?.full_name ?? "Utilisateur";
+  const userName = user?.name ?? "Utilisateur";
 
   const stats = [
     {

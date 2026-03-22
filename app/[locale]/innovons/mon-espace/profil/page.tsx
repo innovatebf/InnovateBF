@@ -39,11 +39,11 @@ export default async function ProfilPage({
       {user && (
         <ProfilForm
           initialData={{
-            full_name: user.full_name,
-            organisation: user.organisation ?? "",
-            bio: user.bio ?? "",
-            role: user.role,
-            avatar_url: user.avatar_url,
+            full_name: user.name,
+            organisation: "",
+            bio: "",
+            role: (user.role as "UTILISATEUR" | "PARRAIN" | "INNOVATEUR" | "ADMINISTRATEUR") ?? "UTILISATEUR",
+            avatar_url: undefined,
           }}
         />
       )}

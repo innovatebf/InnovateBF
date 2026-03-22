@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useMemo } from "react";
+import { useRouter } from "@/i18n/routing";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -138,6 +139,7 @@ function detectPrescriptiveTerms(text: string): string[] {
 
 export function NeedStepper() {
   const t = useTranslations("innovons.deposer");
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -366,6 +368,9 @@ export function NeedStepper() {
       }
 
       setSubmitted(true);
+      setTimeout(() => {
+        router.push("/innovons/mon-espace/besoins");
+      }, 2500);
     } catch (error) {
       console.error("Erreur soumission:", error);
       setSubmitError(

@@ -82,6 +82,7 @@ export interface Need {
   population_impact: number;
   budget: number;
   auteur_id: string;
+  auteur_email?: string;
   created_at: string;
   published_at: string | null;
   updated_at: string;

@@ -1,30 +1,28 @@
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { getServerSession } from "@/lib/auth/server";
+import sql from "@/lib/db/neon";
 import type { Need, Proposal } from "./types";
 import { MOCK_NEEDS } from "./mock-data";
 
-// Profil utilisateur etendu
+// Profil utilisateur
 export interface UserProfile {
   id: string;
-  full_name: string;
+  name: string;
   email: string;
-  role: "UTILISATEUR" | "PARRAIN" | "INNOVATEUR" | "ADMINISTRATEUR";
-  organisation?: string;
-  bio?: string;
-  avatar_url?: string;
-  created_at: string;
+  role: string;
+  created_at?: string;
 }
 
-// Mock user
+function isNeonConfigured(): boolean {
+  return Boolean(
+    process.env.DATABASE_URL && !process.env.DATABASE_URL.includes("your-"),
+  );
+}
+
 const MOCK_USER_PROFILE: UserProfile = {
-  id: "mock-user-1",
-  full_name: "Adama Ouedraogo",
-  email: "adama@example.bf",
-  role: "INNOVATEUR",
-  organisation: "TechBF Lab",
-  bio: "Entrepreneur technologique au Burkina Faso, passionne par les solutions locales.",
-  avatar_url: undefined,
-  created_at: "2025-01-15T00:00:00Z",
+  id: "mock-user-001",
+  name: "Adama Ouedraogo",
+  email: "adama@example.com",
+  role: "UTILISATEUR",
 };
 
 // Mock proposals soumises par l'utilisateur
@@ -53,103 +51,53 @@ const MOCK_USER_PROPOSALS: Proposal[] = [
   },
 ];
 
-function isSupabaseConfigured(): boolean {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return !!(
-    url &&
-    key &&
-    !url.includes("your-project") &&
-    !key.includes("your-anon-key")
-  );
-}
-
 export async function getCurrentUser(): Promise<UserProfile | null> {
-  if (!isSupabaseConfigured()) return MOCK_USER_PROFILE;
-
   try {
-    const cookieStore = await cookies();
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll: () => cookieStore.getAll(),
-          setAll: () => {},
-        },
-      },
-    );
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return null;
-
-    const { data } = await supabase
-      .from("ie_profiles")
-      .select("*")
-      .eq("id", user.id)
-      .single();
-
-    return (data as UserProfile) ?? null;
+    const session = await getServerSession();
+    if (!session?.user) return null;
+    return {
+      id: session.user.id,
+      name: session.user.name ?? session.user.email,
+      email: session.user.email,
+      role: (session.user as { role?: string }).role ?? "UTILISATEUR",
+    };
   } catch {
-    return MOCK_USER_PROFILE;
+    return null;
   }
 }
 
-export async function getUserNeeds(userId: string): Promise<Need[]> {
-  if (!isSupabaseConfigured()) {
+export async function getUserNeeds(
+  userId: string,
+  userEmail?: string,
+): Promise<Need[]> {
+  if (!isNeonConfigured()) {
     return MOCK_NEEDS.slice(0, 3).map((n) => ({ ...n, auteur_id: userId }));
   }
 
   try {
-    const cookieStore = await cookies();
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll: () => cookieStore.getAll(),
-          setAll: () => {},
-        },
-      },
-    );
-
-    const { data } = await supabase
-      .from("ie_needs")
-      .select("*")
-      .eq("auteur_id", userId)
-      .order("created_at", { ascending: false });
-
-    return (data ?? []) as Need[];
+    const emailFilter = userEmail ?? "";
+    const result = await sql`
+      SELECT * FROM ie_needs
+      WHERE auteur_id = ${userId}
+         OR auteur_email = ${emailFilter}
+      ORDER BY created_at DESC
+    `;
+    return (result ?? []) as Need[];
   } catch {
-    return MOCK_NEEDS.slice(0, 3).map((n) => ({ ...n, auteur_id: userId }));
+    return [];
   }
 }
 
 export async function getUserProposals(userId: string): Promise<Proposal[]> {
-  if (!isSupabaseConfigured()) return MOCK_USER_PROPOSALS;
+  if (!isNeonConfigured()) return MOCK_USER_PROPOSALS;
 
   try {
-    const cookieStore = await cookies();
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll: () => cookieStore.getAll(),
-          setAll: () => {},
-        },
-      },
-    );
-
-    const { data } = await supabase
-      .from("ie_proposals")
-      .select("*")
-      .eq("auteur_id", userId)
-      .order("created_at", { ascending: false });
-
-    return (data ?? []) as Proposal[];
+    const result = await sql`
+      SELECT * FROM ie_proposals
+      WHERE auteur_id = ${userId}
+      ORDER BY created_at DESC
+    `;
+    return (result ?? []) as Proposal[];
   } catch {
     return MOCK_USER_PROPOSALS;
   }
