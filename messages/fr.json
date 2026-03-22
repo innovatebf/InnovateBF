@@ -206,27 +206,25 @@
     "legal": "Mentions légales",
     "copyright": "© 2026 InnovateBF. Tous droits réservés."
   },
-
   "innovons": {
     "meta_title": "InnovonsEnsembleLeFaso – Plateforme nationale d'innovation",
     "meta_description": "Plateforme nationale pour recenser, prioriser et résoudre les besoins sociétaux du Burkina Faso grâce à l'innovation endogène.",
-
     "nav": {
       "home": "Accueil",
       "needs": "Besoins",
       "calls": "Appels",
       "conference": "Conférence",
       "observatoire": "Observatoire",
-      "login": "Connexion"
+      "login": "Connexion",
+      "submit": "Déposer un besoin",
+      "my_space": "Mon espace"
     },
-
     "hero": {
       "title": "Innovons Ensemble Le Faso",
       "subtitle": "Plateforme nationale pour recenser, prioriser et résoudre les besoins sociétaux du Burkina Faso grâce à l'innovation endogène.",
       "cta_needs": "Explorer les besoins",
       "cta_calls": "Voir les appels"
     },
-
     "stats": {
       "section_label": "Indicateurs clés d'impact",
       "needs_label": "Besoins recensés",
@@ -235,7 +233,6 @@
       "population_label": "Population impactée",
       "budget_label": "Budget mobilisé"
     },
-
     "mission": {
       "badge": "Notre Mission",
       "title": "Mobiliser l'écosystème d'innovation pour le développement du Burkina Faso",
@@ -246,7 +243,6 @@
       "image_placeholder": "Image de la mission (à charger depuis le CMS)",
       "image_alt": "Équipe InnovonsEnsembleLeFaso en action"
     },
-
     "how": {
       "title": "Comment ça fonctionne ?",
       "subtitle": "Une plateforme complète pour transformer les besoins sociétaux en solutions concrètes",
@@ -260,14 +256,12 @@
       "card4_title": "Conférence nationale",
       "card4_desc": "Événement annuel de célébration et de partage des innovations et des impacts mesurés."
     },
-
     "cta": {
       "title": "Rejoignez le mouvement de l'innovation endogène",
       "subtitle": "Que vous soyez porteur de besoin, parrain, innovateur ou simple citoyen, votre contribution compte pour bâtir un Burkina Faso plus innovant.",
       "deposit": "Déposer un besoin",
       "register": "Créer un compte"
     },
-
     "inscription": {
       "meta_title": "Inscription - InnovonsEnsembleLeFaso",
       "meta_description": "Créez votre compte pour rejoindre la plateforme d'innovation endogène du Burkina Faso.",
@@ -299,7 +293,6 @@
       "error_email_exists": "Cette adresse email est déjà utilisée.",
       "error_generic": "Erreur réseau. Veuillez réessayer."
     },
-
     "connexion": {
       "meta_title": "Connexion - InnovonsEnsembleLeFaso",
       "meta_description": "Connectez-vous à la plateforme d'innovation endogène du Burkina Faso.",
@@ -319,7 +312,6 @@
       "error_generic": "Erreur réseau. Veuillez réessayer.",
       "forgot_password": "Mot de passe oublié ?"
     },
-
     "mot_de_passe_oublie": {
       "meta_title": "Mot de passe oublié - InnovateBF",
       "meta_description": "Réinitialisez votre mot de passe InnovateBF",
@@ -334,7 +326,6 @@
       "back_to_login": "Retour à la connexion",
       "error_generic": "Une erreur est survenue. Veuillez réessayer."
     },
-
     "reset_password": {
       "meta_title": "Nouveau mot de passe - InnovateBF",
       "meta_description": "Définissez votre nouveau mot de passe",
@@ -352,7 +343,6 @@
       "error_generic": "Une erreur est survenue. Veuillez réessayer.",
       "request_new_link": "Demander un nouveau lien"
     },
-
     "besoins": {
       "page_title": "Catalogue des besoins",
       "page_desc": "156 besoins sociétaux recensés et priorisés pour le Burkina Faso",
@@ -368,7 +358,6 @@
       "consult": "Consulter",
       "no_results": "Aucun besoin ne correspond à vos critères."
     },
-
     "need_detail": {
       "meta_suffix": "InnovonsEnsembleLeFaso",
       "dim_contexte": "Contexte stratégique",
@@ -407,7 +396,6 @@
       "published_at": "Date de publication",
       "back": "Retour au catalogue"
     },
-
     "appels": {
       "page_title": "Appels à solutionnement",
       "page_desc": "Consultez les appels ouverts et proposez vos solutions innovantes pour répondre aux besoins sociétaux du Burkina Faso.",
@@ -428,7 +416,6 @@
       "cta_button": "Déposez votre proposition",
       "stats_summary": "8 appels ouverts · 3 domaines · Deadline moyenne : 45 jours"
     },
-
     "conference": {
       "page_title": "Conférence EBC 2026",
       "tagline": "Échangeons, Bâtissons, Contribuons",
@@ -458,7 +445,6 @@
       "session_panel": "Panel",
       "session_ceremony": "Cérémonie"
     },
-
     "deposer": {
       "page_title": "Déposer un besoin",
       "page_desc": "Décrivez un besoin sociétal du Burkina Faso en suivant notre méthodologie structurée en 8 étapes.",
@@ -562,7 +548,6 @@
       "review_summary": "Résumé de la fiche",
       "publish_disabled": "Le score de cohérence doit être d'au moins 5/7 pour publier."
     },
-
     "mon_espace": {
       "meta_title": "Mon Espace — InnovonsEnsembleLeFaso",
       "meta_description": "Gérez vos besoins, propositions et profil sur InnovonsEnsembleLeFaso",
@@ -599,7 +584,6 @@
       "profil_bio": "Bio",
       "profil_change_password": "Changer le mot de passe"
     },
-
     "footer": {
       "tagline": "Plateforme nationale d'innovation collaborative pour le développement du Burkina Faso.",
       "quick_links": "Liens rapides",
@@ -612,7 +596,6 @@
       "link_calls": "Appels à solutionnement",
       "link_conference": "Conférence 2026"
     },
-
     "proposer": {
       "title": "Proposer une solution",
       "subtitle": "Pour le besoin",
@@ -639,7 +622,6 @@
       "error_title": "Erreur",
       "error_message": "Une erreur est survenue. Veuillez réessayer."
     },
-
     "modifier": {
       "title": "Modifier mon besoin",
       "breadcrumb": "Modifier",

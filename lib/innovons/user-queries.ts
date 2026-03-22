@@ -63,13 +63,32 @@ export async function getCurrentUser(): Promise<UserProfile | null> {
   try {
     const session = await getServerSession();
     if (!session?.user) return null;
+
+    // Role from session (better-auth additionalField)
+    let role =
+      ((session.user as { role?: string }).role as UserProfile["role"]) ??
+      "guest";
+
+    // Fallback: query DB directly if role is missing or default
+    // (session might be cached before role migration)
+    if (isNeonConfigured() && (role === "guest" || !role)) {
+      try {
+        const rows = await sql`
+          SELECT role FROM "user" WHERE id = ${session.user.id} LIMIT 1
+        `;
+        if (rows[0]?.role) {
+          role = rows[0].role as UserProfile["role"];
+        }
+      } catch {
+        // keep session role
+      }
+    }
+
     return {
       id: session.user.id,
       name: session.user.name ?? session.user.email,
       email: session.user.email,
-      role:
-        ((session.user as { role?: string }).role as UserProfile["role"]) ??
-        "guest",
+      role,
     };
   } catch {
     return null;

@@ -34,7 +34,7 @@ function RoleBadge({ role }: { role: string }) {
   const config: Record<string, { label: string; className: string }> = {
     admin:  { label: "Admin",    className: "bg-red-100 text-red-700" },
     editor: { label: "Editeur",  className: "bg-green-100 text-green-700" },
-    guest:  { label: "Invite",   className: "bg-gray-100 text-gray-700" },
+    guest:  { label: "Invité",   className: "bg-gray-100 text-gray-700" },
     // Legacy fallback values
     ADMINISTRATEUR: { label: "Admin",      className: "bg-red-100 text-red-700" },
     UTILISATEUR:    { label: "Utilisateur", className: "bg-gray-100 text-gray-700" },
