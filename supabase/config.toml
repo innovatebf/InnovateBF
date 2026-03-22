@@ -1,0 +1,51 @@
+# Supabase local development config
+# Doc: https://supabase.com/docs/guides/cli/config
+
+[project]
+# Renseignez votre project_id depuis https://supabase.com/dashboard/project/_/settings/general
+# project_id = "votre-project-id"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[inbucket]
+enabled = true
+port = 54324
+
+[storage]
+enabled = true
+
+[auth]
+enabled = true
+site_url = "http://localhost:3001"
+
+# URLs autorisées pour les redirections OAuth et reset password
+# Ajouter ici toutes les URLs de callback et reset
+additional_redirect_urls = [
+  "http://localhost:3001/innovons/reset-password",
+  "http://localhost:3001/innovons/connexion",
+  "https://innovatebf.org/innovons/reset-password",
+  "https://innovatebf.org/innovons/connexion",
+]
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
+
+[auth.email.template.recovery]
+subject = "Réinitialisez votre mot de passe InnovateBF"
+content_path = "./supabase/templates/recovery.html"
