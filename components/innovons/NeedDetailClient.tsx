@@ -63,6 +63,8 @@ interface NeedDetailClientProps {
   need: Need;
   labels: NeedDetailLabels;
   locale: string;
+  /** Slug from the URL segment — fallback when need.slug is null (Neon row without slug) */
+  needSlug: string;
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -163,7 +165,9 @@ function AccordionSection({
 
 // ── Main Component ──────────────────────────────────────────────────────────
 
-export function NeedDetailClient({ need, labels, locale }: NeedDetailClientProps) {
+export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailClientProps) {
+  // Resolve slug: prefer need.slug (set for mock data), fallback to URL segment
+  const resolvedSlug = need.slug || needSlug;
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 lg:px-8">
       {/* Back link */}
@@ -392,7 +396,7 @@ export function NeedDetailClient({ need, labels, locale }: NeedDetailClientProps
 
             {/* CTA */}
             <Link
-              href={`/innovons/besoins/${need.slug}/proposer`}
+              href={`/innovons/besoins/${resolvedSlug}/proposer`}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-secondary-600 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-secondary-700"
             >
               <Lightbulb className="size-4" aria-hidden="true" />
