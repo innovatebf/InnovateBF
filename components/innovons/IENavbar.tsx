@@ -9,14 +9,19 @@ import {
   CalendarDays,
   Globe,
   LogIn,
+  LayoutDashboard,
+  Plus,
   Menu,
   X,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useSession } from "@/lib/auth/client";
 
 export function IENavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const t = useTranslations("innovons.nav");
+  const { data: session } = useSession();
+  const isLoggedIn = Boolean(session?.user);
 
   const navItems = [
     { key: "home", href: "/innovons", icon: Home },
@@ -62,15 +67,35 @@ export function IENavbar() {
             ))}
           </div>
 
-          {/* ── CTA + mobile toggle ── */}
-          <div className="flex items-center gap-3">
+          {/* ── CTAs + mobile toggle ── */}
+          <div className="flex items-center gap-2">
+            {/* Déposer un besoin — always visible on desktop */}
             <Link
-              href="/innovons/connexion"
-              className="hidden items-center gap-1.5 rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-500 lg:inline-flex"
+              href="/innovons/besoins/deposer"
+              className="hidden items-center gap-1.5 rounded-lg border border-green-500 px-3 py-2 text-sm font-semibold text-green-400 transition-colors hover:bg-green-500 hover:text-white lg:inline-flex"
             >
-              <LogIn className="size-4" aria-hidden="true" />
-              {t("login")}
+              <Plus className="size-4" aria-hidden="true" />
+              Déposer
             </Link>
+
+            {/* Mon Espace or Connexion */}
+            {isLoggedIn ? (
+              <Link
+                href="/innovons/mon-espace"
+                className="hidden items-center gap-1.5 rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-500 lg:inline-flex"
+              >
+                <LayoutDashboard className="size-4" aria-hidden="true" />
+                Mon Espace
+              </Link>
+            ) : (
+              <Link
+                href="/innovons/connexion"
+                className="hidden items-center gap-1.5 rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-500 lg:inline-flex"
+              >
+                <LogIn className="size-4" aria-hidden="true" />
+                {t("login")}
+              </Link>
+            )}
 
             <button
               type="button"
@@ -105,14 +130,36 @@ export function IENavbar() {
               </Link>
             ))}
 
+            {/* Déposer — mobile */}
             <Link
-              href="/innovons/connexion"
-              className="mt-2 flex items-center gap-2 rounded-full bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-500"
+              href="/innovons/besoins/deposer"
+              className="mt-2 flex items-center gap-2 rounded-lg border border-green-500 px-4 py-2.5 text-sm font-semibold text-green-400 transition-colors hover:bg-green-500 hover:text-white"
               onClick={() => setMobileOpen(false)}
             >
-              <LogIn className="size-4" aria-hidden="true" />
-              {t("login")}
+              <Plus className="size-4" aria-hidden="true" />
+              Déposer un besoin
             </Link>
+
+            {/* Mon Espace or Connexion — mobile */}
+            {isLoggedIn ? (
+              <Link
+                href="/innovons/mon-espace"
+                className="flex items-center gap-2 rounded-full bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-500"
+                onClick={() => setMobileOpen(false)}
+              >
+                <LayoutDashboard className="size-4" aria-hidden="true" />
+                Mon Espace
+              </Link>
+            ) : (
+              <Link
+                href="/innovons/connexion"
+                className="flex items-center gap-2 rounded-full bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-500"
+                onClick={() => setMobileOpen(false)}
+              >
+                <LogIn className="size-4" aria-hidden="true" />
+                {t("login")}
+              </Link>
+            )}
           </div>
         </div>
       )}
