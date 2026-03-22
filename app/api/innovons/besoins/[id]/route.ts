@@ -39,6 +39,13 @@ export async function GET(
     }
 
     if (!result || result.length === 0) {
+      // Fallback sur mock data (utile en dev)
+      const mockNeed =
+        MOCK_NEEDS.find((n) => n.id === id) ??
+        MOCK_NEEDS.find((n) => n.slug === id);
+      if (mockNeed) {
+        return NextResponse.json({ success: true, need: mockNeed, source: "mock" });
+      }
       return NextResponse.json({ error: "Besoin non trouve" }, { status: 404 });
     }
 
@@ -82,7 +89,24 @@ export async function PATCH(
     `;
 
     if (!existing || existing.length === 0) {
-      return NextResponse.json({ error: "Besoin non trouve" }, { status: 404 });
+      // Fallback mock (dev sans données Neon)
+      const mockNeed =
+        MOCK_NEEDS.find((n) => n.id === id) ??
+        MOCK_NEEDS.find((n) => n.slug === id);
+      if (!mockNeed) {
+        return NextResponse.json({ error: "Besoin non trouve" }, { status: 404 });
+      }
+      if (mockNeed.statut !== "BROUILLON" && mockNeed.statut !== "VALIDATION") {
+        return NextResponse.json(
+          { error: "Seuls les besoins en BROUILLON ou VALIDATION peuvent etre modifies" },
+          { status: 403 },
+        );
+      }
+      console.log("[DEV] Besoin mis a jour (mock fallback):", id, body);
+      return NextResponse.json({
+        success: true,
+        need: { ...mockNeed, ...body, updated_at: new Date().toISOString() },
+      });
     }
 
     const existingNeed = existing[0] as { id: string; statut: string };

@@ -1126,6 +1126,32 @@ export const MOCK_NEEDS: Need[] = [
     published_at: "2026-01-10T08:00:00Z",
     updated_at: "2026-03-05T10:00:00Z",
   },
+  // ── Besoin de TEST en statut BROUILLON (dev only) ─────────────────────────
+  {
+    id: "need-test-brouillon",
+    slug: "test-besoin-brouillon",
+    titre: "Besoin test en brouillon (dev only)",
+    domaine: "Numerique",
+    secteur: "TIC",
+    region: "Centre",
+    pays: "Burkina Faso",
+    niveau: "LOCAL",
+    statut: "BROUILLON",
+    tags: ["test", "brouillon"],
+    question_centrale: "Comment tester la modification d'un besoin en statut BROUILLON ?",
+    contexte_strategique: "Besoin créé uniquement pour les tests de l'interface de modification.",
+    parties_prenantes: [],
+    obstacles: [],
+    resultats: [],
+    indicateurs: [],
+    synthese_narrative: "Besoin de test pour valider le formulaire de modification.",
+    population_impact: 0,
+    budget: 0,
+    auteur_id: "user-test-001",
+    created_at: "2026-01-01T00:00:00Z",
+    published_at: null,
+    updated_at: "2026-01-01T00:00:00Z",
+  },
 ];
 
 // population_impact total:
