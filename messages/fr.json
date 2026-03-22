@@ -316,7 +316,41 @@
       "no_account": "Pas encore de compte ?",
       "register_link": "Créer un compte",
       "error_invalid_credentials": "Email ou mot de passe incorrect.",
-      "error_generic": "Erreur réseau. Veuillez réessayer."
+      "error_generic": "Erreur réseau. Veuillez réessayer.",
+      "forgot_password": "Mot de passe oublié ?"
+    },
+
+    "mot_de_passe_oublie": {
+      "meta_title": "Mot de passe oublié - InnovateBF",
+      "meta_description": "Réinitialisez votre mot de passe InnovateBF",
+      "title": "Mot de passe oublié ?",
+      "subtitle": "Entrez votre email pour recevoir un lien de réinitialisation",
+      "field_email": "Adresse email",
+      "placeholder_email": "votre@email.com",
+      "submit": "Envoyer le lien",
+      "submitting": "Envoi en cours...",
+      "success_title": "Email envoyé !",
+      "success_message": "Un lien de réinitialisation a été envoyé à {email}. Vérifiez votre boîte de réception.",
+      "back_to_login": "Retour à la connexion",
+      "error_generic": "Une erreur est survenue. Veuillez réessayer."
+    },
+
+    "reset_password": {
+      "meta_title": "Nouveau mot de passe - InnovateBF",
+      "meta_description": "Définissez votre nouveau mot de passe",
+      "title": "Nouveau mot de passe",
+      "subtitle": "Choisissez un mot de passe sécurisé",
+      "field_password": "Nouveau mot de passe",
+      "field_confirm": "Confirmer le mot de passe",
+      "placeholder_password": "8 caractères minimum",
+      "placeholder_confirm": "Répétez le mot de passe",
+      "submit": "Mettre à jour le mot de passe",
+      "submitting": "Mise à jour...",
+      "success_title": "Mot de passe mis à jour !",
+      "success_message": "Votre mot de passe a été modifié avec succès. Redirection vers la connexion...",
+      "error_invalid_link": "Lien invalide ou expiré. Demandez un nouveau lien de réinitialisation.",
+      "error_generic": "Une erreur est survenue. Veuillez réessayer.",
+      "request_new_link": "Demander un nouveau lien"
     },
 
     "besoins": {

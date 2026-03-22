@@ -316,7 +316,41 @@
       "no_account": "Don't have an account?",
       "register_link": "Create an account",
       "error_invalid_credentials": "Incorrect email or password.",
-      "error_generic": "Network error. Please try again."
+      "error_generic": "Network error. Please try again.",
+      "forgot_password": "Forgot password?"
+    },
+
+    "mot_de_passe_oublie": {
+      "meta_title": "Forgot Password - InnovateBF",
+      "meta_description": "Reset your InnovateBF password",
+      "title": "Forgot your password?",
+      "subtitle": "Enter your email to receive a reset link",
+      "field_email": "Email address",
+      "placeholder_email": "your@email.com",
+      "submit": "Send reset link",
+      "submitting": "Sending...",
+      "success_title": "Email sent!",
+      "success_message": "A reset link has been sent to {email}. Check your inbox.",
+      "back_to_login": "Back to login",
+      "error_generic": "An error occurred. Please try again."
+    },
+
+    "reset_password": {
+      "meta_title": "New Password - InnovateBF",
+      "meta_description": "Set your new password",
+      "title": "New password",
+      "subtitle": "Choose a secure password",
+      "field_password": "New password",
+      "field_confirm": "Confirm password",
+      "placeholder_password": "8 characters minimum",
+      "placeholder_confirm": "Repeat password",
+      "submit": "Update password",
+      "submitting": "Updating...",
+      "success_title": "Password updated!",
+      "success_message": "Your password has been changed successfully. Redirecting to login...",
+      "error_invalid_link": "Invalid or expired link. Request a new reset link.",
+      "error_generic": "An error occurred. Please try again.",
+      "request_new_link": "Request a new link"
     },
 
     "besoins": {
