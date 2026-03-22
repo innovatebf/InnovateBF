@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { IENavbar } from "@/components/innovons/IENavbar";
 import { ResetPasswordForm } from "@/components/innovons/ResetPasswordForm";
+import { Loader2 } from "lucide-react";
 
 export async function generateMetadata({
   params,
@@ -46,7 +48,15 @@ export default async function ResetPasswordPage({
 
           {/* Carte formulaire */}
           <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
-            <ResetPasswordForm />
+            <Suspense
+              fallback={
+                <div className="flex justify-center py-8">
+                  <Loader2 className="size-6 animate-spin text-green-600" />
+                </div>
+              }
+            >
+              <ResetPasswordForm />
+            </Suspense>
           </div>
         </div>
       </div>
