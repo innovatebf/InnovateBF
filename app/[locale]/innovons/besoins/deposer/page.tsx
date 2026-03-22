@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { IENavbar } from "@/components/innovons/IENavbar";
 import { NeedStepper } from "@/components/innovons/NeedStepper";
 import { FileText } from "lucide-react";
+import { requireRole } from "@/lib/auth/guards";
 
 export async function generateMetadata({
   params,
@@ -22,6 +23,7 @@ export default async function DeposerBesoinPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  await requireRole('editor', locale);
   setRequestLocale(locale);
   const t = await getTranslations("innovons.deposer");
 

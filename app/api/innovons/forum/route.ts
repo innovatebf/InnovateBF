@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getComments, postComment, castVote } from "@/lib/innovons/forum-queries";
+import { requireRoleForApi } from "@/lib/auth/guards";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -10,6 +11,10 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  // RBAC: any authenticated user (guest+) can post comments/votes
+  const auth = await requireRoleForApi('guest');
+  if (auth.error) return auth.error;
+
   try {
     const body = await req.json();
     const { type, needId, parentId, authorName, authorEmail, content, value, userEmail } = body;

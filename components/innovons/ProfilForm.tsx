@@ -16,20 +16,18 @@ interface ProfilFormProps {
     full_name: string;
     organisation: string;
     bio: string;
-    role: "UTILISATEUR" | "PARRAIN" | "INNOVATEUR" | "ADMINISTRATEUR";
+    role: string;
     avatar_url?: string;
   };
 }
 
-const DEFAULT_ROLE_BADGE = { label: "Utilisateur", className: "bg-gray-100 text-gray-700" };
 const ROLE_BADGE: Record<string, { label: string; className: string }> = {
-  PARRAIN: { label: "Parrain", className: "bg-purple-100 text-purple-700" },
-  INNOVATEUR: { label: "Innovateur", className: "bg-green-100 text-green-700" },
+  admin:  { label: "Admin",    className: "bg-red-100 text-red-700" },
+  editor: { label: "Editeur",  className: "bg-green-100 text-green-700" },
+  guest:  { label: "Invite",   className: "bg-gray-100 text-gray-700" },
+  // Legacy fallback values
   ADMINISTRATEUR: { label: "Admin", className: "bg-red-100 text-red-700" },
-  UTILISATEUR: {
-    label: "Utilisateur",
-    className: "bg-gray-100 text-gray-700",
-  },
+  UTILISATEUR: { label: "Utilisateur", className: "bg-gray-100 text-gray-700" },
 };
 
 export function ProfilForm({ initialData }: ProfilFormProps) {
@@ -61,7 +59,7 @@ export function ProfilForm({ initialData }: ProfilFormProps) {
     .toUpperCase()
     .slice(0, 2);
 
-  const roleBadge = ROLE_BADGE[initialData.role] ?? DEFAULT_ROLE_BADGE;
+  const roleBadge = ROLE_BADGE[initialData.role] ?? ROLE_BADGE.guest!;
 
   async function onSubmit(data: ProfilFormData) {
     setSaveStatus("idle");

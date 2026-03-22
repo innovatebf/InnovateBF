@@ -9,19 +9,18 @@ import {
   CalendarDays,
   Globe,
   LogIn,
-  LayoutDashboard,
-  Plus,
   Menu,
   X,
+  User,
+  PlusCircle,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useSession } from "@/lib/auth/client";
+import { useRole } from "@/lib/auth/hooks";
 
 export function IENavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const t = useTranslations("innovons.nav");
-  const { data: session } = useSession();
-  const isLoggedIn = Boolean(session?.user);
+  const { isAuthenticated, can } = useRole();
 
   const navItems = [
     { key: "home", href: "/innovons", icon: Home },
@@ -38,7 +37,7 @@ export function IENavbar() {
     >
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="flex h-14 items-center justify-between">
-          {/* ── Logo IE ── */}
+          {/* -- Logo IE -- */}
           <Link href="/innovons" className="flex items-center gap-3 group">
             <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-green-600 text-sm font-black text-white transition-colors group-hover:bg-green-500">
               IE
@@ -48,12 +47,12 @@ export function IENavbar() {
                 InnovonsEnsembleLeFaso
               </p>
               <p className="text-[11px] text-gray-400">
-                Innovation endogène&nbsp;•&nbsp;Burkina Faso
+                Innovation endogene&nbsp;•&nbsp;Burkina Faso
               </p>
             </div>
           </Link>
 
-          {/* ── Desktop nav ── */}
+          {/* -- Desktop nav -- */}
           <div className="hidden items-center gap-0.5 lg:flex">
             {navItems.map(({ key, href, icon: Icon }) => (
               <Link
@@ -67,25 +66,25 @@ export function IENavbar() {
             ))}
           </div>
 
-          {/* ── CTAs + mobile toggle ── */}
-          <div className="flex items-center gap-2">
-            {/* Déposer un besoin — always visible on desktop */}
-            <Link
-              href="/innovons/besoins/deposer"
-              className="hidden items-center gap-1.5 rounded-lg border border-green-500 px-3 py-2 text-sm font-semibold text-green-400 transition-colors hover:bg-green-500 hover:text-white lg:inline-flex"
-            >
-              <Plus className="size-4" aria-hidden="true" />
-              Déposer
-            </Link>
+          {/* -- CTA + mobile toggle -- */}
+          <div className="flex items-center gap-3">
+            {can('editor') && (
+              <Link
+                href="/innovons/besoins/deposer"
+                className="hidden items-center gap-1.5 rounded-md px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-gray-800 hover:text-white lg:inline-flex"
+              >
+                <PlusCircle className="size-4" aria-hidden="true" />
+                {t("submit") ?? "Deposer"}
+              </Link>
+            )}
 
-            {/* Mon Espace or Connexion */}
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <Link
                 href="/innovons/mon-espace"
                 className="hidden items-center gap-1.5 rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-500 lg:inline-flex"
               >
-                <LayoutDashboard className="size-4" aria-hidden="true" />
-                Mon Espace
+                <User className="size-4" aria-hidden="true" />
+                {t("my_space") ?? "Mon espace"}
               </Link>
             ) : (
               <Link
@@ -114,7 +113,7 @@ export function IENavbar() {
         </div>
       </div>
 
-      {/* ── Mobile menu ── */}
+      {/* -- Mobile menu -- */}
       {mobileOpen && (
         <div className="border-t border-white/10 bg-gray-900 lg:hidden">
           <div className="space-y-1 px-4 pb-4 pt-2">
@@ -130,30 +129,30 @@ export function IENavbar() {
               </Link>
             ))}
 
-            {/* Déposer — mobile */}
-            <Link
-              href="/innovons/besoins/deposer"
-              className="mt-2 flex items-center gap-2 rounded-lg border border-green-500 px-4 py-2.5 text-sm font-semibold text-green-400 transition-colors hover:bg-green-500 hover:text-white"
-              onClick={() => setMobileOpen(false)}
-            >
-              <Plus className="size-4" aria-hidden="true" />
-              Déposer un besoin
-            </Link>
-
-            {/* Mon Espace or Connexion — mobile */}
-            {isLoggedIn ? (
+            {can('editor') && (
               <Link
-                href="/innovons/mon-espace"
-                className="flex items-center gap-2 rounded-full bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-500"
+                href="/innovons/besoins/deposer"
+                className="flex items-center gap-2 rounded-md px-3 py-2.5 text-sm text-gray-300 transition-colors hover:bg-gray-800 hover:text-white"
                 onClick={() => setMobileOpen(false)}
               >
-                <LayoutDashboard className="size-4" aria-hidden="true" />
-                Mon Espace
+                <PlusCircle className="size-4" aria-hidden="true" />
+                {t("submit") ?? "Deposer"}
+              </Link>
+            )}
+
+            {isAuthenticated ? (
+              <Link
+                href="/innovons/mon-espace"
+                className="mt-2 flex items-center gap-2 rounded-full bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-500"
+                onClick={() => setMobileOpen(false)}
+              >
+                <User className="size-4" aria-hidden="true" />
+                {t("my_space") ?? "Mon espace"}
               </Link>
             ) : (
               <Link
                 href="/innovons/connexion"
-                className="flex items-center gap-2 rounded-full bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-500"
+                className="mt-2 flex items-center gap-2 rounded-full bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-500"
                 onClick={() => setMobileOpen(false)}
               >
                 <LogIn className="size-4" aria-hidden="true" />

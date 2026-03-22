@@ -32,23 +32,15 @@ const STATUS_LABEL: Record<NeedStatus, string> = {
 
 function RoleBadge({ role }: { role: string }) {
   const config: Record<string, { label: string; className: string }> = {
-    PARRAIN: { label: "Parrain", className: "bg-purple-100 text-purple-700" },
-    INNOVATEUR: {
-      label: "Innovateur",
-      className: "bg-green-100 text-green-700",
-    },
-    ADMINISTRATEUR: {
-      label: "Admin",
-      className: "bg-red-100 text-red-700",
-    },
-    UTILISATEUR: {
-      label: "Utilisateur",
-      className: "bg-gray-100 text-gray-700",
-    },
+    admin:  { label: "Admin",    className: "bg-red-100 text-red-700" },
+    editor: { label: "Editeur",  className: "bg-green-100 text-green-700" },
+    guest:  { label: "Invite",   className: "bg-gray-100 text-gray-700" },
+    // Legacy fallback values
+    ADMINISTRATEUR: { label: "Admin",      className: "bg-red-100 text-red-700" },
+    UTILISATEUR:    { label: "Utilisateur", className: "bg-gray-100 text-gray-700" },
   };
 
-  const defaultConfig = { label: "Utilisateur", className: "bg-gray-100 text-gray-700" };
-  const c = config[role] ?? defaultConfig;
+  const c = config[role] ?? config.guest!;
 
   return (
     <span
@@ -69,7 +61,7 @@ export default async function MonEspacePage({
   const t = await getTranslations({ locale, namespace: "innovons.mon_espace" });
 
   const user = await getCurrentUser();
-  const needs = user ? await getUserNeeds(user.id, user.email) : [];
+  const needs = user ? await getUserNeeds(user.id) : [];
   const proposals = user ? await getUserProposals(user.id) : [];
   const calls = await getOpenCalls();
 

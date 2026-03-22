@@ -4,6 +4,7 @@ import { IENavbar } from "@/components/innovons/IENavbar";
 import { ProposerSolutionForm } from "@/components/innovons/ProposerSolutionForm";
 import { getNeedBySlug } from "@/lib/innovons/queries";
 import { Link } from "@/i18n/routing";
+import { requireRole } from "@/lib/auth/guards";
 
 export async function generateMetadata({
   params,
@@ -27,6 +28,7 @@ export default async function ProposerSolutionPage({
   params: Promise<{ locale: string; id: string }>;
 }) {
   const { locale, id } = await params;
+  await requireRole('editor', locale);
   setRequestLocale(locale);
 
   const need = await getNeedBySlug(id);

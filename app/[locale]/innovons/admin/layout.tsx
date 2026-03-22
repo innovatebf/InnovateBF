@@ -1,11 +1,17 @@
 import { IENavbar } from "@/components/innovons/IENavbar";
 import { AdminSidebar } from "@/components/innovons/AdminSidebar";
+import { requireRole } from "@/lib/auth/guards";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
+  await requireRole('admin', locale);
+
   return (
     <div className="flex min-h-screen flex-col">
       <IENavbar />
