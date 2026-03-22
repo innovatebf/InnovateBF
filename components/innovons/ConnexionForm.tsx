@@ -10,6 +10,7 @@ import {
   connexionSchema,
   type ConnexionFormData,
 } from "@/lib/schemas/inscription";
+import { Link } from "@/i18n/routing";
 import { Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
 
 export function ConnexionForm() {
@@ -132,6 +133,14 @@ export function ConnexionForm() {
         {errors.password && (
           <p className="mt-1 text-xs text-red-600">{errors.password.message}</p>
         )}
+        <div className="mt-1.5 text-right">
+          <Link
+            href="/innovons/mot-de-passe-oublie"
+            className="text-xs font-medium text-green-600 hover:underline"
+          >
+            {t("forgot_password")}
+          </Link>
+        </div>
       </div>
 
       {/* Bouton soumettre */}
