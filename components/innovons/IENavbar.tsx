@@ -7,6 +7,7 @@ import {
   FileText,
   Megaphone,
   CalendarDays,
+  Globe,
   LogIn,
   Menu,
   X,
@@ -22,6 +23,7 @@ export function IENavbar() {
     { key: "needs", href: "/innovons/besoins", icon: FileText },
     { key: "calls", href: "/innovons/appels", icon: Megaphone },
     { key: "conference", href: "/innovons/conference", icon: CalendarDays },
+    { key: "observatoire", href: "/innovons/observatoire", icon: Globe },
   ];
 
   return (
