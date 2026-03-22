@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { createClient } from "@/lib/supabase/client";
+import { signUp } from "@/lib/auth/client";
 import {
   inscriptionSchema,
   type InscriptionFormData,
@@ -52,24 +52,17 @@ export function InscriptionForm() {
     setServerError(null);
 
     try {
-      const supabase = createClient();
-
-      const { error } = await supabase.auth.signUp({
+      const { error } = await signUp.email({
         email: data.email,
         password: data.password,
-        options: {
-          data: {
-            full_name: data.fullName,
-            role: data.role,
-          },
-        },
+        name: data.fullName,
       });
 
       if (error) {
-        if (error.message.toLowerCase().includes("already")) {
+        if (error.message?.toLowerCase().includes("already") || error.code === "USER_ALREADY_EXISTS") {
           setServerError(t("error_email_exists"));
         } else {
-          setServerError(error.message);
+          setServerError(error.message || t("error_generic"));
         }
         return;
       }

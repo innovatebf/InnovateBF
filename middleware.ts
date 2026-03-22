@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
-import { createServerClient } from "@supabase/ssr";
+import { auth } from "@/lib/auth";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -38,7 +38,7 @@ function isAdminPath(pathname: string): boolean {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // 1. Laisser passer les assets et API
+  // 1. Laisser passer les assets, API et better-auth routes
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
@@ -49,39 +49,6 @@ export async function middleware(request: NextRequest) {
 
   // 2. Vérifier si la route est protégée
   if (isProtectedPath(pathname)) {
-    // Créer client Supabase (lecture seule en middleware Edge)
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    // Si Supabase n'est pas configuré (dev sans env vars), laisser passer
-    if (
-      !supabaseUrl ||
-      !supabaseKey ||
-      supabaseUrl.includes("your-project") ||
-      supabaseKey.includes("your-anon-key")
-    ) {
-      return intlMiddleware(request);
-    }
-
-    const response = NextResponse.next({
-      request: { headers: request.headers },
-    });
-
-    const supabase = createServerClient(supabaseUrl, supabaseKey, {
-      cookies: {
-        getAll: () => request.cookies.getAll(),
-        setAll: (cookiesToSet) => {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set(name, value, options);
-          });
-        },
-      },
-    });
-
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-
     // Extraire la locale depuis le pathname
     const locales = routing.locales as readonly string[];
     let locale = routing.defaultLocale as string;
@@ -92,39 +59,39 @@ export async function middleware(request: NextRequest) {
       }
     }
 
-    if (!session) {
-      const redirectUrl = new URL(
-        `/${locale}/innovons/connexion`,
-        request.url
-      );
-      redirectUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(redirectUrl);
-    }
+    try {
+      const session = await auth.api.getSession({
+        headers: request.headers,
+      });
 
-    // Vérification du rôle ADMIN pour les routes admin
-    if (isAdminPath(pathname)) {
-      try {
-        const { data: profile } = await supabase
-          .from("ie_profiles")
-          .select("role")
-          .eq("id", session.user.id)
-          .single();
+      if (!session) {
+        const redirectUrl = new URL(
+          `/${locale}/innovons/connexion`,
+          request.url
+        );
+        redirectUrl.searchParams.set("redirect", pathname);
+        return NextResponse.redirect(redirectUrl);
+      }
 
-        if (!profile || profile.role !== "ADMINISTRATEUR") {
+      // Vérification du rôle ADMIN pour les routes admin
+      if (isAdminPath(pathname)) {
+        const user = session.user as { role?: string };
+        if (!user.role || user.role !== "ADMINISTRATEUR") {
           const monEspaceUrl = new URL(
             `/${locale}/innovons/mon-espace`,
             request.url
           );
           return NextResponse.redirect(monEspaceUrl);
         }
-      } catch {
-        // En cas d'erreur de requête, rediriger vers mon-espace par sécurité
-        const monEspaceUrl = new URL(
-          `/${locale}/innovons/mon-espace`,
-          request.url
-        );
-        return NextResponse.redirect(monEspaceUrl);
       }
+    } catch {
+      // En cas d'erreur (pas de session, token invalide), rediriger vers connexion
+      const redirectUrl = new URL(
+        `/${locale}/innovons/connexion`,
+        request.url
+      );
+      redirectUrl.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(redirectUrl);
     }
   }
 

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { createClient } from "@/lib/supabase/client";
+import { signIn } from "@/lib/auth/client";
 import {
   connexionSchema,
   type ConnexionFormData,
@@ -35,18 +35,16 @@ export function ConnexionForm() {
     setServerError(null);
 
     try {
-      const supabase = createClient();
-
-      const { error } = await supabase.auth.signInWithPassword({
+      const { error } = await signIn.email({
         email: data.email,
         password: data.password,
       });
 
       if (error) {
-        if (error.message.includes("Invalid login credentials")) {
+        if (error.message?.includes("Invalid") || error.code === "INVALID_EMAIL_OR_PASSWORD") {
           setServerError(t("error_invalid_credentials"));
         } else {
-          setServerError(error.message);
+          setServerError(error.message || t("error_generic"));
         }
         return;
       }

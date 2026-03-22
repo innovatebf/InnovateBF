@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
-import { createClient } from "@/lib/supabase/client";
+import { requestPasswordReset } from "@/lib/auth/client";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 
 const forgotPasswordSchema = z.object({
@@ -13,10 +13,6 @@ const forgotPasswordSchema = z.object({
 });
 
 type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
-
-function isMockMode() {
-  return !process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("supabase.co");
-}
 
 export function ForgotPasswordForm() {
   const t = useTranslations("innovons.mot_de_passe_oublie");
@@ -38,20 +34,13 @@ export function ForgotPasswordForm() {
     setServerError(null);
 
     try {
-      if (isMockMode()) {
-        // Simulate success after 1s delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setSuccessEmail(data.email);
-        return;
-      }
-
-      const supabase = createClient();
-      const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
+      const { error } = await requestPasswordReset({
+        email: data.email,
         redirectTo: `${window.location.origin}/innovons/reset-password`,
       });
 
       if (error) {
-        setServerError(error.message);
+        setServerError(error.message || t("error_generic"));
         return;
       }
 
