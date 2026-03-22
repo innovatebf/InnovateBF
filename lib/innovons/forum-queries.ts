@@ -1,10 +1,16 @@
-import { getSql } from "@/lib/db/neon";
+import sql from "@/lib/db/neon";
 
 function isNeonConfigured(): boolean {
   return Boolean(
     process.env.DATABASE_URL &&
     !process.env.DATABASE_URL.includes("your-")
   );
+}
+
+// UUID v4 regex — mock IDs like "need-001" are not UUIDs
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function isValidUUID(id: string): boolean {
+  return UUID_REGEX.test(id);
 }
 
 // Types
@@ -60,11 +66,10 @@ const MOCK_COMMENTS: Comment[] = [
 ];
 
 export async function getComments(needId: string): Promise<Comment[]> {
-  if (!isNeonConfigured()) {
+  if (!isNeonConfigured() || !isValidUUID(needId)) {
     return MOCK_COMMENTS.map(c => ({ ...c, need_id: needId }));
   }
   try {
-    const sql = getSql();
     const rows = await sql`
       SELECT id, need_id, parent_id, author_name, author_email, content, created_at
       FROM ie_comments
@@ -95,7 +100,7 @@ export async function postComment(data: {
   authorEmail: string;
   content: string;
 }): Promise<Comment | null> {
-  if (!isNeonConfigured()) {
+  if (!isNeonConfigured() || !isValidUUID(data.needId)) {
     const mock: Comment = {
       id: "mock-" + Date.now(),
       need_id: data.needId,
@@ -109,7 +114,6 @@ export async function postComment(data: {
     return mock;
   }
   try {
-    const sql = getSql();
     const rows = await sql`
       INSERT INTO ie_comments (need_id, parent_id, author_name, author_email, content)
       VALUES (
@@ -129,11 +133,10 @@ export async function postComment(data: {
 }
 
 export async function getVoteScore(needId: string, userEmail?: string): Promise<VoteResult> {
-  if (!isNeonConfigured()) {
+  if (!isNeonConfigured() || !isValidUUID(needId)) {
     return { vote_score: Math.floor(Math.random() * 20) + 5, vote_count: Math.floor(Math.random() * 30) + 8, user_vote: 0 };
   }
   try {
-    const sql = getSql();
     const [scoreRow] = await sql`
       SELECT COALESCE(SUM(value), 0) as vote_score, COUNT(*) as vote_count
       FROM ie_votes WHERE need_id = ${needId}
@@ -158,11 +161,10 @@ export async function getVoteScore(needId: string, userEmail?: string): Promise<
 }
 
 export async function castVote(needId: string, userEmail: string, value: 1 | -1): Promise<VoteResult> {
-  if (!isNeonConfigured()) {
+  if (!isNeonConfigured() || !isValidUUID(needId)) {
     return { vote_score: value, vote_count: 1, user_vote: value };
   }
   try {
-    const sql = getSql();
     await sql`
       INSERT INTO ie_votes (need_id, user_email, value)
       VALUES (${needId}, ${userEmail}, ${value})
