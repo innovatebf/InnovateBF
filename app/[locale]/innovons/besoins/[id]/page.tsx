@@ -135,13 +135,13 @@ export default async function NeedDetailPage({
       </section>
 
       {/* ── Content (client-side accordion + sidebar) ─────────────── */}
-      <NeedDetailClient need={need} labels={labels} locale={locale} />
+      <NeedDetailClient need={need} labels={labels} locale={locale} needSlug={id} />
 
       {/* ── CTA: Propose a solution ────────────────────────────────── */}
       <div className="bg-gray-100">
         <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8 text-center">
           <Link
-            href={`/innovons/besoins/${need.slug}/proposer`}
+            href={`/innovons/besoins/${need.slug ?? id}/proposer`}
             className="inline-flex items-center gap-2.5 rounded-xl bg-green-600 px-8 py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-green-700 hover:shadow-xl"
           >
             <Lightbulb className="size-5" aria-hidden="true" />
