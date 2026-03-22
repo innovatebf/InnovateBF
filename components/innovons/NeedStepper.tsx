@@ -141,12 +141,15 @@ export function NeedStepper() {
   const [currentStep, setCurrentStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [savedDraft, setSavedDraft] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
     register,
     control,
     watch,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<NeedFormData>({
@@ -370,6 +373,51 @@ export function NeedStepper() {
       );
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleSaveDraft = async () => {
+    setIsSaving(true);
+    setSavedDraft(false);
+    try {
+      const data = getValues();
+      const payload = {
+        titre: data.title || "Brouillon sans titre",
+        domaine: data.domain,
+        secteur: data.sector,
+        pays: data.country,
+        niveau: data.level,
+        region: data.region,
+        contexte_strategique: data.strategicContext,
+        question_centrale: data.centralQuestion,
+        perimetre_inclus: data.scopeIncluded || [],
+        perimetre_exclus: data.scopeExcluded || [],
+        parties_prenantes: data.stakeholders || [],
+        obstacles: data.obstacles || [],
+        resultats: data.results || [],
+        indicateurs: data.indicators || [],
+        synthese_narrative: data.narrativeSummary,
+        coherence_score: coherenceScore,
+        statut: "BROUILLON",
+      };
+
+      const res = await fetch("/api/innovons/besoins", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Erreur lors de la sauvegarde");
+      }
+
+      setSavedDraft(true);
+      setTimeout(() => setSavedDraft(false), 3000);
+    } catch (error) {
+      console.error("Erreur sauvegarde brouillon:", error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -1402,7 +1450,7 @@ export function NeedStepper() {
               )}
 
               {/* Publish button */}
-              {coherenceScore < 5 && (
+              {coherenceScore < 3 && (
                 <p className="text-sm text-amber-600">
                   {t("publish_disabled")}
                 </p>
@@ -1426,10 +1474,12 @@ export function NeedStepper() {
           <div className="flex gap-3">
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+              onClick={handleSaveDraft}
+              disabled={isSaving}
+              className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-60"
             >
               <Save className="size-4" aria-hidden="true" />
-              {t("save")}
+              {isSaving ? "Sauvegarde..." : savedDraft ? "✓ Sauvegardé" : t("save")}
             </button>
 
             {currentStep < STEP_COUNT - 1 ? (
@@ -1444,7 +1494,7 @@ export function NeedStepper() {
             ) : (
               <button
                 type="submit"
-                disabled={coherenceScore < 5 || isSubmitting}
+                disabled={coherenceScore < 3 || isSubmitting}
                 className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <Send className="size-4" aria-hidden="true" />

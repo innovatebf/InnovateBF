@@ -5,10 +5,20 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    // Valider les champs obligatoires
-    if (!body.titre || !body.question_centrale) {
+    // Déterminer le statut (BROUILLON ou VALIDATION uniquement)
+    const allowedStatuts = ["BROUILLON", "VALIDATION"];
+    const statut = allowedStatuts.includes(body.statut) ? body.statut : "VALIDATION";
+
+    // Valider les champs obligatoires (sauf pour les brouillons)
+    if (statut !== "BROUILLON" && (!body.titre || !body.question_centrale)) {
       return NextResponse.json(
         { error: "Titre et question centrale obligatoires" },
+        { status: 400 },
+      );
+    }
+    if (!body.titre) {
+      return NextResponse.json(
+        { error: "Titre obligatoire" },
         { status: 400 },
       );
     }
@@ -18,9 +28,9 @@ export async function POST(req: NextRequest) {
       !process.env.DATABASE_URL ||
       process.env.DATABASE_URL.includes("your-")
     ) {
-      console.log("[DEV] Besoin soumis (mock):", body.titre);
+      console.log(`[DEV] Besoin ${statut} (mock):`, body.titre);
       return NextResponse.json(
-        { success: true, id: "mock-" + Date.now(), mock: true },
+        { success: true, id: "mock-" + Date.now(), mock: true, statut },
         { status: 201 },
       );
     }
@@ -36,16 +46,16 @@ export async function POST(req: NextRequest) {
       ) VALUES (
         ${body.titre}, ${body.domaine}, ${body.secteur},
         ${body.pays || "Burkina Faso"}, ${body.niveau}, ${body.region},
-        ${body.contexte_strategique}, ${body.question_centrale},
+        ${body.contexte_strategique || null}, ${body.question_centrale || null},
         ${JSON.stringify(body.perimetre_inclus || [])},
         ${JSON.stringify(body.perimetre_exclus || [])},
         ${JSON.stringify(body.parties_prenantes || [])},
         ${JSON.stringify(body.obstacles || [])},
         ${JSON.stringify(body.resultats || [])},
         ${JSON.stringify(body.indicateurs || [])},
-        ${body.synthese_narrative},
+        ${body.synthese_narrative || null},
         ${body.coherence_score || 0},
-        'VALIDATION',
+        ${statut},
         ${body.auteur_email || null}
       )
       RETURNING id, titre, statut, created_at
