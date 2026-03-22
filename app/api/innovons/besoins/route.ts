@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSql } from "@/lib/db/neon";
+import sql from "@/lib/db/neon";
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,7 +25,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const sql = getSql();
     const result = await sql`
       INSERT INTO ie_needs (
         titre, domaine, secteur, pays, niveau, region,

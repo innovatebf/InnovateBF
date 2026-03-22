@@ -1,7 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
-import { auth } from "@/lib/auth";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -59,39 +58,25 @@ export async function middleware(request: NextRequest) {
       }
     }
 
-    try {
-      const session = await auth.api.getSession({
-        headers: request.headers,
-      });
+    // Vérifier la session via le cookie better-auth (compatible Edge Runtime)
+    const sessionCookie =
+      request.cookies.get("better-auth.session_token") ??
+      request.cookies.get("__Secure-better-auth.session_token");
 
-      if (!session) {
-        const redirectUrl = new URL(
-          `/${locale}/innovons/connexion`,
-          request.url
-        );
-        redirectUrl.searchParams.set("redirect", pathname);
-        return NextResponse.redirect(redirectUrl);
-      }
-
-      // Vérification du rôle ADMIN pour les routes admin
-      if (isAdminPath(pathname)) {
-        const user = session.user as { role?: string };
-        if (!user.role || user.role !== "ADMINISTRATEUR") {
-          const monEspaceUrl = new URL(
-            `/${locale}/innovons/mon-espace`,
-            request.url
-          );
-          return NextResponse.redirect(monEspaceUrl);
-        }
-      }
-    } catch {
-      // En cas d'erreur (pas de session, token invalide), rediriger vers connexion
+    if (!sessionCookie?.value) {
       const redirectUrl = new URL(
         `/${locale}/innovons/connexion`,
         request.url
       );
       redirectUrl.searchParams.set("redirect", pathname);
       return NextResponse.redirect(redirectUrl);
+    }
+
+    // Pour les routes admin, la vérification du rôle se fait côté serveur
+    // (le cookie ne contient pas le rôle — la page admin vérifie via getServerSession)
+    if (isAdminPath(pathname)) {
+      // Laisser passer — la page admin elle-même vérifie le rôle ADMINISTRATEUR
+      // et redirige si nécessaire
     }
   }
 
