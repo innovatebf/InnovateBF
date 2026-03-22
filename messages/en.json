@@ -577,6 +577,50 @@
       "link_catalog": "Needs catalogue",
       "link_calls": "Solution calls",
       "link_conference": "Conference 2026"
+    },
+
+    "proposer": {
+      "title": "Propose a Solution",
+      "subtitle": "For the need",
+      "breadcrumb": "Propose a solution",
+      "field_titre": "Title of your solution",
+      "field_description": "Full description",
+      "field_approche": "Technical/methodological approach",
+      "field_equipe": "Proposed team",
+      "field_budget": "Estimated budget (FCFA)",
+      "field_delai": "Implementation timeline",
+      "field_porteur_nom": "Lead name",
+      "field_porteur_email": "Lead email",
+      "field_porteur_org": "Organisation/Structure",
+      "delai_3m": "3 months",
+      "delai_6m": "6 months",
+      "delai_1a": "1 year",
+      "delai_2a": "2 years",
+      "delai_3a": "3 years or more",
+      "submit": "Submit my proposal",
+      "submitting": "Submitting...",
+      "success_title": "Proposal submitted!",
+      "success_message": "Your proposal has been submitted successfully. Our team will review it in the coming days.",
+      "back_to_need": "Back to need",
+      "error_title": "Error",
+      "error_message": "An error occurred. Please try again."
+    },
+
+    "modifier": {
+      "title": "Edit My Need",
+      "breadcrumb": "Edit",
+      "field_titre": "Need title",
+      "field_domaine": "Domain",
+      "field_secteur": "Sector",
+      "field_region": "Region",
+      "field_question": "Central question",
+      "field_contexte": "Strategic context",
+      "field_synthese": "Narrative summary",
+      "save": "Save changes",
+      "saving": "Saving...",
+      "success": "Need updated successfully",
+      "error": "Error updating need",
+      "cancel": "Cancel"
     }
   }
 }
