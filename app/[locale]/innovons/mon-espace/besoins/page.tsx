@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
-import { FileText, Plus, Eye } from "lucide-react";
+import { FileText, Plus, Eye, Pencil } from "lucide-react";
 import { getCurrentUser, getUserNeeds } from "@/lib/innovons/user-queries";
 import type { NeedStatus, ObstacleCriticite } from "@/lib/innovons/types";
 
@@ -155,13 +155,24 @@ export default async function MesBesoinsPage({
                         {new Date(need.created_at).toLocaleDateString(locale)}
                       </td>
                       <td className="px-5 py-4">
-                        <Link
-                          href={`/innovons/besoins/${need.slug}`}
-                          className="inline-flex items-center gap-1 text-sm text-green-600 hover:text-green-700"
-                        >
-                          <Eye className="size-3.5" aria-hidden="true" />
-                          Voir
-                        </Link>
+                        <div className="flex items-center gap-3">
+                          <Link
+                            href={`/innovons/besoins/${need.slug}`}
+                            className="inline-flex items-center gap-1 text-sm text-green-600 hover:text-green-700"
+                          >
+                            <Eye className="size-3.5" aria-hidden="true" />
+                            Voir
+                          </Link>
+                          {(need.statut === "BROUILLON" || need.statut === "VALIDATION") && (
+                            <Link
+                              href={`/innovons/mon-espace/besoins/${need.id}/modifier`}
+                              className="inline-flex items-center gap-1 text-sm text-amber-600 hover:text-amber-700"
+                            >
+                              <Pencil className="size-3.5" aria-hidden="true" />
+                              Modifier
+                            </Link>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   );
@@ -200,13 +211,24 @@ export default async function MesBesoinsPage({
                       {CRITICITE_LABEL[maxC]}
                     </span>
                   </div>
-                  <Link
-                    href={`/innovons/besoins/${need.slug}`}
-                    className="inline-flex items-center gap-1 text-sm font-medium text-green-600 hover:text-green-700"
-                  >
-                    <Eye className="size-3.5" aria-hidden="true" />
-                    Voir
-                  </Link>
+                  <div className="flex items-center gap-3">
+                    <Link
+                      href={`/innovons/besoins/${need.slug}`}
+                      className="inline-flex items-center gap-1 text-sm font-medium text-green-600 hover:text-green-700"
+                    >
+                      <Eye className="size-3.5" aria-hidden="true" />
+                      Voir
+                    </Link>
+                    {(need.statut === "BROUILLON" || need.statut === "VALIDATION") && (
+                      <Link
+                        href={`/innovons/mon-espace/besoins/${need.id}/modifier`}
+                        className="inline-flex items-center gap-1 text-sm font-medium text-amber-600 hover:text-amber-700"
+                      >
+                        <Pencil className="size-3.5" aria-hidden="true" />
+                        Modifier
+                      </Link>
+                    )}
+                  </div>
                 </div>
               );
             })}

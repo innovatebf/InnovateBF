@@ -216,6 +216,7 @@
       "needs": "Besoins",
       "calls": "Appels",
       "conference": "Conférence",
+      "observatoire": "Observatoire",
       "login": "Connexion"
     },
 
@@ -576,6 +577,50 @@
       "link_catalog": "Catalogue des besoins",
       "link_calls": "Appels à solutionnement",
       "link_conference": "Conférence 2026"
+    },
+
+    "proposer": {
+      "title": "Proposer une solution",
+      "subtitle": "Pour le besoin",
+      "breadcrumb": "Proposer une solution",
+      "field_titre": "Titre de votre solution",
+      "field_description": "Description complète",
+      "field_approche": "Approche technique/méthodologique",
+      "field_equipe": "Équipe proposée",
+      "field_budget": "Budget estimé (FCFA)",
+      "field_delai": "Délai de mise en œuvre",
+      "field_porteur_nom": "Nom du porteur",
+      "field_porteur_email": "Email du porteur",
+      "field_porteur_org": "Organisation/Structure",
+      "delai_3m": "3 mois",
+      "delai_6m": "6 mois",
+      "delai_1a": "1 an",
+      "delai_2a": "2 ans",
+      "delai_3a": "3 ans et plus",
+      "submit": "Soumettre ma proposition",
+      "submitting": "Envoi en cours...",
+      "success_title": "Proposition soumise !",
+      "success_message": "Votre proposition a été soumise avec succès. Notre équipe l'examinera dans les prochains jours.",
+      "back_to_need": "Retour au besoin",
+      "error_title": "Erreur",
+      "error_message": "Une erreur est survenue. Veuillez réessayer."
+    },
+
+    "modifier": {
+      "title": "Modifier mon besoin",
+      "breadcrumb": "Modifier",
+      "field_titre": "Titre du besoin",
+      "field_domaine": "Domaine",
+      "field_secteur": "Secteur",
+      "field_region": "Région",
+      "field_question": "Question centrale",
+      "field_contexte": "Contexte stratégique",
+      "field_synthese": "Synthèse narrative",
+      "save": "Enregistrer les modifications",
+      "saving": "Enregistrement...",
+      "success": "Besoin mis à jour avec succès",
+      "error": "Erreur lors de la mise à jour",
+      "cancel": "Annuler"
     }
   }
 }
