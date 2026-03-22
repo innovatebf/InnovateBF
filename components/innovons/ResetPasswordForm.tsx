@@ -5,8 +5,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
 import { z } from "zod";
-import { createClient } from "@/lib/supabase/client";
+import { resetPassword } from "@/lib/auth/client";
 import { Link } from "@/i18n/routing";
 import {
   Loader2,
@@ -28,33 +29,16 @@ const resetPasswordSchema = z
 
 type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
-function isMockMode() {
-  return !process.env.NEXT_PUBLIC_SUPABASE_URL?.includes("supabase.co");
-}
-
 export function ResetPasswordForm() {
   const t = useTranslations("innovons.reset_password");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
   const [showNewPwd, setShowNewPwd] = useState(false);
   const [showConfirmPwd, setShowConfirmPwd] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const [hasValidSession, setHasValidSession] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    async function checkSession() {
-      if (isMockMode()) {
-        setHasValidSession(true);
-        return;
-      }
-
-      const supabase = createClient();
-      const { data } = await supabase.auth.getSession();
-      setHasValidSession(!!data.session);
-    }
-
-    checkSession();
-  }, []);
+  const hasValidSession = !!token;
 
   useEffect(() => {
     if (success) {
@@ -81,19 +65,18 @@ export function ResetPasswordForm() {
     setServerError(null);
 
     try {
-      if (isMockMode()) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setSuccess(true);
+      if (!token) {
+        setServerError(t("error_invalid_link"));
         return;
       }
 
-      const supabase = createClient();
-      const { error } = await supabase.auth.updateUser({
-        password: data.new_password,
+      const { error } = await resetPassword({
+        newPassword: data.new_password,
+        token,
       });
 
       if (error) {
-        setServerError(error.message);
+        setServerError(error.message || t("error_generic"));
         return;
       }
 
@@ -103,16 +86,7 @@ export function ResetPasswordForm() {
     }
   }
 
-  // Loading state while checking session
-  if (hasValidSession === null) {
-    return (
-      <div className="flex justify-center py-8">
-        <Loader2 className="size-6 animate-spin text-green-600" />
-      </div>
-    );
-  }
-
-  // Invalid/expired link
+  // Invalid/expired link (no token in URL)
   if (!hasValidSession) {
     return (
       <div className="text-center">
