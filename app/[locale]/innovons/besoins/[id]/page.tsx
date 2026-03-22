@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { IENavbar } from "@/components/innovons/IENavbar";
+import { JsonLd } from "@/components/innovons/JsonLd";
+import { needToStructuredData } from "@/lib/innovons/seo";
 import { getNeedBySlug } from "@/lib/innovons/queries";
 import { MOCK_NEEDS } from "@/lib/innovons/mock-data";
 import { NeedDetailClient } from "@/components/innovons/NeedDetailClient";
@@ -93,6 +95,14 @@ export default async function NeedDetailPage({
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <JsonLd
+        data={needToStructuredData({
+          titre: need.titre,
+          slug: need.slug,
+          domaine: need.domaine,
+          created_at: need.created_at,
+        })}
+      />
       <IENavbar />
 
       {/* ── Header ──────────────────────────────────────────────────── */}

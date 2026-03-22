@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import { IENavbar } from "@/components/innovons/IENavbar";
 import { StatsGrid, StatsSkeleton } from "@/components/innovons/StatsGrid";
+import { JsonLd } from "@/components/innovons/JsonLd";
+import { ORGANIZATION_SCHEMA } from "@/lib/innovons/seo";
 
 export async function generateMetadata({
   params,
@@ -23,8 +25,21 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "innovons" });
   return {
-    title: t("meta_title"),
-    description: t("meta_description"),
+    title: "InnovonsEnsembleLeFaso | InnovateBF",
+    description: t("hero.subtitle"),
+    openGraph: {
+      title: "InnovonsEnsembleLeFaso | InnovateBF",
+      description: t("hero.subtitle"),
+      url: "https://innovatebf.org/fr/innovons",
+      siteName: "InnovateBF",
+      locale: locale === "fr" ? "fr_BF" : "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "InnovonsEnsembleLeFaso | InnovateBF",
+      description: t("hero.subtitle"),
+    },
   };
 }
 
@@ -85,6 +100,8 @@ export default async function InnovonsPage({
 
   return (
     <div className="min-h-screen">
+      <JsonLd data={ORGANIZATION_SCHEMA} />
+
       {/* ═══════════════════════════════════════════════════════════════════
           SOUS-NAVIGATION IE  — sticky sous le header InnovateBF
       ═══════════════════════════════════════════════════════════════════ */}

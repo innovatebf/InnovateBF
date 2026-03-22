@@ -216,6 +216,7 @@
       "needs": "Besoins",
       "calls": "Appels",
       "conference": "Conférence",
+      "observatoire": "Observatoire",
       "login": "Connexion"
     },
 

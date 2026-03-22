@@ -17,6 +17,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/privacy",
     "/legal",
+    "/innovons",
+    "/innovons/besoins",
+    "/innovons/appels",
+    "/innovons/conference",
+    "/innovons/observatoire",
   ];
 
   const locales = ["fr", "en"];
