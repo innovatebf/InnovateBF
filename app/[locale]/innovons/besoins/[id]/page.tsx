@@ -4,6 +4,9 @@ import { IENavbar } from "@/components/innovons/IENavbar";
 import { getNeedBySlug } from "@/lib/innovons/queries";
 import { MOCK_NEEDS } from "@/lib/innovons/mock-data";
 import { NeedDetailClient } from "@/components/innovons/NeedDetailClient";
+import { VotePanel } from "@/components/innovons/VotePanel";
+import { CommentSection } from "@/components/innovons/CommentSection";
+import { getVoteScore, getComments } from "@/lib/innovons/forum-queries";
 
 // ── Static params for mock slugs ────────────────────────────────────────────
 
@@ -41,6 +44,11 @@ export default async function NeedDetailPage({
 
   const need = await getNeedBySlug(id);
   if (!need) notFound();
+
+  const [voteData, comments] = await Promise.all([
+    getVoteScore(need.id),
+    getComments(need.id),
+  ]);
 
   const t = await getTranslations("innovons.need_detail");
 
@@ -116,6 +124,22 @@ export default async function NeedDetailPage({
 
       {/* ── Content (client-side accordion + sidebar) ─────────────── */}
       <NeedDetailClient need={need} labels={labels} locale={locale} />
+
+      {/* ── Forum section ────────────────────────────────────────────── */}
+      <div className="bg-gray-950">
+        <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+          <div className="flex gap-6 items-start">
+            <VotePanel
+              needId={need.id}
+              initialScore={voteData.vote_score}
+              initialCount={voteData.vote_count}
+            />
+            <div className="flex-1 min-w-0">
+              <CommentSection needId={need.id} initialComments={comments} />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
