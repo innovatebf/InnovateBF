@@ -392,7 +392,7 @@ export function NeedDetailClient({ need, labels, locale }: NeedDetailClientProps
 
             {/* CTA */}
             <Link
-              href="/innovons/proposer"
+              href={`/innovons/besoins/${need.slug}/proposer`}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-secondary-600 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-secondary-700"
             >
               <Lightbulb className="size-4" aria-hidden="true" />
