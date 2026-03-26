@@ -99,6 +99,11 @@ export default async function AdminDashboardPage({
       href: "/innovons/admin/appels",
       description: "Creer et gerer les appels a solutions",
     },
+    {
+      label: "Gérer les utilisateurs",
+      href: "/innovons/admin/utilisateurs",
+      description: "Attribuer les rôles éditeur et admin",
+    },
   ];
 
   return (

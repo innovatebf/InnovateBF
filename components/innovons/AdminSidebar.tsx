@@ -7,6 +7,7 @@ import {
   Megaphone,
   Settings,
   ChevronLeft,
+  Users,
 } from "lucide-react";
 import { Link, usePathname } from "@/i18n/routing";
 
@@ -36,6 +37,11 @@ const navItems: NavItem[] = [
     href: "/innovons/admin/appels",
     icon: Megaphone,
     label: "Appels",
+  },
+  {
+    href: "/innovons/admin/utilisateurs",
+    icon: Users,
+    label: "Utilisateurs",
   },
   {
     href: "/innovons/admin/parametres",
