@@ -29,11 +29,10 @@ export async function getPublishedNeeds(): Promise<Need[]> {
       WHERE statut = 'PUBLIE'
       ORDER BY published_at DESC NULLS LAST, created_at DESC
     `;
-    if (rows.length > 0) return rows as unknown as Need[];
-    return MOCK_NEEDS.filter((n) => n.statut === "PUBLIE");
+    return rows as unknown as Need[];
   } catch (err) {
     console.error("[getPublishedNeeds] Neon error:", err);
-    return MOCK_NEEDS.filter((n) => n.statut === "PUBLIE");
+    return [];
   }
 }
 
@@ -49,11 +48,10 @@ export async function getNeedBySlug(slug: string): Promise<Need | null> {
     const rows = await sql`
       SELECT * FROM ie_needs WHERE slug = ${slug} LIMIT 1
     `;
-    if (rows[0]) return rows[0] as unknown as Need;
-    return MOCK_NEEDS.find((n) => n.slug === slug) ?? null;
+    return (rows[0] as unknown as Need) ?? null;
   } catch (err) {
     console.error("[getNeedBySlug] Neon error:", err);
-    return MOCK_NEEDS.find((n) => n.slug === slug) ?? null;
+    return null;
   }
 }
 
@@ -111,10 +109,9 @@ export async function getOpenCalls(): Promise<CallForSolutions[]> {
       WHERE statut = 'OUVERT'
       ORDER BY deadline ASC NULLS LAST
     `;
-    if (rows.length > 0) return rows as unknown as CallForSolutions[];
-    return MOCK_CALLS.filter((c) => c.statut === "OUVERT");
+    return rows as unknown as CallForSolutions[];
   } catch (err) {
     console.error("[getOpenCalls] Neon error:", err);
-    return MOCK_CALLS.filter((c) => c.statut === "OUVERT");
+    return [];
   }
 }
