@@ -68,14 +68,15 @@ export async function getStats(): Promise<IEStats> {
 
   try {
     const [needsRow, proposalsRow, usersRow] = await Promise.all([
-      // Besoins publiés + sommes agrégées
+      // Tous les besoins soumis + agrégats sur les publiés uniquement
       sql`
         SELECT
-          COUNT(*)::int                          AS needs_count,
-          COALESCE(SUM(population_impact), 0)::bigint AS population_impact,
-          COALESCE(SUM(budget), 0)::bigint       AS budget_mobilise
+          COUNT(*)::int                                                     AS needs_count,
+          COUNT(*) FILTER (WHERE statut = 'PUBLIE')::int                   AS published_count,
+          COALESCE(SUM(population_impact) FILTER (WHERE statut = 'PUBLIE'), 0)::bigint AS population_impact,
+          COALESCE(SUM(budget) FILTER (WHERE statut = 'PUBLIE'), 0)::bigint AS budget_mobilise
         FROM ie_needs
-        WHERE statut = 'PUBLIE'
+        WHERE statut NOT IN ('BROUILLON')
       `,
       // Propositions soumises
       sql`SELECT COUNT(*)::int AS proposals_count FROM ie_proposals`,
