@@ -4,6 +4,8 @@ import { Lightbulb } from "lucide-react";
 import { getCurrentUser, getUserProposals } from "@/lib/innovons/user-queries";
 import type { Proposal } from "@/lib/innovons/types";
 
+export const dynamic = 'force-dynamic';
+
 const PROPOSAL_STATUS_BADGE: Record<Proposal["statut"], string> = {
   EN_ATTENTE: "bg-amber-100 text-amber-700",
   RETENU: "bg-green-100 text-green-700",

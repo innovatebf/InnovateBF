@@ -17,6 +17,8 @@ import { getOpenCalls } from "@/lib/innovons/queries";
 import { hasMinRole } from "@/lib/auth/roles";
 import type { NeedStatus } from "@/lib/innovons/types";
 
+export const dynamic = 'force-dynamic';
+
 const STATUS_BADGE: Record<NeedStatus, string> = {
   BROUILLON: "bg-gray-100 text-gray-700",
   VALIDATION: "bg-amber-100 text-amber-700",

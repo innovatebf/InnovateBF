@@ -3,6 +3,8 @@ import { Link } from "@/i18n/routing";
 import { getCurrentUser } from "@/lib/innovons/user-queries";
 import { ProfilForm } from "@/components/innovons/ProfilForm";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProfilPage({
   params,
 }: {
