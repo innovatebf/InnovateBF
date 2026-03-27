@@ -65,13 +65,13 @@ const MOCK_MODERATION_QUEUE: ModerationItem[] = MOCK_NEEDS.filter(
     statut: n.statut,
     created_at: n.created_at,
     updated_at: n.updated_at,
-    author_name: [
+    author_name: (([
       "Amadou Traore",
       "Fatima Ouedraogo",
       "Boukary Compaore",
       "Mariam Sawadogo",
       "Ibrahim Kabore",
-    ][i % 5],
+    ][i % 5]) as string),
     author_email: `user${i + 1}@example.com`,
     moderation_count: 0,
   }));
@@ -159,7 +159,7 @@ export async function getModerationStats(): Promise<ModerationStats> {
  */
 export async function getNeedForReview(id: string): Promise<Need | null> {
   if (!isNeonConfigured()) {
-    return MOCK_NEEDS.find((n) => n.id === id || n.slug === id) ?? MOCK_NEEDS[0];
+    return MOCK_NEEDS.find((n) => n.id === id || n.slug === id) ?? MOCK_NEEDS[0] ?? null;
   }
 
   try {
