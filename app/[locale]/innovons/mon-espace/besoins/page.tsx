@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { FileText, Plus, Eye, Pencil } from "lucide-react";
 import { getCurrentUser, getUserNeeds } from "@/lib/innovons/user-queries";
+import { hasMinRole } from "@/lib/auth/roles";
 import type { NeedStatus, ObstacleCriticite } from "@/lib/innovons/types";
 
 const STATUS_BADGE: Record<NeedStatus, string> = {
@@ -41,7 +42,8 @@ export default async function MesBesoinsPage({
 
   const user = await getCurrentUser();
   const needs = user ? await getUserNeeds(user.id, user.email) : [];
-  const canDeposit = user?.role === 'editor' || user?.role === 'admin';
+  console.log('[mon-espace/besoins] user.role =', user?.role);
+  const canDeposit = hasMinRole(user?.role, 'editor');
 
   function getMaxCriticite(
     obstacles: { criticite: ObstacleCriticite }[],

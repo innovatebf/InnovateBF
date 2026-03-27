@@ -14,6 +14,7 @@ import {
   getUserProposals,
 } from "@/lib/innovons/user-queries";
 import { getOpenCalls } from "@/lib/innovons/queries";
+import { hasMinRole } from "@/lib/auth/roles";
 import type { NeedStatus } from "@/lib/innovons/types";
 
 const STATUS_BADGE: Record<NeedStatus, string> = {
@@ -66,7 +67,8 @@ export default async function MonEspacePage({
   const calls = await getOpenCalls();
 
   const userName = user?.name ?? "Utilisateur";
-  const canDeposit = user?.role === 'editor' || user?.role === 'admin';
+  console.log('[mon-espace] user.role =', user?.role);
+  const canDeposit = hasMinRole(user?.role, 'editor');
 
   const stats = [
     {
