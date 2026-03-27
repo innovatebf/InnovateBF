@@ -382,28 +382,34 @@ export function NeedStepper() {
   };
 
   const handleSaveDraft = async () => {
+    const data = getValues();
+    if (!data.title || data.title.trim().length < 1) {
+      setSubmitError("Le titre est obligatoire pour sauvegarder un brouillon.");
+      return;
+    }
+
     setIsSaving(true);
     setSavedDraft(false);
+    setSubmitError(null);
     try {
-      const data = getValues();
       const payload = {
-        titre: data.title || "Brouillon sans titre",
+        titre: data.title,
         domaine: data.domain,
         secteur: data.sector,
         pays: data.country,
         niveau: data.level,
         region: data.region,
         contexte_strategique: data.strategicContext,
-        question_centrale: data.centralQuestion,
+        question_centrale: data.centralQuestion || '',
         perimetre_inclus: data.scopeIncluded || [],
         perimetre_exclus: data.scopeExcluded || [],
         parties_prenantes: data.stakeholders || [],
         obstacles: data.obstacles || [],
         resultats: data.results || [],
         indicateurs: data.indicators || [],
-        synthese_narrative: data.narrativeSummary,
+        synthese_narrative: data.narrativeSummary || '',
         coherence_score: coherenceScore,
-        statut: "BROUILLON",
+        statut: 'BROUILLON',
       };
 
       const res = await fetch("/api/innovons/besoins", {
@@ -421,6 +427,9 @@ export function NeedStepper() {
       setTimeout(() => setSavedDraft(false), 3000);
     } catch (error) {
       console.error("Erreur sauvegarde brouillon:", error);
+      setSubmitError(
+        error instanceof Error ? error.message : "Erreur lors de la sauvegarde",
+      );
     } finally {
       setIsSaving(false);
     }
@@ -1499,7 +1508,7 @@ export function NeedStepper() {
             ) : (
               <button
                 type="submit"
-                disabled={coherenceScore < 3 || isSubmitting}
+                disabled={isSubmitting}
                 className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <Send className="size-4" aria-hidden="true" />

@@ -11,7 +11,8 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     // Valider les champs obligatoires
-    if (!body.titre || !body.question_centrale) {
+    const isBrouillon = body.statut === 'BROUILLON';
+    if (!body.titre || (!isBrouillon && !body.question_centrale)) {
       return NextResponse.json(
         { error: "Titre et question centrale obligatoires" },
         { status: 400 },
@@ -50,7 +51,7 @@ export async function POST(req: NextRequest) {
         ${JSON.stringify(body.indicateurs || [])},
         ${body.synthese_narrative},
         ${body.coherence_score || 0},
-        'VALIDATION',
+        ${body.statut || 'VALIDATION'},
         ${body.auteur_email || null}
       )
       RETURNING id, titre, statut, created_at
