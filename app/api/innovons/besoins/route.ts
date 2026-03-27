@@ -3,9 +3,13 @@ import sql from "@/lib/db/neon";
 import { requireRoleForApi } from "@/lib/auth/guards";
 
 export async function POST(req: NextRequest) {
-  // RBAC: editor or admin only
+  // RBAC: editor or admin only — session carries auteur identity
   const auth = await requireRoleForApi('editor');
   if (auth.error) return auth.error;
+
+  // Extract author identity from verified session (never trust client payload)
+  const auteurEmail = auth.session!.user.email ?? null;
+  const auteurId = auth.session!.user.id ?? null;
 
   try {
     const body = await req.json();
@@ -38,7 +42,7 @@ export async function POST(req: NextRequest) {
         perimetre_inclus, perimetre_exclus, parties_prenantes,
         obstacles, resultats, indicateurs,
         synthese_narrative, coherence_score, statut,
-        auteur_email
+        auteur_email, auteur_id
       ) VALUES (
         ${body.titre}, ${body.domaine}, ${body.secteur},
         ${body.pays || "Burkina Faso"}, ${body.niveau}, ${body.region},
@@ -52,7 +56,7 @@ export async function POST(req: NextRequest) {
         ${body.synthese_narrative},
         ${body.coherence_score || 0},
         ${body.statut || 'VALIDATION'},
-        ${body.auteur_email || null}
+        ${auteurEmail}, ${auteurId}
       )
       RETURNING id, titre, statut, created_at
     `;
