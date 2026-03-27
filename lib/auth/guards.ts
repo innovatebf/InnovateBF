@@ -11,14 +11,29 @@ function isNeonConfigured(): boolean {
   );
 }
 
-/** Resolve role: session first, DB fallback if missing/guest */
+/** Normalize legacy/uppercase role values (e.g. ADMINISTRATEUR → admin) */
+function normalizeRole(raw: string | undefined | null): string {
+  if (!raw) return 'guest';
+  switch (raw.toUpperCase()) {
+    case 'ADMIN':
+    case 'ADMINISTRATEUR':
+      return 'admin';
+    case 'EDITOR':
+    case 'EDITEUR':
+      return 'editor';
+    default:
+      return 'guest';
+  }
+}
+
+/** Resolve role: session first, DB fallback if guest, always normalize legacy values */
 async function resolveRole(userId: string, sessionRole?: string): Promise<string> {
-  const role = sessionRole ?? 'guest';
-  if (role !== 'guest' && role) return role;
+  const role = normalizeRole(sessionRole);
+  if (role !== 'guest') return role;
   if (!isNeonConfigured()) return role;
   try {
     const rows = await sql`SELECT role FROM "user" WHERE id = ${userId} LIMIT 1`;
-    return (rows[0]?.role as string) ?? role;
+    return normalizeRole(rows[0]?.role as string | undefined);
   } catch {
     return role;
   }

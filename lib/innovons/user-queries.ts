@@ -59,25 +59,38 @@ function isNeonConfigured(): boolean {
   );
 }
 
+/** Normalize legacy/uppercase role values to the current AppRole enum */
+function normalizeRole(raw: string | undefined | null): UserProfile["role"] {
+  if (!raw) return "guest";
+  switch (raw.toUpperCase()) {
+    case "ADMIN":
+    case "ADMINISTRATEUR":
+      return "admin";
+    case "EDITOR":
+    case "EDITEUR":
+      return "editor";
+    default:
+      return "guest";
+  }
+}
+
 export async function getCurrentUser(): Promise<UserProfile | null> {
   try {
     const session = await getServerSession();
     if (!session?.user) return null;
 
-    // Role from session (better-auth additionalField)
-    let role =
-      ((session.user as { role?: string }).role as UserProfile["role"]) ??
-      "guest";
+    // Role from session (better-auth additionalField) — normalize legacy values
+    const rawSessionRole = (session.user as { role?: string }).role;
+    let role = normalizeRole(rawSessionRole);
 
-    // Fallback: query DB directly if role is missing or default
-    // (session might be cached before role migration)
-    if (isNeonConfigured() && (role === "guest" || !role)) {
+    // Always re-check DB when role resolves to guest (stale cookie cache or unset)
+    if (isNeonConfigured() && role === "guest") {
       try {
         const rows = await sql`
           SELECT role FROM "user" WHERE id = ${session.user.id} LIMIT 1
         `;
         if (rows[0]?.role) {
-          role = rows[0].role as UserProfile["role"];
+          role = normalizeRole(rows[0].role as string);
         }
       } catch {
         // keep session role
