@@ -41,6 +41,7 @@ export default async function MesBesoinsPage({
 
   const user = await getCurrentUser();
   const needs = user ? await getUserNeeds(user.id, user.email) : [];
+  const canDeposit = user?.role === 'editor' || user?.role === 'admin';
 
   function getMaxCriticite(
     obstacles: { criticite: ObstacleCriticite }[],
@@ -72,13 +73,15 @@ export default async function MesBesoinsPage({
         <h1 className="text-2xl font-bold text-gray-900">
           {t("besoins_title")}
         </h1>
-        <Link
-          href="/innovons/besoins/deposer"
-          className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
-        >
-          <Plus className="size-4" aria-hidden="true" />
-          {t("besoins_new")}
-        </Link>
+        {canDeposit && (
+          <Link
+            href="/innovons/besoins/deposer"
+            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
+          >
+            <Plus className="size-4" aria-hidden="true" />
+            {t("besoins_new")}
+          </Link>
+        )}
       </div>
 
       {needs.length === 0 ? (
@@ -91,15 +94,19 @@ export default async function MesBesoinsPage({
             {t("besoins_empty")}
           </p>
           <p className="mb-6 text-sm text-gray-500">
-            Commencez par deposer un besoin societal.
+            {canDeposit
+              ? "Commencez par déposer un besoin sociétal."
+              : "Aucun besoin soumis pour le moment."}
           </p>
-          <Link
-            href="/innovons/besoins/deposer"
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
-          >
-            <Plus className="size-4" aria-hidden="true" />
-            {t("besoins_empty_cta")}
-          </Link>
+          {canDeposit && (
+            <Link
+              href="/innovons/besoins/deposer"
+              className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
+            >
+              <Plus className="size-4" aria-hidden="true" />
+              {t("besoins_empty_cta")}
+            </Link>
+          )}
         </div>
       ) : (
         <>

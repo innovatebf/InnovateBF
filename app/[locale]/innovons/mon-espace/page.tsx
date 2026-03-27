@@ -61,11 +61,12 @@ export default async function MonEspacePage({
   const t = await getTranslations({ locale, namespace: "innovons.mon_espace" });
 
   const user = await getCurrentUser();
-  const needs = user ? await getUserNeeds(user.id) : [];
+  const needs = user ? await getUserNeeds(user.id, user.email) : [];
   const proposals = user ? await getUserProposals(user.id) : [];
   const calls = await getOpenCalls();
 
   const userName = user?.name ?? "Utilisateur";
+  const canDeposit = user?.role === 'editor' || user?.role === 'admin';
 
   const stats = [
     {
@@ -214,13 +215,15 @@ export default async function MonEspacePage({
 
       {/* CTAs */}
       <div className="flex flex-wrap gap-4">
-        <Link
-          href="/innovons/besoins/deposer"
-          className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
-        >
-          {t("cta_submit")}
-          <ArrowRight className="size-4" aria-hidden="true" />
-        </Link>
+        {canDeposit && (
+          <Link
+            href="/innovons/besoins/deposer"
+            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
+          >
+            {t("cta_submit")}
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        )}
         <Link
           href="/innovons/appels"
           className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
