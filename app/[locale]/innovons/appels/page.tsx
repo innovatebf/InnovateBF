@@ -149,7 +149,7 @@ function getDaysLeft(deadline: string): number {
 function getStatusBadgeClasses(status: AppelStatus): string {
   switch (status) {
     case "OUVERT":
-      return "bg-green-100 text-green-800";
+      return "bg-secondary-100 text-secondary-700";
     case "FERME":
       return "bg-gray-100 text-gray-600";
     case "SELECTIONNE":
@@ -198,10 +198,10 @@ export default async function AppelsPage({
       <section className="bg-[#0D0D0D] px-4 py-20 text-white lg:px-8 lg:py-28">
         <div className="mx-auto max-w-5xl">
           <div className="mb-4 flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-green-600">
+            <div className="flex size-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary-600 to-primary-500">
               <Megaphone className="size-5 text-white" aria-hidden="true" />
             </div>
-            <span className="text-sm font-medium text-green-400">
+            <span className="text-sm font-medium text-secondary-400">
               InnovonsEnsembleLeFaso
             </span>
           </div>
@@ -230,7 +230,7 @@ export default async function AppelsPage({
                 return (
                   <article
                     key={appel.id}
-                    className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+                    className="overflow-hidden rounded-xl bg-white shadow-[0_20px_40px_rgba(25,28,29,0.05)] transition-shadow hover:shadow-[0_20px_40px_rgba(25,28,29,0.10)]"
                   >
                     <div className="p-6">
                       <div className="mb-3 flex flex-wrap items-center gap-2">
@@ -257,7 +257,7 @@ export default async function AppelsPage({
 
                       <div className="mt-4 flex flex-wrap items-center gap-4 text-sm">
                         <div className="flex items-center gap-1.5 font-semibold text-gray-900">
-                          <span className="text-green-600">{ta("budget")} :</span>
+                          <span className="text-secondary-600">{ta("budget")} :</span>
                           {formatBudgetFCFA(appel.budget)}
                         </div>
 
@@ -282,7 +282,7 @@ export default async function AppelsPage({
                         <div className="mt-5">
                           <Link
                             href="/innovons/appels"
-                            className="inline-flex items-center gap-2 rounded-full bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
+                            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600"
                           >
                             {ta("propose")}
                             <ArrowRight
@@ -300,7 +300,7 @@ export default async function AppelsPage({
 
             {/* Sidebar */}
             <aside className="space-y-6">
-              <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+              <div className="rounded-xl bg-white p-5 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
                 <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-900">
                   <Filter className="size-4" aria-hidden="true" />
                   Filtres
@@ -311,7 +311,7 @@ export default async function AppelsPage({
                   <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-gray-500">
                     {ta("filter_status")}
                   </label>
-                  <select className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700 focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500">
+                  <select className="w-full rounded-lg bg-[#e8eaeb] px-3 py-2 text-sm text-gray-700 outline-none focus:bg-[#f1f3f4] focus:ring-2 focus:ring-[#b70011]/20">
                     <option>{ta("all_statuses")}</option>
                     <option>{ta("status_open")}</option>
                     <option>{ta("status_closed")}</option>
@@ -324,7 +324,7 @@ export default async function AppelsPage({
                   <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-gray-500">
                     {ta("filter_domain")}
                   </label>
-                  <select className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700 focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500">
+                  <select className="w-full rounded-lg bg-[#e8eaeb] px-3 py-2 text-sm text-gray-700 outline-none focus:bg-[#f1f3f4] focus:ring-2 focus:ring-[#b70011]/20">
                     <option>{ta("all_domains")}</option>
                     {ALL_DOMAINS.map((d) => (
                       <option key={d}>{d}</option>
@@ -339,20 +339,20 @@ export default async function AppelsPage({
                   </label>
                   <input
                     type="date"
-                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700 focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
+                    className="w-full rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/30"
                   />
                 </div>
               </div>
 
               {/* Stats sidebar */}
-              <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+              <div className="rounded-xl bg-white p-5 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
                 <h3 className="mb-3 text-sm font-semibold text-gray-900">
                   Statistiques
                 </h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-500">Appels ouverts</span>
-                    <span className="font-bold text-green-600">8</span>
+                    <span className="font-bold text-secondary-600">8</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">Domaines couverts</span>
@@ -385,7 +385,7 @@ export default async function AppelsPage({
           <div className="mt-8">
             <Link
               href="/innovons/appels"
-              className="inline-flex items-center gap-2 rounded-full bg-green-600 px-8 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-green-500"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-8 py-3.5 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600"
             >
               {ta("cta_button")}
               <ArrowRight className="size-4" aria-hidden="true" />
@@ -403,7 +403,7 @@ export default async function AppelsPage({
           <div className="grid gap-10 sm:grid-cols-3">
             <div>
               <div className="flex items-center gap-2">
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-green-600 text-sm font-black text-white">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary-600 to-primary-500 text-sm font-black text-white">
                   IE
                 </div>
                 <span className="font-bold text-white">
@@ -450,21 +450,21 @@ export default async function AppelsPage({
               <ul className="space-y-3 text-sm">
                 <li className="flex items-center gap-2">
                   <Mail
-                    className="size-4 shrink-0 text-green-500"
+                    className="size-4 shrink-0 text-secondary-500"
                     aria-hidden="true"
                   />
                   <span>{tf("email")}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Phone
-                    className="size-4 shrink-0 text-green-500"
+                    className="size-4 shrink-0 text-secondary-500"
                     aria-hidden="true"
                   />
                   <span>{tf("phone")}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <MapPin
-                    className="size-4 shrink-0 text-green-500"
+                    className="size-4 shrink-0 text-secondary-500"
                     aria-hidden="true"
                   />
                   <span>{tf("location")}</span>

@@ -22,12 +22,12 @@ interface ProfilFormProps {
 }
 
 const ROLE_BADGE: Record<string, { label: string; className: string }> = {
-  admin:  { label: "Admin",    className: "bg-red-100 text-red-700" },
-  editor: { label: "Editeur",  className: "bg-green-100 text-green-700" },
-  guest:  { label: "Invite",   className: "bg-gray-100 text-gray-700" },
+  admin:  { label: "Admin",    className: "bg-primary-100 text-primary-700" },
+  editor: { label: "Editeur",  className: "bg-secondary-100 text-secondary-700" },
+  guest:  { label: "Invite",   className: "bg-gray-100 text-gray-600" },
   // Legacy fallback values
-  ADMINISTRATEUR: { label: "Admin", className: "bg-red-100 text-red-700" },
-  UTILISATEUR: { label: "Utilisateur", className: "bg-gray-100 text-gray-700" },
+  ADMINISTRATEUR: { label: "Admin", className: "bg-primary-100 text-primary-700" },
+  UTILISATEUR: { label: "Utilisateur", className: "bg-gray-100 text-gray-600" },
 };
 
 export function ProfilForm({ initialData }: ProfilFormProps) {
@@ -64,8 +64,7 @@ export function ProfilForm({ initialData }: ProfilFormProps) {
   async function onSubmit(data: ProfilFormData) {
     setSaveStatus("idle");
     try {
-      // In production, this would call Supabase to update ie_profiles
-      // For now, simulate a save
+      // TODO: call API to update profile in Neon DB
       await new Promise((resolve) => setTimeout(resolve, 500));
       console.log("Profile update:", data);
       setSaveStatus("success");
@@ -78,7 +77,7 @@ export function ProfilForm({ initialData }: ProfilFormProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 rounded-xl bg-white p-6 shadow-sm"
+      className="space-y-6 rounded-xl bg-white p-6 shadow-[0_20px_40px_rgba(25,28,29,0.05)]"
     >
       {/* Avatar section */}
       <div className="flex items-center gap-5">
@@ -89,7 +88,7 @@ export function ProfilForm({ initialData }: ProfilFormProps) {
             className="size-16 rounded-full object-cover"
           />
         ) : (
-          <div className="flex size-16 items-center justify-center rounded-full bg-green-100 text-lg font-bold text-green-700">
+          <div className="flex size-16 items-center justify-center rounded-full bg-secondary-50 text-lg font-bold text-secondary-700">
             {initials || <User className="size-6" />}
           </div>
         )}
@@ -97,7 +96,7 @@ export function ProfilForm({ initialData }: ProfilFormProps) {
           <button
             type="button"
             disabled
-            className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-400 cursor-not-allowed"
+            className="rounded-lg bg-gray-100 px-3 py-1.5 text-sm text-gray-400 cursor-not-allowed"
           >
             Changer photo
           </button>
@@ -129,7 +128,7 @@ export function ProfilForm({ initialData }: ProfilFormProps) {
           id="full_name"
           type="text"
           {...register("full_name", { required: true })}
-          className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
+          className="w-full rounded-lg bg-gray-50 px-3 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
         />
         {errors.full_name && (
           <p className="mt-1 text-xs text-red-500">Ce champ est requis.</p>
@@ -148,7 +147,7 @@ export function ProfilForm({ initialData }: ProfilFormProps) {
           id="organisation"
           type="text"
           {...register("organisation")}
-          className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
+          className="w-full rounded-lg bg-gray-50 px-3 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
         />
       </div>
 
@@ -165,7 +164,7 @@ export function ProfilForm({ initialData }: ProfilFormProps) {
           rows={4}
           maxLength={300}
           {...register("bio", { maxLength: 300 })}
-          className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
+          className="w-full resize-none rounded-lg bg-gray-50 px-3 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
         />
         <p className="mt-1 text-xs text-gray-400">
           {bioValue?.length ?? 0}/300
@@ -173,18 +172,18 @@ export function ProfilForm({ initialData }: ProfilFormProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex flex-wrap items-center gap-4 border-t border-gray-100 pt-5">
+      <div className="flex flex-wrap items-center gap-4 pt-5">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:opacity-50"
+          className="rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600 disabled:opacity-50"
         >
           {isSubmitting ? "..." : t("profil_save")}
         </button>
 
         <a
           href="#"
-          className="text-sm font-medium text-green-600 hover:text-green-700"
+          className="text-sm font-medium text-primary-600 hover:opacity-80"
         >
           {t("profil_change_password")}
         </a>
@@ -192,7 +191,7 @@ export function ProfilForm({ initialData }: ProfilFormProps) {
 
       {/* Toast-like feedback */}
       {saveStatus === "success" && (
-        <div className="rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">
+        <div className="rounded-lg bg-secondary-50 px-4 py-3 text-sm text-secondary-700">
           {t("profil_saved")}
         </div>
       )}

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 import { MOCK_NEEDS } from "@/lib/innovons/mock-data";
 import { requireRoleForApi } from "@/lib/auth/guards";
 
@@ -29,14 +29,14 @@ export async function GET(
     }
 
     // Try by ID first, then by slug
-    let result = await sql`
+    let result = await getSql()`
       SELECT * FROM ie_needs WHERE id::text = ${id}
-    `;
+    ` as any[];
 
     if (!result || result.length === 0) {
-      result = await sql`
+      result = await getSql()`
         SELECT * FROM ie_needs WHERE slug = ${id}
-      `;
+      ` as any[];
     }
 
     if (!result || result.length === 0) {
@@ -98,9 +98,9 @@ export async function PATCH(
     }
 
     // Check status before updating
-    const existing = await sql`
+    const existing = await getSql()`
       SELECT id, statut, auteur_email FROM ie_needs WHERE id::text = ${id} OR slug = ${id}
-    `;
+    ` as any[];
 
     if (!existing || existing.length === 0) {
       // Fallback mock (dev sans donnees Neon)
@@ -178,7 +178,7 @@ export async function PATCH(
     const contexte_strategique = updates["contexte_strategique"] ?? null;
     const synthese_narrative = updates["synthese_narrative"] ?? null;
 
-    const result = await sql`
+    const result = await getSql()`
       UPDATE ie_needs SET
         titre = COALESCE(${titre}, titre),
         domaine = COALESCE(${domaine}, domaine),
@@ -190,7 +190,7 @@ export async function PATCH(
         updated_at = NOW()
       WHERE id = ${needId}
       RETURNING *
-    `;
+    ` as any[];
 
     return NextResponse.json({ success: true, need: result[0] });
   } catch (error) {

@@ -1,6 +1,6 @@
 import type { Need, IEStats, CallForSolutions } from "./types";
 import { MOCK_NEEDS, MOCK_STATS, MOCK_CALLS } from "./mock-data";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -24,7 +24,7 @@ export async function getPublishedNeeds(): Promise<Need[]> {
   }
 
   try {
-    const rows = await sql`
+    const rows = await getSql()`
       SELECT * FROM ie_needs
       WHERE statut = 'PUBLIE'
       ORDER BY published_at DESC NULLS LAST, created_at DESC
@@ -45,7 +45,7 @@ export async function getNeedBySlug(slug: string): Promise<Need | null> {
   }
 
   try {
-    const rows = await sql`
+    const rows = await getSql()`
       SELECT * FROM ie_needs WHERE slug = ${slug} LIMIT 1
     `;
     return (rows[0] as unknown as Need) ?? null;
@@ -67,7 +67,7 @@ export async function getStats(): Promise<IEStats> {
   try {
     const [needsRow, proposalsRow, usersRow] = await Promise.all([
       // Tous les besoins soumis + agrégats sur les publiés uniquement
-      sql`
+      getSql()`
         SELECT
           COUNT(*)::int                                                     AS needs_count,
           COUNT(*) FILTER (WHERE statut = 'PUBLIE')::int                   AS published_count,
@@ -77,9 +77,9 @@ export async function getStats(): Promise<IEStats> {
         WHERE statut NOT IN ('BROUILLON')
       `,
       // Propositions soumises
-      sql`SELECT COUNT(*)::int AS proposals_count FROM ie_proposals`,
+      getSql()`SELECT COUNT(*)::int AS proposals_count FROM ie_proposals`,
       // Éditeurs = sponsors/parrains (users with role editor or admin)
-      sql`SELECT COUNT(*)::int AS parrains_count FROM "user" WHERE role IN ('editor', 'admin')`,
+      getSql()`SELECT COUNT(*)::int AS parrains_count FROM "user" WHERE role IN ('editor', 'admin')`,
     ]);
 
     return {
@@ -104,7 +104,7 @@ export async function getOpenCalls(): Promise<CallForSolutions[]> {
   }
 
   try {
-    const rows = await sql`
+    const rows = await getSql()`
       SELECT * FROM ie_calls
       WHERE statut = 'OUVERT'
       ORDER BY deadline ASC NULLS LAST

@@ -92,9 +92,9 @@ function formatDate(dateStr: string | null, locale: string): string {
 
 function criticiteColor(c: ObstacleCriticite) {
   const map = {
-    1: { bg: "bg-secondary-50", text: "text-secondary-600", border: "border-secondary-200" },
-    2: { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
-    3: { bg: "bg-red-50", text: "text-primary-600", border: "border-red-200" },
+    1: { bg: "bg-secondary-50", text: "text-secondary-700", border: "border-secondary-200" },
+    2: { bg: "bg-accent-50", text: "text-accent-700", border: "border-accent-200" },
+    3: { bg: "bg-primary-50", text: "text-primary-700", border: "border-primary-200" },
   };
   return map[c];
 }
@@ -142,7 +142,7 @@ function AccordionSection({
   const [open, setOpen] = useState(defaultOpen ?? false);
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white">
+    <div className="rounded-xl bg-white shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -158,7 +158,7 @@ function AccordionSection({
           <ChevronDown className="size-5 text-gray-400" aria-hidden="true" />
         )}
       </button>
-      {open && <div className="border-t border-gray-100 px-6 py-5">{children}</div>}
+      {open && <div className="px-6 py-5">{children}</div>}
     </div>
   );
 }
@@ -194,7 +194,7 @@ export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailC
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-200 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  <tr className="text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     <th className="pb-3 pr-4">{labels.pp_categorie}</th>
                     <th className="pb-3 pr-4">{labels.pp_acteur}</th>
                     <th className="pb-3 pr-4">{labels.pp_role}</th>
@@ -205,7 +205,7 @@ export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailC
                   {need.parties_prenantes.map((pp) => (
                     <tr key={pp.id}>
                       <td className="py-3 pr-4">
-                        <span className="rounded-full bg-secondary-50 px-2 py-0.5 text-xs font-medium text-secondary-600">
+                        <span className="rounded-full bg-secondary-100 px-2 py-0.5 text-xs font-medium text-secondary-700">
                           {pp.categorie}
                         </span>
                       </td>
@@ -215,9 +215,9 @@ export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailC
                         <span
                           className={`rounded-full px-2 py-0.5 text-xs font-medium ${
                             pp.position === "Actif"
-                              ? "bg-secondary-50 text-secondary-600"
+                              ? "bg-secondary-100 text-secondary-700"
                               : pp.position === "Oppose"
-                                ? "bg-red-50 text-primary-600"
+                                ? "bg-primary-100 text-primary-700"
                                 : "bg-gray-100 text-gray-600"
                           }`}
                         >
@@ -234,15 +234,15 @@ export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailC
           {/* 3. Perimetre */}
           <AccordionSection title={labels.perimetre} icon={MapPin}>
             <div className="grid gap-4 sm:grid-cols-3">
-              <div className="rounded-lg bg-gray-50 p-4">
+              <div className="rounded-xl bg-[#f8f9fa] p-4">
                 <p className="text-xs font-medium uppercase text-gray-400">{labels.region}</p>
                 <p className="mt-1 text-sm font-semibold text-gray-900">{need.region}</p>
               </div>
-              <div className="rounded-lg bg-gray-50 p-4">
+              <div className="rounded-xl bg-[#f8f9fa] p-4">
                 <p className="text-xs font-medium uppercase text-gray-400">{labels.secteur}</p>
                 <p className="mt-1 text-sm font-semibold text-gray-900">{need.secteur}</p>
               </div>
-              <div className="rounded-lg bg-gray-50 p-4">
+              <div className="rounded-xl bg-[#f8f9fa] p-4">
                 <p className="text-xs font-medium uppercase text-gray-400">{labels.pays}</p>
                 <p className="mt-1 text-sm font-semibold text-gray-900">{need.pays}</p>
               </div>
@@ -293,10 +293,10 @@ export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailC
               {need.resultats.map((res) => (
                 <div
                   key={res.id}
-                  className="rounded-xl border border-gray-200 bg-white p-4"
+                  className="rounded-xl bg-[#f8f9fa] p-4"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="rounded-full bg-secondary-50 px-2 py-0.5 text-xs font-medium text-secondary-600">
+                    <span className="rounded-full bg-secondary-100 px-2 py-0.5 text-xs font-medium text-secondary-700">
                       {niveauLabel(res.niveau, labels)}
                     </span>
                     <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500">
@@ -316,7 +316,7 @@ export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailC
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-200 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  <tr className="text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
                     <th className="pb-3 pr-4">{labels.ind_intitule}</th>
                     <th className="pb-3 pr-4">{labels.ind_type}</th>
                     <th className="pb-3 pr-4">{labels.ind_source}</th>
@@ -344,7 +344,7 @@ export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailC
           </AccordionSection>
 
           {/* Synthese narrative */}
-          <div className="rounded-xl border border-gray-200 bg-white p-6">
+          <div className="rounded-xl bg-white p-6 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
             <h3 className="text-base font-semibold text-gray-900">{labels.synthese}</h3>
             <p className="mt-3 text-sm leading-relaxed text-gray-600">{need.synthese_narrative}</p>
           </div>
@@ -354,10 +354,10 @@ export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailC
         <aside className="w-full shrink-0 lg:w-72">
           <div className="sticky top-40 space-y-4">
             {/* Stats card */}
-            <div className="rounded-xl border border-gray-200 bg-white p-5">
+            <div className="rounded-xl bg-white p-5 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-secondary-50">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-secondary-50">
                     <Users className="size-5 text-secondary-600" aria-hidden="true" />
                   </div>
                   <div>
@@ -369,7 +369,7 @@ export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailC
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-secondary-50">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-secondary-50">
                     <Banknote className="size-5 text-secondary-600" aria-hidden="true" />
                   </div>
                   <div>
@@ -381,7 +381,7 @@ export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailC
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-gray-50">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-gray-100">
                     <CalendarDays className="size-5 text-gray-500" aria-hidden="true" />
                   </div>
                   <div>
@@ -397,7 +397,7 @@ export function NeedDetailClient({ need, labels, locale, needSlug }: NeedDetailC
             {/* CTA */}
             <Link
               href={`/innovons/besoins/${resolvedSlug}/proposer`}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-secondary-600 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-secondary-700"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600"
             >
               <Lightbulb className="size-4" aria-hidden="true" />
               {labels.propose_solution}

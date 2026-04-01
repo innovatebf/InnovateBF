@@ -22,7 +22,7 @@ export const dynamic = 'force-dynamic';
 const STATUS_BADGE: Record<NeedStatus, string> = {
   BROUILLON: "bg-gray-100 text-gray-700",
   VALIDATION: "bg-amber-100 text-amber-700",
-  PUBLIE: "bg-green-100 text-green-700",
+  PUBLIE: "bg-[#006e2d]/10 text-[#16a34a]",
   ARCHIVE: "bg-red-100 text-red-700",
 };
 
@@ -35,12 +35,12 @@ const STATUS_LABEL: Record<NeedStatus, string> = {
 
 function RoleBadge({ role }: { role: string }) {
   const config: Record<string, { label: string; className: string }> = {
-    admin:  { label: "Admin",    className: "bg-red-100 text-red-700" },
-    editor: { label: "Editeur",  className: "bg-green-100 text-green-700" },
-    guest:  { label: "Invité",   className: "bg-gray-100 text-gray-700" },
+    admin:  { label: "Admin",    className: "bg-[#b70011]/10 text-[#dc2626]" },
+    editor: { label: "Editeur",  className: "bg-[#006e2d]/10 text-[#16a34a]" },
+    guest:  { label: "Invité",   className: "bg-[#e8eaeb] text-gray-600" },
     // Legacy fallback values
-    ADMINISTRATEUR: { label: "Admin",      className: "bg-red-100 text-red-700" },
-    UTILISATEUR:    { label: "Utilisateur", className: "bg-gray-100 text-gray-700" },
+    ADMINISTRATEUR: { label: "Admin",      className: "bg-[#b70011]/10 text-[#dc2626]" },
+    UTILISATEUR:    { label: "Utilisateur", className: "bg-[#e8eaeb] text-gray-600" },
   };
 
   const c = config[role] ?? config.guest!;
@@ -95,7 +95,7 @@ export default async function MonEspacePage({
       label: t("stat_compte"),
       value: t("stat_actif"),
       icon: CheckCircle,
-      color: "text-green-600 bg-green-50",
+      color: "text-[#16a34a] bg-[#006e2d]/10",
     },
   ];
 
@@ -117,7 +117,7 @@ export default async function MonEspacePage({
         {stats.map(({ label, value, icon: Icon, color }) => (
           <div
             key={label}
-            className="flex items-center gap-4 rounded-xl bg-white p-5 shadow-sm"
+            className="flex items-center gap-4 rounded-xl bg-white p-5 shadow-[0_20px_40px_rgba(25,28,29,0.05)]"
           >
             <div className={`flex size-10 items-center justify-center rounded-lg ${color}`}>
               <Icon className="size-5" aria-hidden="true" />
@@ -136,7 +136,7 @@ export default async function MonEspacePage({
           {t("recent_activity")}
         </h2>
         {recentNeeds.length > 0 ? (
-          <div className="divide-y divide-gray-100 rounded-xl bg-white shadow-sm">
+          <div className="rounded-xl bg-white shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
             {recentNeeds.map((need) => (
               <div
                 key={need.id}
@@ -145,7 +145,7 @@ export default async function MonEspacePage({
                 <div className="min-w-0 flex-1">
                   <Link
                     href={`/innovons/besoins/${need.slug}`}
-                    className="text-sm font-medium text-gray-900 hover:text-green-600"
+                    className="text-sm font-medium text-gray-900 hover:text-[#16a34a]"
                   >
                     {need.titre}
                   </Link>
@@ -189,7 +189,7 @@ export default async function MonEspacePage({
               return (
                 <div
                   key={call.id}
-                  className="rounded-xl bg-white p-5 shadow-sm"
+                  className="rounded-xl bg-white p-5 shadow-[0_20px_40px_rgba(25,28,29,0.05)]"
                 >
                   <h3 className="text-sm font-semibold text-gray-900">
                     {call.titre}
@@ -201,7 +201,7 @@ export default async function MonEspacePage({
                       {daysLeft > 0 ? `${daysLeft} jours restants` : "Expire"}
                     </span>
                   </div>
-                  <div className="mt-2 text-xs font-medium text-green-600">
+                  <div className="mt-2 text-xs font-medium text-[#16a34a]">
                     {new Intl.NumberFormat(locale, {
                       style: "currency",
                       currency: "XOF",
@@ -222,7 +222,7 @@ export default async function MonEspacePage({
         {canDeposit && (
           <Link
             href="/innovons/besoins/deposer"
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#b70011] to-[#dc2626] px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
           >
             {t("cta_submit")}
             <ArrowRight className="size-4" aria-hidden="true" />
@@ -230,7 +230,7 @@ export default async function MonEspacePage({
         )}
         <Link
           href="/innovons/appels"
-          className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#e8eaeb] px-5 py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-[#f1f3f4]"
         >
           {t("cta_browse")}
           <ArrowRight className="size-4" aria-hidden="true" />

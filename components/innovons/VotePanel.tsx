@@ -75,7 +75,7 @@ export function VotePanel({ needId, initialScore, initialCount }: VotePanelProps
   );
 
   return (
-    <div className="flex flex-col items-center gap-1 bg-gray-800 rounded-xl p-4 select-none min-w-[56px]">
+    <div className="flex flex-col items-center gap-1 bg-gray-900 rounded-xl p-4 select-none min-w-[56px] shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
       {/* Up vote */}
       <button
         aria-label="Voter pour ce besoin"
@@ -84,10 +84,10 @@ export function VotePanel({ needId, initialScore, initialCount }: VotePanelProps
         onClick={() => handleVote(1)}
         className={[
           "flex items-center justify-center w-9 h-9 rounded-lg transition-colors",
-          "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500",
+          "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary-500",
           userVote === 1
-            ? "text-green-400 bg-green-400/15 hover:bg-green-400/25"
-            : "text-gray-400 hover:text-green-400 hover:bg-gray-700",
+            ? "text-secondary-500 bg-secondary-500/15 hover:bg-secondary-500/25"
+            : "text-gray-400 hover:text-secondary-500 hover:bg-white/5",
           pending ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
         ].join(" ")}
       >
@@ -117,10 +117,10 @@ export function VotePanel({ needId, initialScore, initialCount }: VotePanelProps
         onClick={() => handleVote(-1)}
         className={[
           "flex items-center justify-center w-9 h-9 rounded-lg transition-colors",
-          "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500",
+          "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600",
           userVote === -1
-            ? "text-red-400 bg-red-400/15 hover:bg-red-400/25"
-            : "text-gray-400 hover:text-red-400 hover:bg-gray-700",
+            ? "text-primary-600 bg-primary-600/15 hover:bg-primary-600/25"
+            : "text-gray-400 hover:text-primary-600 hover:bg-white/5",
           pending ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
         ].join(" ")}
       >

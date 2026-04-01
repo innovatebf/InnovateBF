@@ -1,5 +1,5 @@
 import { getServerSession } from "@/lib/auth/server";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 import type { Need, Proposal } from "./types";
 import { MOCK_NEEDS } from "./mock-data";
 
@@ -86,7 +86,7 @@ export async function getCurrentUser(): Promise<UserProfile | null> {
     // Always re-check DB when role resolves to guest (stale cookie cache or unset)
     if (isNeonConfigured() && role === "guest") {
       try {
-        const rows = await sql`
+        const rows = await getSql()`
           SELECT role FROM "user" WHERE id = ${session.user.id} LIMIT 1
         `;
         if (rows[0]?.role) {
@@ -118,7 +118,7 @@ export async function getUserNeeds(
 
   try {
     const emailFilter = userEmail ?? "";
-    const result = await sql`
+    const result = await getSql()`
       SELECT * FROM ie_needs
       WHERE auteur_id = ${userId}
          OR auteur_email = ${emailFilter}
@@ -134,7 +134,7 @@ export async function getUserProposals(userId: string): Promise<Proposal[]> {
   if (!isNeonConfigured()) return MOCK_USER_PROPOSALS;
 
   try {
-    const result = await sql`
+    const result = await getSql()`
       SELECT * FROM ie_proposals
       WHERE porteur_id = ${userId}
       ORDER BY created_at DESC

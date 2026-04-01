@@ -132,23 +132,21 @@ const CATEGORIES = [
 const IMPACT_CONFIG: Record<string, ImpactConfig> = {
   ELEVE: {
     label: "Impact élevé",
-    className:
-      "bg-red-900/30 text-red-400 border border-red-800",
+    className: "bg-primary-50 text-primary-700",
   },
   MOYEN: {
     label: "Impact moyen",
-    className:
-      "bg-amber-900/30 text-amber-400 border border-amber-800",
+    className: "bg-amber-100 text-amber-700",
   },
   FAIBLE: {
     label: "Impact faible",
-    className: "bg-gray-800 text-gray-400 border border-gray-700",
+    className: "bg-gray-100 text-gray-600",
   },
 };
 
 const DEFAULT_IMPACT: ImpactConfig = {
   label: "Impact inconnu",
-  className: "bg-gray-800 text-gray-400 border border-gray-700",
+  className: "bg-gray-100 text-gray-600",
 };
 
 // ── Page ──────────────────────────────────────────────────────────────────────
@@ -162,7 +160,7 @@ export default async function ObservatoirePage({
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="min-h-screen bg-gray-50">
       {/* ── Sub-navigation ── */}
       <IENavbar />
 
@@ -172,7 +170,7 @@ export default async function ObservatoirePage({
       <section className="bg-[#0D0D0D] px-4 py-20 lg:px-8 lg:py-28">
         <div className="mx-auto max-w-5xl">
           {/* Eyebrow */}
-          <div className="flex items-center gap-2 text-green-400">
+          <div className="flex items-center gap-2 text-secondary-400">
             <Globe className="size-5" aria-hidden="true" />
             <span className="text-sm font-semibold uppercase tracking-widest">
               Observatoire
@@ -198,7 +196,7 @@ export default async function ObservatoirePage({
                 key={label}
                 className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-gray-300"
               >
-                <Icon className="size-4 text-green-400" aria-hidden="true" />
+                <Icon className="size-4 text-secondary-400" aria-hidden="true" />
                 {label}
               </div>
             ))}
@@ -209,19 +207,19 @@ export default async function ObservatoirePage({
       {/* ═══════════════════════════════════════════════════════════════════
           MAIN — two-column layout
       ═══════════════════════════════════════════════════════════════════ */}
-      <main className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+      <main className="mx-auto max-w-7xl px-4 py-12 lg:px-8 text-gray-900">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
 
           {/* ── Left column — Signaux & Tendances ── */}
           <section aria-labelledby="signals-heading">
             <div className="mb-6 flex items-center gap-2.5">
               <Globe
-                className="size-5 shrink-0 text-green-400"
+                className="size-5 shrink-0 text-secondary-600"
                 aria-hidden="true"
               />
               <h2
                 id="signals-heading"
-                className="text-xl font-bold text-white"
+                className="text-xl font-bold text-gray-900"
               >
                 Signaux &amp; Tendances
               </h2>
@@ -240,13 +238,13 @@ export default async function ObservatoirePage({
           <aside className="space-y-6" aria-label="Informations complémentaires">
 
             {/* Tendances du moment */}
-            <div className="rounded-xl border border-gray-800 bg-gray-900 p-5">
+            <div className="rounded-xl bg-white p-5 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
               <div className="mb-5 flex items-center gap-2.5">
                 <TrendingUp
-                  className="size-5 shrink-0 text-green-400"
+                  className="size-5 shrink-0 text-secondary-600"
                   aria-hidden="true"
                 />
-                <h2 className="text-base font-bold text-white">
+                <h2 className="text-base font-bold text-gray-900">
                   Tendances du moment
                 </h2>
               </div>
@@ -255,13 +253,13 @@ export default async function ObservatoirePage({
                 {TENDANCES.map(({ label, score, trend }) => (
                   <li key={label}>
                     <div className="mb-1.5 flex items-center justify-between">
-                      <span className="text-sm text-gray-300">{label}</span>
-                      <span className="text-xs font-semibold text-green-400">
+                      <span className="text-sm text-gray-700">{label}</span>
+                      <span className="text-xs font-semibold text-secondary-600">
                         {trend}
                       </span>
                     </div>
                     <div
-                      className="h-1.5 w-full overflow-hidden rounded-full bg-gray-800"
+                      className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100"
                       role="progressbar"
                       aria-valuenow={score}
                       aria-valuemin={0}
@@ -269,7 +267,7 @@ export default async function ObservatoirePage({
                       aria-label={`${label} : ${score}/100`}
                     >
                       <div
-                        className="h-full rounded-full bg-green-500 transition-all"
+                        className="h-full rounded-full bg-gradient-to-r from-[#b70011] to-[#dc2626] transition-all"
                         style={{ width: `${score}%` }}
                       />
                     </div>
@@ -279,7 +277,7 @@ export default async function ObservatoirePage({
             </div>
 
             {/* Sources actives */}
-            <div className="rounded-xl border border-gray-800 bg-gray-900 p-5">
+            <div className="rounded-xl bg-white p-5 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
               <h2 className="mb-4 text-base font-bold text-white">
                 Sources actives
               </h2>
@@ -287,14 +285,14 @@ export default async function ObservatoirePage({
                 {SOURCES_ACTIVES.map(({ nom, url }) => (
                   <li key={nom} className="flex items-center gap-2.5">
                     <span
-                      className="size-2 shrink-0 rounded-full bg-green-500"
+                      className="size-2 shrink-0 rounded-full bg-[#16a34a]"
                       aria-hidden="true"
                     />
                     <a
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-gray-400 transition-colors hover:text-white"
+                      className="text-sm text-gray-600 transition-colors hover:text-gray-900"
                     >
                       {nom}
                     </a>
@@ -311,7 +309,7 @@ export default async function ObservatoirePage({
           BOTTOM CTA
       ═══════════════════════════════════════════════════════════════════ */}
       <section
-        className="border-t border-gray-800 bg-gray-900 px-4 py-14 lg:px-8"
+        className="bg-[#0D0D0D] px-4 py-14 lg:px-8 text-white"
         aria-labelledby="cta-heading"
       >
         <div className="mx-auto max-w-3xl text-center">
@@ -328,14 +326,14 @@ export default async function ObservatoirePage({
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <a
               href="/innovons/besoins/deposer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-green-400 transition-all hover:border-green-500 hover:bg-white/5"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-6 py-3 text-sm font-semibold text-[#16a34a] transition-all hover:border-[#16a34a] hover:bg-white/5"
             >
               Soumettre un signal
               <ArrowRight className="size-4" aria-hidden="true" />
             </a>
             <a
               href="mailto:observatoire@innovatebf.org"
-              className="inline-flex items-center gap-2 rounded-full bg-green-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-green-600"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#b70011] to-[#dc2626] px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
             >
               Proposer une source
             </a>

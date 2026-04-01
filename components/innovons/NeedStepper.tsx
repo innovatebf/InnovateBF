@@ -234,8 +234,8 @@ export function NeedStepper() {
     strategicContextWords < 100
       ? "text-gray-400"
       : strategicContextWords <= 150
-        ? "text-green-600"
-        : "text-red-600";
+        ? "text-secondary-600"
+        : "text-primary-600";
 
   // ── Prescriptive term detection ───────────────────────────────────────
   const detectedTerms = detectPrescriptiveTerms(
@@ -317,16 +317,16 @@ export function NeedStepper() {
   const coherenceScore = coherenceChecks.filter((c) => c.pass).length;
   const scoreColor =
     coherenceScore <= 3
-      ? "text-red-600"
+      ? "text-primary-600"
       : coherenceScore <= 5
         ? "text-amber-600"
-        : "text-green-600";
+        : "text-secondary-600";
   const scoreBgColor =
     coherenceScore <= 3
-      ? "bg-red-50 border-red-200"
+      ? "bg-primary-50"
       : coherenceScore <= 5
-        ? "bg-amber-50 border-amber-200"
-        : "bg-green-50 border-green-200";
+        ? "bg-amber-50"
+        : "bg-secondary-50";
 
   // ── Navigation ────────────────────────────────────────────────────────
   const goTo = useCallback((step: number) => {
@@ -438,8 +438,8 @@ export function NeedStepper() {
   if (submitted) {
     return (
       <div className="mx-auto max-w-xl py-20 text-center">
-        <div className="mx-auto mb-6 flex size-20 items-center justify-center rounded-full bg-green-100">
-          <PartyPopper className="size-10 text-green-600" aria-hidden="true" />
+        <div className="mx-auto mb-6 flex size-20 items-center justify-center rounded-full bg-secondary-50">
+          <PartyPopper className="size-10 text-secondary-600" aria-hidden="true" />
         </div>
         <h2 className="text-2xl font-bold text-gray-900">{t("success_title")}</h2>
         <p className="mt-3 text-gray-500">{t("success_desc")}</p>
@@ -449,11 +449,11 @@ export function NeedStepper() {
 
   // ── Shared input styles ───────────────────────────────────────────────
   const inputCls =
-    "w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500";
+    "w-full rounded-lg bg-gray-50 px-3 py-2.5 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30";
   const selectCls =
-    "w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500";
+    "w-full rounded-lg bg-gray-50 px-3 py-2.5 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30";
   const textareaCls =
-    "w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 resize-y";
+    "w-full rounded-lg bg-gray-50 px-3 py-2.5 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30 resize-y";
   const labelCls = "mb-1.5 block text-sm font-medium text-gray-700";
   const errorCls = "mt-1 text-xs text-red-600";
 
@@ -475,10 +475,10 @@ export function NeedStepper() {
                 <div
                   className={`flex size-9 items-center justify-center rounded-full text-sm font-bold transition-colors ${
                     isActive
-                      ? "bg-green-600 text-white"
+                      ? "bg-gradient-to-br from-primary-600 to-primary-500 text-white"
                       : isDone
-                        ? "bg-green-100 text-green-700"
-                        : "bg-gray-200 text-gray-500"
+                        ? "bg-secondary-50 text-secondary-600"
+                        : "bg-gray-100 text-gray-500"
                   }`}
                 >
                   {isDone ? (
@@ -489,7 +489,7 @@ export function NeedStepper() {
                 </div>
                 <span
                   className={`text-[11px] font-medium ${
-                    isActive ? "text-green-700" : "text-gray-500"
+                    isActive ? "text-primary-600" : "text-gray-500"
                   }`}
                 >
                   {label}
@@ -501,7 +501,7 @@ export function NeedStepper() {
         {/* Progress line */}
         <div className="mt-2 h-1 min-w-[640px] rounded-full bg-gray-200">
           <div
-            className="h-1 rounded-full bg-green-600 transition-all"
+            className="h-1 rounded-full bg-gradient-to-r from-primary-600 to-primary-500 transition-all"
             style={{
               width: `${((currentStep + 1) / STEP_COUNT) * 100}%`,
             }}
@@ -511,7 +511,7 @@ export function NeedStepper() {
 
       {/* ── Step content ─────────────────────────────────────────────── */}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm lg:p-8">
+        <div className="rounded-xl bg-white p-6 shadow-[0_20px_40px_rgba(25,28,29,0.05)] lg:p-8">
           {/* ── STEP 1: Contexte ─────────────────────────────────────── */}
           {currentStep === 0 && (
             <div className="space-y-5">
@@ -651,7 +651,7 @@ export function NeedStepper() {
                       position: "NEUTRE",
                     })
                   }
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700 transition-colors hover:bg-green-100"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
                 >
                   <Plus className="size-4" aria-hidden="true" />
                   {t("add_item")}
@@ -667,7 +667,7 @@ export function NeedStepper() {
               {stakeholderFields.map((field, idx) => (
                 <div
                   key={field.id}
-                  className="rounded-lg border border-gray-200 bg-gray-50 p-4"
+                  className="rounded-lg bg-gray-50 p-4"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <span className="text-sm font-semibold text-gray-700">
@@ -754,7 +754,7 @@ export function NeedStepper() {
                     onClick={() =>
                       appendScopeInc({ axis: "", justification: "" })
                     }
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700 transition-colors hover:bg-green-100"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
                   >
                     <Plus className="size-4" aria-hidden="true" />
                     {t("add_item")}
@@ -766,7 +766,7 @@ export function NeedStepper() {
                 {scopeIncFields.map((field, idx) => (
                   <div
                     key={field.id}
-                    className="mb-3 rounded-lg border border-gray-200 bg-gray-50 p-4"
+                    className="mb-3 rounded-lg bg-gray-50 p-4"
                   >
                     <div className="mb-2 flex items-center justify-between">
                       <span className="text-xs font-semibold text-gray-500">
@@ -814,7 +814,7 @@ export function NeedStepper() {
                     onClick={() =>
                       appendScopeExc({ element: "", reason: "" })
                     }
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700 transition-colors hover:bg-green-100"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
                   >
                     <Plus className="size-4" aria-hidden="true" />
                     {t("add_item")}
@@ -828,7 +828,7 @@ export function NeedStepper() {
                 {scopeExcFields.map((field, idx) => (
                   <div
                     key={field.id}
-                    className="mb-3 rounded-lg border border-gray-200 bg-gray-50 p-4"
+                    className="mb-3 rounded-lg bg-gray-50 p-4"
                   >
                     <div className="mb-2 flex items-center justify-between">
                       <span className="text-xs font-semibold text-gray-500">
@@ -890,7 +890,7 @@ export function NeedStepper() {
               </div>
 
               {/* 6 tests table */}
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+              <div className="rounded-lg bg-gray-50 p-4">
                 <h4 className="mb-3 text-sm font-semibold text-gray-700">
                   Tests de validation
                 </h4>
@@ -899,7 +899,7 @@ export function NeedStepper() {
                     <div key={idx} className="flex items-center gap-3">
                       {test.pass ? (
                         <CheckCircle
-                          className="size-5 text-green-600"
+                          className="size-5 text-secondary-600"
                           aria-hidden="true"
                         />
                       ) : (
@@ -909,7 +909,7 @@ export function NeedStepper() {
                         />
                       )}
                       <span
-                        className={`text-sm ${test.pass ? "text-green-700" : "text-gray-500"}`}
+                        className={`text-sm ${test.pass ? "text-secondary-600" : "text-gray-500"}`}
                       >
                         T{idx + 1} {test.label}
                       </span>
@@ -938,7 +938,7 @@ export function NeedStepper() {
                       controllability: "",
                     })
                   }
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700 transition-colors hover:bg-green-100"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
                 >
                   <Plus className="size-4" aria-hidden="true" />
                   {t("add_item")}
@@ -963,7 +963,7 @@ export function NeedStepper() {
               {obstacleFields.map((field, idx) => (
                 <div
                   key={field.id}
-                  className="rounded-lg border border-gray-200 bg-gray-50 p-4"
+                  className="rounded-lg bg-gray-50 p-4"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <span className="text-sm font-semibold text-gray-700">
@@ -1045,14 +1045,14 @@ export function NeedStepper() {
                                   key={val}
                                   type="button"
                                   onClick={() => f.onChange(val)}
-                                  className={`flex size-10 items-center justify-center rounded-lg border text-sm font-bold transition-colors ${
+                                  className={`flex size-10 items-center justify-center rounded-lg text-sm font-bold transition-colors ${
                                     f.value === val
                                       ? val === 1
-                                        ? "border-green-300 bg-green-100 text-green-700"
+                                        ? "bg-secondary-50 text-secondary-700"
                                         : val === 2
-                                          ? "border-amber-300 bg-amber-100 text-amber-700"
-                                          : "border-red-300 bg-red-100 text-red-700"
-                                      : "border-gray-200 bg-white text-gray-400"
+                                          ? "bg-amber-100 text-amber-700"
+                                          : "bg-primary-50 text-primary-700"
+                                      : "bg-gray-100 text-gray-400"
                                   }`}
                                 >
                                   {val}
@@ -1106,7 +1106,7 @@ export function NeedStepper() {
                       horizon: "COURT",
                     })
                   }
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700 transition-colors hover:bg-green-100"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
                 >
                   <Plus className="size-4" aria-hidden="true" />
                   {t("add_item")}
@@ -1122,7 +1122,7 @@ export function NeedStepper() {
               {resultFields.map((field, idx) => (
                 <div
                   key={field.id}
-                  className="rounded-lg border border-gray-200 bg-gray-50 p-4"
+                  className="rounded-lg bg-gray-50 p-4"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <span className="text-sm font-semibold text-gray-700">
@@ -1203,7 +1203,7 @@ export function NeedStepper() {
                       frequency: "",
                     })
                   }
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-green-50 px-3 py-2 text-sm font-medium text-green-700 transition-colors hover:bg-green-100"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
                 >
                   <Plus className="size-4" aria-hidden="true" />
                   {t("add_item")}
@@ -1223,7 +1223,7 @@ export function NeedStepper() {
                 return (
                   <div
                     key={field.id}
-                    className="rounded-lg border border-gray-200 bg-gray-50 p-4"
+                    className="rounded-lg bg-gray-50 p-4"
                   >
                     <div className="mb-3 flex items-center justify-between">
                       <span className="text-sm font-semibold text-gray-700">
@@ -1334,7 +1334,7 @@ export function NeedStepper() {
               </h3>
 
               {/* Coherence grid */}
-              <div className={`rounded-lg border p-5 ${scoreBgColor}`}>
+              <div className={`rounded-xl p-5 ${scoreBgColor}`}>
                 <div className="mb-4 flex items-center justify-between">
                   <h4 className="text-sm font-semibold text-gray-700">
                     {t("review_coherence")}
@@ -1348,7 +1348,7 @@ export function NeedStepper() {
                     <div key={idx} className="flex items-center gap-3">
                       {check.pass ? (
                         <CheckCircle
-                          className="size-5 text-green-600"
+                          className="size-5 text-secondary-600"
                           aria-hidden="true"
                         />
                       ) : (
@@ -1358,7 +1358,7 @@ export function NeedStepper() {
                         />
                       )}
                       <span
-                        className={`text-sm ${check.pass ? "text-green-700" : "text-gray-500"}`}
+                        className={`text-sm ${check.pass ? "text-secondary-600" : "text-gray-500"}`}
                       >
                         {check.label}
                       </span>
@@ -1382,7 +1382,7 @@ export function NeedStepper() {
               </div>
 
               {/* Summary */}
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-5">
+              <div className="rounded-xl bg-gray-50 p-5">
                 <h4 className="mb-4 text-sm font-semibold text-gray-700">
                   {t("review_summary")}
                 </h4>
@@ -1458,7 +1458,7 @@ export function NeedStepper() {
 
               {/* Submit error */}
               {submitError && (
-                <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-700">
+                <div className="rounded-xl bg-primary-50 p-4 text-sm text-primary-700">
                   {submitError}
                 </div>
               )}
@@ -1479,7 +1479,7 @@ export function NeedStepper() {
             type="button"
             onClick={() => goTo(currentStep - 1)}
             disabled={currentStep === 0}
-            className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex items-center gap-2 rounded-xl bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-40"
           >
             <ChevronLeft className="size-4" aria-hidden="true" />
             {t("previous")}
@@ -1490,7 +1490,7 @@ export function NeedStepper() {
               type="button"
               onClick={handleSaveDraft}
               disabled={isSaving}
-              className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-xl bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 disabled:opacity-60"
             >
               <Save className="size-4" aria-hidden="true" />
               {isSaving ? "Sauvegarde..." : savedDraft ? "✓ Sauvegardé" : t("save")}
@@ -1500,7 +1500,7 @@ export function NeedStepper() {
               <button
                 type="button"
                 onClick={() => goTo(currentStep + 1)}
-                className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600"
               >
                 {t("next")}
                 <ChevronRight className="size-4" aria-hidden="true" />
@@ -1509,7 +1509,7 @@ export function NeedStepper() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-40"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <Send className="size-4" aria-hidden="true" />
                 {isSubmitting ? t("submitting") || "Envoi en cours..." : t("publish")}

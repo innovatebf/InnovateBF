@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 import { requireRoleForApi } from "@/lib/auth/guards";
 
 export async function POST(req: NextRequest) {
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = await sql`
+    const result = await getSql()`
       INSERT INTO ie_needs (
         titre, domaine, secteur, pays, niveau, region,
         contexte_strategique, question_centrale,

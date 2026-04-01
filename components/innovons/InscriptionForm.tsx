@@ -77,8 +77,8 @@ export function InscriptionForm() {
   if (success) {
     return (
       <div className="py-6 text-center">
-        <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-green-50">
-          <CheckCircle className="size-8 text-green-600" />
+        <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-secondary-50">
+          <CheckCircle className="size-8 text-secondary-600" />
         </div>
         <h2 className="mt-4 text-xl font-bold text-gray-900">
           {t("success_title")}
@@ -88,7 +88,7 @@ export function InscriptionForm() {
         </p>
         <Link
           href="/innovons/connexion"
-          className="mt-6 inline-block rounded-full bg-green-600 px-6 py-3 text-sm font-semibold text-white hover:bg-green-700"
+          className="mt-6 inline-block rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600"
         >
           {t("login_link")}
         </Link>
@@ -123,10 +123,8 @@ export function InscriptionForm() {
           autoComplete="name"
           {...register("fullName")}
           placeholder={t("placeholder_name")}
-          className={`w-full rounded-lg border px-3 py-2.5 text-sm outline-none focus:ring-2 ${
-            errors.fullName
-              ? "border-red-300 focus:ring-red-100"
-              : "border-gray-200 focus:border-green-400 focus:ring-green-100"
+          className={`w-full rounded-lg bg-gray-50 px-3 py-2.5 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30 ${
+            errors.fullName ? "ring-2 ring-primary-500/30" : ""
           }`}
         />
         {errors.fullName && (
@@ -148,10 +146,8 @@ export function InscriptionForm() {
           autoComplete="email"
           {...register("email")}
           placeholder={t("placeholder_email")}
-          className={`w-full rounded-lg border px-3 py-2.5 text-sm outline-none focus:ring-2 ${
-            errors.email
-              ? "border-red-300 focus:ring-red-100"
-              : "border-gray-200 focus:border-green-400 focus:ring-green-100"
+          className={`w-full rounded-lg bg-gray-50 px-3 py-2.5 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30 ${
+            errors.email ? "ring-2 ring-primary-500/30" : ""
           }`}
         />
         {errors.email && (
@@ -174,10 +170,8 @@ export function InscriptionForm() {
             autoComplete="new-password"
             {...register("password")}
             placeholder={t("placeholder_password")}
-            className={`w-full rounded-lg border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 ${
-              errors.password
-                ? "border-red-300 focus:ring-red-100"
-                : "border-gray-200 focus:border-green-400 focus:ring-green-100"
+            className={`w-full rounded-lg bg-gray-50 px-3 py-2.5 pr-10 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30 ${
+              errors.password ? "ring-2 ring-primary-500/30" : ""
             }`}
           />
           <button
@@ -213,10 +207,8 @@ export function InscriptionForm() {
             autoComplete="new-password"
             {...register("confirmPassword")}
             placeholder={t("placeholder_confirm_password")}
-            className={`w-full rounded-lg border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 ${
-              errors.confirmPassword
-                ? "border-red-300 focus:ring-red-100"
-                : "border-gray-200 focus:border-green-400 focus:ring-green-100"
+            className={`w-full rounded-lg bg-gray-50 px-3 py-2.5 pr-10 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30 ${
+              errors.confirmPassword ? "ring-2 ring-primary-500/30" : ""
             }`}
           />
           <button
@@ -250,10 +242,10 @@ export function InscriptionForm() {
               key={value}
               type="button"
               onClick={() => setValue("role", value, { shouldValidate: true })}
-              className={`flex flex-col items-center rounded-lg border p-3 text-center transition-colors ${
+              className={`flex flex-col items-center rounded-xl p-3 text-center transition-colors ${
                 currentRole === value
-                  ? "border-green-500 bg-green-50"
-                  : "border-gray-200 hover:border-gray-300"
+                  ? "bg-primary-50 ring-2 ring-primary-500/30"
+                  : "bg-gray-100 hover:bg-gray-200"
               }`}
             >
               <span className="text-sm font-semibold text-gray-900">
@@ -272,7 +264,7 @@ export function InscriptionForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="flex w-full items-center justify-center gap-2 rounded-full bg-green-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#b70011] to-[#dc2626] py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
       >
         {isSubmitting && <Loader2 className="size-4 animate-spin" aria-hidden="true" />}
         {isSubmitting ? t("submitting") : t("submit")}

@@ -58,10 +58,10 @@ export function MonEspaceSidebar({
 
   const roleBadgeColors =
     userRole === "PARRAIN" || userRole === "INNOVATEUR"
-      ? "bg-green-600/20 text-green-400"
+      ? "bg-secondary-100 text-secondary-700"
       : userRole === "ADMINISTRATEUR"
-        ? "bg-red-600/20 text-red-400"
-        : "bg-gray-600/20 text-gray-400";
+        ? "bg-primary-100 text-primary-700"
+        : "bg-gray-100 text-gray-600";
 
   const roleLabel =
     userRole === "PARRAIN"
@@ -74,16 +74,16 @@ export function MonEspaceSidebar({
 
   return (
     <aside
-      className="hidden w-60 shrink-0 flex-col bg-gray-900 text-white lg:flex"
+      className="hidden w-60 shrink-0 flex-col bg-gray-50 text-gray-800 lg:flex"
       style={{ minHeight: "calc(100vh - 72px)" }}
     >
       {/* Header */}
-      <div className="border-b border-white/10 px-4 py-5">
+      <div className="px-4 py-5">
         <div className="flex items-center gap-3">
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-green-600 text-xs font-black text-white">
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-700 to-primary-600 text-xs font-black text-white">
             IE
           </div>
-          <span className="text-sm font-bold">{t("nav_dashboard")}</span>
+          <span className="text-sm font-bold text-gray-900">{t("nav_dashboard")}</span>
         </div>
       </div>
 
@@ -96,10 +96,10 @@ export function MonEspaceSidebar({
               <li key={href}>
                 <Link
                   href={href}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                  className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
                     active
-                      ? "bg-green-600/20 text-green-400"
-                      : "text-gray-300 hover:bg-white/5 hover:text-white"
+                      ? "bg-primary-50 text-primary-700 font-medium"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                   }`}
                   aria-current={active ? "page" : undefined}
                 >
@@ -112,11 +112,11 @@ export function MonEspaceSidebar({
         </ul>
       </nav>
 
-      {/* Separator + Back link */}
-      <div className="border-t border-white/10 px-3 py-3">
+      {/* Back link */}
+      <div className="px-3 py-3">
         <Link
           href="/innovons"
-          className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+          className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900"
         >
           <ChevronLeft className="size-4 shrink-0" aria-hidden="true" />
           {t("nav_back")}
@@ -124,7 +124,7 @@ export function MonEspaceSidebar({
       </div>
 
       {/* Role badge */}
-      <div className="border-t border-white/10 px-4 py-4">
+      <div className="px-4 py-4">
         <span
           className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${roleBadgeColors}`}
         >

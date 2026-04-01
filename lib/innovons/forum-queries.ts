@@ -1,4 +1,4 @@
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 
 function isNeonConfigured(): boolean {
   return Boolean(
@@ -70,7 +70,7 @@ export async function getComments(needId: string): Promise<Comment[]> {
     return MOCK_COMMENTS.map(c => ({ ...c, need_id: needId }));
   }
   try {
-    const rows = await sql`
+    const rows = await getSql()`
       SELECT id, need_id, parent_id, author_name, author_email, content, created_at
       FROM ie_comments
       WHERE need_id = ${needId} AND parent_id IS NULL
@@ -78,7 +78,7 @@ export async function getComments(needId: string): Promise<Comment[]> {
     ` as Comment[];
     // Fetch replies
     for (const comment of rows) {
-      const replies = await sql`
+      const replies = await getSql()`
         SELECT id, need_id, parent_id, author_name, author_email, content, created_at
         FROM ie_comments
         WHERE parent_id = ${comment.id}
@@ -114,7 +114,7 @@ export async function postComment(data: {
     return mock;
   }
   try {
-    const rows = await sql`
+    const rows = await getSql()`
       INSERT INTO ie_comments (need_id, parent_id, author_name, author_email, content)
       VALUES (
         ${data.needId},
@@ -137,14 +137,14 @@ export async function getVoteScore(needId: string, userEmail?: string): Promise<
     return { vote_score: Math.floor(Math.random() * 20) + 5, vote_count: Math.floor(Math.random() * 30) + 8, user_vote: 0 };
   }
   try {
-    const [scoreRow] = await sql`
+    const [scoreRow] = await getSql()`
       SELECT COALESCE(SUM(value), 0) as vote_score, COUNT(*) as vote_count
       FROM ie_votes WHERE need_id = ${needId}
     ` as { vote_score: number; vote_count: number }[];
 
     let user_vote: -1 | 0 | 1 = 0;
     if (userEmail) {
-      const [voteRow] = await sql`
+      const [voteRow] = await getSql()`
         SELECT value FROM ie_votes WHERE need_id = ${needId} AND user_email = ${userEmail}
       ` as { value: -1 | 1 }[];
       if (voteRow) user_vote = voteRow.value;
@@ -165,7 +165,7 @@ export async function castVote(needId: string, userEmail: string, value: 1 | -1)
     return { vote_score: value, vote_count: 1, user_vote: value };
   }
   try {
-    await sql`
+    await getSql()`
       INSERT INTO ie_votes (need_id, user_email, value)
       VALUES (${needId}, ${userEmail}, ${value})
       ON CONFLICT (need_id, user_email)

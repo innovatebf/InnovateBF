@@ -35,10 +35,10 @@ export default async function DeposerBesoinPage({
       <section className="bg-[#0D0D0D] px-4 py-16 text-white lg:px-8 lg:py-20">
         <div className="mx-auto max-w-4xl">
           <div className="mb-4 flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-green-600">
+            <div className="flex size-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary-600 to-primary-500">
               <FileText className="size-5 text-white" aria-hidden="true" />
             </div>
-            <span className="text-sm font-medium text-green-400">
+            <span className="text-sm font-medium text-secondary-400">
               InnovonsEnsembleLeFaso
             </span>
           </div>

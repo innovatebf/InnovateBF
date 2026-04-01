@@ -12,9 +12,9 @@ type UserRow = {
 };
 
 const ROLE_CONFIG: Record<string, { label: string; className: string }> = {
-  admin: { label: "Admin", className: "bg-red-900/40 text-red-400 border-red-800" },
-  editor: { label: "Éditeur", className: "bg-green-900/40 text-green-400 border-green-800" },
-  guest: { label: "Invité", className: "bg-gray-800 text-gray-400 border-gray-700" },
+  admin: { label: "Admin", className: "bg-primary-500/20 text-primary-400 border-primary-500/30" },
+  editor: { label: "Éditeur", className: "bg-secondary-500/20 text-secondary-400 border-secondary-500/30" },
+  guest: { label: "Invité", className: "bg-white/10 text-gray-400 border-white/10" },
 };
 
 export function UserRoleManager({ users: initialUsers }: { users: UserRow[] }) {
@@ -49,14 +49,14 @@ export function UserRoleManager({ users: initialUsers }: { users: UserRow[] }) {
   return (
     <div className="space-y-4">
       {error && (
-        <div className="rounded-md border border-red-800 bg-red-900/20 px-4 py-3 text-sm text-red-400">
+        <div className="rounded-xl bg-primary-50 px-4 py-3 text-sm text-primary-700">
           {error}
         </div>
       )}
 
-      <div className="overflow-hidden rounded-xl border border-white/10 bg-gray-900 shadow-sm">
+      <div className="overflow-hidden rounded-xl bg-[#191c1d] shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
         <table className="min-w-full divide-y divide-white/5">
-          <thead className="bg-gray-800/50">
+          <thead className="bg-white/5">
             <tr>
               {["Utilisateur", "Email", "Rôle", "Membre depuis", "Action"].map(
                 (h) => (
@@ -79,7 +79,7 @@ export function UserRoleManager({ users: initialUsers }: { users: UserRow[] }) {
                 <tr key={user.id} className="hover:bg-white/5 transition-colors">
                   <td className="whitespace-nowrap px-5 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-green-600/20 text-green-400 text-sm font-bold">
+                      <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary-500/20 text-primary-400 text-sm font-bold">
                         {initials}
                       </div>
                       <span className="text-sm font-medium text-white">
@@ -109,7 +109,7 @@ export function UserRoleManager({ users: initialUsers }: { users: UserRow[] }) {
                         value={user.role}
                         disabled={isLoading}
                         onChange={(e) => updateRole(user.id, e.target.value)}
-                        className="rounded-md border border-gray-700 bg-gray-800 px-2 py-1 text-sm text-gray-200 shadow-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 disabled:opacity-50"
+                        className="rounded-lg bg-white/10 px-2 py-1 text-sm text-gray-200 outline-none focus:bg-white/15 focus:ring-2 focus:ring-primary-500/30 disabled:opacity-50"
                         aria-label={`Rôle de ${user.name ?? user.email}`}
                       >
                         <option value="guest">Invité</option>

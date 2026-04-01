@@ -79,7 +79,7 @@ export default async function ModifierBesoinPage({
           <li>
             <Link
               href="/innovons/mon-espace"
-              className="hover:text-green-600"
+              className="hover:text-[#16a34a]"
             >
               {tEspace("nav_dashboard")}
             </Link>
@@ -88,7 +88,7 @@ export default async function ModifierBesoinPage({
           <li>
             <Link
               href="/innovons/mon-espace/besoins"
-              className="hover:text-green-600"
+              className="hover:text-[#16a34a]"
             >
               {tEspace("besoins_title")}
             </Link>

@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { requireRoleForApi } from "@/lib/auth/guards";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 
 export async function GET() {
   const { error } = await requireRoleForApi("admin");
   if (error) return error;
 
   try {
-    const users = await sql`
+    const users = await getSql()`
       SELECT id, name, email, role, "createdAt" as created_at
       FROM "user"
       ORDER BY "createdAt" DESC

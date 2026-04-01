@@ -1,6 +1,6 @@
 import type { Need, NeedStatus } from "./types";
 import { MOCK_NEEDS } from "./mock-data";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 
 // Statuts etendus pour la moderation
 type ModerationNeedStatus = NeedStatus | "REJETE" | "REVISION_DEMANDEE";
@@ -93,7 +93,7 @@ export async function getModerationQueue(): Promise<ModerationItem[]> {
   if (!isNeonConfigured()) return MOCK_MODERATION_QUEUE;
 
   try {
-    const rows = await sql`
+    const rows = await getSql()`
       SELECT
         n.id,
         n.slug,
@@ -125,7 +125,7 @@ export async function getModerationStats(): Promise<ModerationStats> {
   if (!isNeonConfigured()) return MOCK_MODERATION_STATS;
 
   try {
-    const rows = await sql`
+    const rows = await getSql()`
       SELECT
         COUNT(*) FILTER (WHERE statut = 'VALIDATION')::int        AS pending,
         COUNT(*) FILTER (WHERE statut = 'PUBLIE')::int            AS published,
@@ -163,7 +163,7 @@ export async function getNeedForReview(id: string): Promise<Need | null> {
   }
 
   try {
-    const rows = await sql`
+    const rows = await getSql()`
       SELECT * FROM ie_needs
       WHERE id = ${id} OR slug = ${id}
       LIMIT 1
@@ -196,13 +196,13 @@ export async function submitModerationAction(
 
   try {
     if (action.action === "APPROVED") {
-      await sql`
+      await getSql()`
         UPDATE ie_needs
         SET statut = ${newStatus}, updated_at = NOW(), published_at = NOW()
         WHERE id = ${action.needId}
       `;
     } else {
-      await sql`
+      await getSql()`
         UPDATE ie_needs
         SET statut = ${newStatus}, updated_at = NOW()
         WHERE id = ${action.needId}

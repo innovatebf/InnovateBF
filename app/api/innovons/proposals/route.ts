@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 import { requireRoleForApi } from "@/lib/auth/guards";
 
 function isNeonConfigured(): boolean {
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = await sql`
+    const result = await getSql()`
       INSERT INTO ie_proposals (
         need_id, titre, description, approche, equipe,
         budget_estime, delai, porteur_nom, porteur_email, porteur_organisation,
