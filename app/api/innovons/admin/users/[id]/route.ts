@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireRoleForApi } from "@/lib/auth/guards";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 import { ROLES } from "@/lib/auth/roles";
 
 export async function PATCH(
@@ -26,7 +26,7 @@ export async function PATCH(
   }
 
   try {
-    await sql`UPDATE "user" SET role = ${role} WHERE id = ${id}`;
+    await getSql()`UPDATE "user" SET role = ${role} WHERE id = ${id}`;
     return NextResponse.json({ success: true });
   } catch (e) {
     console.error(e);

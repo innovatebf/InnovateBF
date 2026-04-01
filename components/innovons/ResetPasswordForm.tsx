@@ -90,13 +90,13 @@ export function ResetPasswordForm() {
   if (!hasValidSession) {
     return (
       <div className="text-center">
-        <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-red-100">
-          <AlertCircle className="size-6 text-red-600" aria-hidden="true" />
+        <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary-50">
+          <AlertCircle className="size-6 text-primary-600" aria-hidden="true" />
         </div>
         <p className="text-sm text-gray-700">{t("error_invalid_link")}</p>
         <Link
           href="/innovons/mot-de-passe-oublie"
-          className="mt-4 inline-block text-sm font-semibold text-green-600 hover:underline"
+          className="mt-4 inline-block text-sm font-semibold text-primary-600 hover:underline"
         >
           {t("request_new_link")}
         </Link>
@@ -108,8 +108,8 @@ export function ResetPasswordForm() {
   if (success) {
     return (
       <div className="text-center">
-        <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-green-100">
-          <CheckCircle2 className="size-6 text-green-600" aria-hidden="true" />
+        <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-secondary-50">
+          <CheckCircle2 className="size-6 text-secondary-600" aria-hidden="true" />
         </div>
         <h2 className="text-lg font-semibold text-gray-900">
           {t("success_title")}
@@ -147,10 +147,8 @@ export function ResetPasswordForm() {
             autoComplete="new-password"
             {...register("new_password")}
             placeholder={t("placeholder_password")}
-            className={`w-full rounded-lg border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 ${
-              errors.new_password
-                ? "border-red-300 focus:ring-red-100"
-                : "border-gray-200 focus:border-green-400 focus:ring-green-100"
+            className={`w-full rounded-lg bg-gray-50 px-3 py-2.5 pr-10 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30 ${
+              errors.new_password ? "ring-2 ring-primary-500/30" : ""
             }`}
           />
           <button
@@ -188,10 +186,8 @@ export function ResetPasswordForm() {
             autoComplete="new-password"
             {...register("confirm_password")}
             placeholder={t("placeholder_confirm")}
-            className={`w-full rounded-lg border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 ${
-              errors.confirm_password
-                ? "border-red-300 focus:ring-red-100"
-                : "border-gray-200 focus:border-green-400 focus:ring-green-100"
+            className={`w-full rounded-lg bg-gray-50 px-3 py-2.5 pr-10 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30 ${
+              errors.confirm_password ? "ring-2 ring-primary-500/30" : ""
             }`}
           />
           <button
@@ -218,7 +214,7 @@ export function ResetPasswordForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="flex w-full items-center justify-center gap-2 rounded-full bg-green-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 py-3 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600 disabled:opacity-60"
       >
         {isSubmitting && (
           <Loader2 className="size-4 animate-spin" aria-hidden="true" />

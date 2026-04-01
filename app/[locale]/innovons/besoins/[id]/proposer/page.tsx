@@ -78,7 +78,7 @@ export default async function ProposerSolutionPage({
           </h1>
           <p className="mt-2 text-gray-400">
             {t("subtitle")} :{" "}
-            <span className="font-medium text-green-400">{need.titre}</span>
+            <span className="font-medium text-secondary-400">{need.titre}</span>
           </p>
         </div>
       </section>

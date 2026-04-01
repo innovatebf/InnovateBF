@@ -11,7 +11,7 @@ export default function MonEspaceLayout({
       <IENavbar />
       <div className="flex flex-1">
         <MonEspaceSidebar />
-        <main className="flex-1 overflow-auto bg-gray-50 p-6 lg:p-8">
+        <main className="flex-1 overflow-auto bg-[#f8f9fa] p-6 lg:p-8">
           {children}
         </main>
       </div>

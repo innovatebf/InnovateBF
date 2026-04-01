@@ -89,7 +89,7 @@ export async function StatsGrid() {
   return (
     <section
       aria-label={t("section_label")}
-      className="border-b border-gray-100 bg-white py-14"
+      className="bg-gray-50 py-14"
     >
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         {/* PRD KI-F02 : 5 cols >= 1280px, 2-3 tab, 1-2 mobile */}
@@ -102,13 +102,13 @@ export async function StatsGrid() {
               <Link
                 key={key}
                 href={href}
-                className="group flex flex-col items-center text-center transition-transform hover:-translate-y-0.5"
+                className="group flex flex-col items-center text-center transition-all hover:-translate-y-0.5"
                 aria-label={`${display}${currency ? " " + currency : ""} ${label}`}
               >
-                {/* Icone sur fond vert clair */}
-                <div className="flex size-12 items-center justify-center rounded-lg bg-green-50 transition-colors group-hover:bg-green-100">
+                {/* Icone sur fond primaire clair */}
+                <div className="flex size-12 items-center justify-center rounded-xl bg-primary-50 transition-colors group-hover:bg-primary-100">
                   <Icon
-                    className="size-6 text-green-600"
+                    className="size-6 text-primary-600"
                     aria-hidden="true"
                   />
                 </div>
@@ -139,7 +139,7 @@ export function StatsSkeleton() {
   return (
     <section
       aria-label="Chargement des indicateurs"
-      className="border-b border-gray-100 bg-white py-14"
+      className="bg-gray-50 py-14"
     >
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">

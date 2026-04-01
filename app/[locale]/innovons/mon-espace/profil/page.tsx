@@ -24,7 +24,7 @@ export default async function ProfilPage({
           <li>
             <Link
               href="/innovons/mon-espace"
-              className="hover:text-green-600"
+              className="hover:text-[#16a34a]"
             >
               {t("nav_dashboard")}
             </Link>

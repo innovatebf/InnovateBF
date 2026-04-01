@@ -85,13 +85,13 @@ const DAY2_SESSIONS: Session[] = [
 function getTypeBadgeClasses(type: Session["type"]): string {
   switch (type) {
     case "PLENIERE":
-      return "bg-blue-100 text-blue-800";
+      return "bg-blue-100 text-blue-700";
     case "ATELIER":
-      return "bg-amber-100 text-amber-800";
+      return "bg-amber-100 text-amber-700";
     case "PANEL":
-      return "bg-purple-100 text-purple-800";
+      return "bg-purple-100 text-purple-700";
     case "CEREMONIE":
-      return "bg-green-100 text-green-800";
+      return "bg-secondary-100 text-secondary-700";
   }
 }
 
@@ -123,8 +123,8 @@ export function ConferenceTabs() {
           onClick={() => setActiveDay(1)}
           className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-colors ${
             activeDay === 1
-              ? "bg-green-600 text-white shadow-md"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              ? "bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)]"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
           }`}
         >
           {t("day1")} — 15 Oct.
@@ -134,8 +134,8 @@ export function ConferenceTabs() {
           onClick={() => setActiveDay(2)}
           className={`rounded-full px-6 py-2.5 text-sm font-semibold transition-colors ${
             activeDay === 2
-              ? "bg-green-600 text-white shadow-md"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              ? "bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-[0_4px_20px_rgba(0,0,0,0.06)]"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
           }`}
         >
           {t("day2")} — 16 Oct.
@@ -147,11 +147,11 @@ export function ConferenceTabs() {
         {sessions.map((session, idx) => (
           <div
             key={`${activeDay}-${idx}`}
-            className="flex gap-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+            className="flex gap-4 rounded-xl bg-white p-5 shadow-[0_20px_40px_rgba(25,28,29,0.05)] transition-all hover:shadow-[0_20px_40px_rgba(25,28,29,0.10)]"
           >
             {/* Time */}
             <div className="hidden w-36 shrink-0 sm:block">
-              <span className="text-sm font-semibold text-green-600">
+              <span className="text-sm font-semibold text-secondary-600">
                 {session.time}
               </span>
             </div>

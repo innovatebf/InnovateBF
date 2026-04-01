@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { requireRole } from "@/lib/auth/guards";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 import { UserRoleManager } from "@/components/innovons/UserRoleManager";
 
 export default async function AdminUsersPage({
@@ -21,7 +21,7 @@ export default async function AdminUsersPage({
   }> = [];
 
   try {
-    const rows = await sql`
+    const rows = await getSql()`
       SELECT id, name, email, role, "createdAt" as created_at
       FROM "user"
       ORDER BY "createdAt" DESC

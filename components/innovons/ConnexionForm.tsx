@@ -83,10 +83,8 @@ export function ConnexionForm() {
           autoComplete="email"
           {...register("email")}
           placeholder={t("placeholder_email")}
-          className={`w-full rounded-lg border px-3 py-2.5 text-sm outline-none focus:ring-2 ${
-            errors.email
-              ? "border-red-300 focus:ring-red-100"
-              : "border-gray-200 focus:border-green-400 focus:ring-green-100"
+          className={`w-full rounded-lg bg-gray-50 px-3 py-2.5 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30 ${
+            errors.email ? "ring-2 ring-primary-500/30" : ""
           }`}
         />
         {errors.email && (
@@ -109,10 +107,8 @@ export function ConnexionForm() {
             autoComplete="current-password"
             {...register("password")}
             placeholder={t("placeholder_password")}
-            className={`w-full rounded-lg border px-3 py-2.5 pr-10 text-sm outline-none focus:ring-2 ${
-              errors.password
-                ? "border-red-300 focus:ring-red-100"
-                : "border-gray-200 focus:border-green-400 focus:ring-green-100"
+            className={`w-full rounded-lg bg-gray-50 px-3 py-2.5 pr-10 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30 ${
+              errors.password ? "ring-2 ring-primary-500/30" : ""
             }`}
           />
           <button
@@ -134,7 +130,7 @@ export function ConnexionForm() {
         <div className="mt-1.5 text-right">
           <Link
             href="/innovons/mot-de-passe-oublie"
-            className="text-xs font-medium text-green-600 hover:underline"
+            className="text-xs font-medium text-primary-600 hover:underline"
           >
             {t("forgot_password")}
           </Link>
@@ -145,7 +141,7 @@ export function ConnexionForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="flex w-full items-center justify-center gap-2 rounded-full bg-green-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 py-3 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600 disabled:opacity-60"
       >
         {isSubmitting && <Loader2 className="size-4 animate-spin" aria-hidden="true" />}
         {isSubmitting ? t("submitting") : t("submit")}

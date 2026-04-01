@@ -62,8 +62,8 @@ export function ObservatoireClient({
             className={[
               "rounded-full px-3 py-1.5 text-xs font-semibold transition-colors",
               selectedCategory === cat
-                ? "bg-green-600 text-white"
-                : "border border-gray-700 text-gray-400 hover:border-gray-500 hover:text-gray-200",
+                ? "bg-gradient-to-r from-primary-600 to-primary-500 text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200",
             ].join(" ")}
           >
             {cat}
@@ -79,11 +79,11 @@ export function ObservatoireClient({
           return (
             <li
               key={article.id}
-              className="rounded-xl border border-gray-800 bg-gray-900 p-5 transition-colors hover:border-gray-700"
+              className="rounded-xl bg-white p-5 shadow-[0_20px_40px_rgba(25,28,29,0.05)] transition-shadow hover:shadow-[0_20px_40px_rgba(25,28,29,0.10)]"
             >
               {/* Top row — category + impact badges */}
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-green-900/40 px-2.5 py-0.5 text-xs font-semibold text-green-400 border border-green-800/60">
+                <span className="rounded-full bg-secondary-100 px-2.5 py-0.5 text-xs font-semibold text-secondary-700">
                   {article.categorie}
                 </span>
                 <span
@@ -97,7 +97,7 @@ export function ObservatoireClient({
               </div>
 
               {/* Title */}
-              <h3 className="mt-3 text-base font-bold leading-snug text-white">
+              <h3 className="mt-3 text-base font-bold leading-snug text-gray-900">
                 {article.titre}
               </h3>
 
@@ -114,7 +114,7 @@ export function ObservatoireClient({
               </p>
 
               {/* Summary */}
-              <p className="mt-3 text-sm leading-relaxed text-gray-400 line-clamp-3">
+              <p className="mt-3 text-sm leading-relaxed text-gray-600 line-clamp-3">
                 {article.resume}
               </p>
 
@@ -123,11 +123,11 @@ export function ObservatoireClient({
                 className="mt-3 flex flex-wrap items-center gap-1.5"
                 aria-label="Étiquettes"
               >
-                <Tag className="size-3 shrink-0 text-gray-600" aria-hidden="true" />
+                <Tag className="size-3 shrink-0 text-gray-400" aria-hidden="true" />
                 {article.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded bg-gray-800 px-2 py-0.5 text-xs text-gray-400"
+                    className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600"
                   >
                     {tag}
                   </span>
@@ -140,7 +140,7 @@ export function ObservatoireClient({
                   href={article.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-green-400 transition-colors hover:text-green-300"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-secondary-600 transition-colors hover:text-secondary-700"
                 >
                   Lire l&apos;article
                   <ExternalLink className="size-3" aria-hidden="true" />
@@ -151,7 +151,7 @@ export function ObservatoireClient({
         })}
 
         {filteredArticles.length === 0 && (
-          <li className="rounded-xl border border-gray-800 bg-gray-900 px-5 py-10 text-center text-sm text-gray-500">
+          <li className="rounded-xl bg-gray-50 px-5 py-10 text-center text-sm text-gray-500">
             Aucun signal dans cette catégorie pour le moment.
           </li>
         )}

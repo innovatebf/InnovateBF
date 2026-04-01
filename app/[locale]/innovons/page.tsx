@@ -122,15 +122,15 @@ export default async function InnovonsPage({
             {/* Bouton outline vert */}
             <Link
               href="/innovons/besoins"
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-green-400 transition-all hover:border-green-500 hover:bg-white/5"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-6 py-3 text-sm font-semibold text-secondary-400 transition-all hover:border-secondary-400 hover:bg-white/5"
             >
               {t("hero.cta_needs")}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
-            {/* Bouton plein vert fonce */}
+            {/* Bouton plein rouge */}
             <Link
               href="/innovons/appels"
-              className="inline-flex items-center gap-2 rounded-full bg-green-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-green-600"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#b70011] to-[#dc2626] px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
             >
               {t("hero.cta_calls")}
             </Link>
@@ -154,7 +154,7 @@ export default async function InnovonsPage({
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             {/* Colonne gauche */}
             <div>
-              <span className="inline-block rounded-full bg-green-50 px-4 py-1.5 text-xs font-semibold text-green-700">
+              <span className="inline-block rounded-full bg-secondary-100 px-4 py-1.5 text-xs font-semibold text-secondary-700">
                 {t("mission.badge")}
               </span>
               <h2 className="mt-4 text-3xl font-bold leading-tight text-gray-900 lg:text-4xl">
@@ -167,7 +167,7 @@ export default async function InnovonsPage({
                 {missionPoints.map((point) => (
                   <li key={point} className="flex items-start gap-3">
                     <CheckCircle
-                      className="mt-0.5 size-5 shrink-0 text-green-600"
+                      className="mt-0.5 size-5 shrink-0 text-secondary-600"
                       aria-hidden="true"
                     />
                     <span className="text-sm leading-relaxed text-gray-700">
@@ -196,7 +196,7 @@ export default async function InnovonsPage({
       {/* ═══════════════════════════════════════════════════════════════════
           COMMENT CA FONCTIONNE  (Figma p.2 — 4 feature cards)
       ═══════════════════════════════════════════════════════════════════ */}
-      <section className="border-t border-gray-100 bg-gray-50 py-20">
+      <section className="bg-gray-50 py-20">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           {/* En-tete centre */}
           <div className="text-center">
@@ -213,10 +213,10 @@ export default async function InnovonsPage({
             {features.map(({ titleKey, descKey, href, icon: Icon }) => (
               <div
                 key={titleKey}
-                className="flex flex-col rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+                className="flex flex-col rounded-xl bg-white p-6 shadow-[0_20px_40px_rgba(25,28,29,0.05)] transition-shadow hover:shadow-[0_20px_40px_rgba(25,28,29,0.10)]"
               >
                 {/* Carre vert avec icone blanc (Figma) */}
-                <div className="flex size-11 items-center justify-center rounded-lg bg-green-600">
+                <div className="flex size-11 items-center justify-center rounded-lg bg-gradient-to-br from-primary-600 to-primary-500">
                   <Icon
                     className="size-5 text-white"
                     aria-hidden="true"
@@ -230,7 +230,7 @@ export default async function InnovonsPage({
                 </p>
                 <Link
                   href={href}
-                  className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-green-600 transition-colors hover:text-green-700"
+                  className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-secondary-600 transition-colors hover:text-secondary-700"
                 >
                   {t("how.learn_more")}
                   <ArrowRight className="size-3.5" aria-hidden="true" />
@@ -255,14 +255,14 @@ export default async function InnovonsPage({
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link
               href="/innovons/besoins/deposer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-green-400 transition-all hover:border-green-500 hover:bg-white/5"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-6 py-3 text-sm font-semibold text-secondary-400 transition-all hover:border-secondary-400 hover:bg-white/5"
             >
               {t("cta.deposit")}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
             <Link
               href="/innovons/inscription"
-              className="inline-flex rounded-full bg-green-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-green-600"
+              className="inline-flex rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600"
             >
               {t("cta.register")}
             </Link>
@@ -282,7 +282,7 @@ export default async function InnovonsPage({
             {/* Branding */}
             <div>
               <div className="flex items-center gap-2">
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-green-600 text-sm font-black text-white">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary-600 to-primary-500 text-sm font-black text-white">
                   IE
                 </div>
                 <span className="font-bold text-white">
@@ -334,15 +334,15 @@ export default async function InnovonsPage({
               </h3>
               <ul className="space-y-3 text-sm">
                 <li className="flex items-center gap-2">
-                  <Mail className="size-4 shrink-0 text-green-500" aria-hidden="true" />
+                  <Mail className="size-4 shrink-0 text-secondary-500" aria-hidden="true" />
                   <span>{t("footer.email")}</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Phone className="size-4 shrink-0 text-green-500" aria-hidden="true" />
+                  <Phone className="size-4 shrink-0 text-secondary-500" aria-hidden="true" />
                   <span>{t("footer.phone")}</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <MapPin className="size-4 shrink-0 text-green-500" aria-hidden="true" />
+                  <MapPin className="size-4 shrink-0 text-secondary-500" aria-hidden="true" />
                   <span>{t("footer.location")}</span>
                 </li>
               </ul>

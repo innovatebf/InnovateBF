@@ -1,7 +1,7 @@
 import { getServerSession } from '@/lib/auth/server';
 import { redirect } from 'next/navigation';
 import { hasMinRole, type AppRole } from './roles';
-import sql from '@/lib/db/neon';
+import { getSql } from '@/lib/db/neon';
 
 type SessionResult = NonNullable<Awaited<ReturnType<typeof getServerSession>>>;
 
@@ -32,7 +32,7 @@ async function resolveRole(userId: string, sessionRole?: string): Promise<string
   if (role !== 'guest') return role;
   if (!isNeonConfigured()) return role;
   try {
-    const rows = await sql`SELECT role FROM "user" WHERE id = ${userId} LIMIT 1`;
+    const rows = await getSql()`SELECT role FROM "user" WHERE id = ${userId} LIMIT 1`;
     return normalizeRole(rows[0]?.role as string | undefined);
   } catch {
     return role;

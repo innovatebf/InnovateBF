@@ -54,8 +54,8 @@ export function ForgotPasswordForm() {
   if (successEmail) {
     return (
       <div className="text-center">
-        <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-green-100">
-          <CheckCircle2 className="size-6 text-green-600" aria-hidden="true" />
+        <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-secondary-50">
+          <CheckCircle2 className="size-6 text-secondary-600" aria-hidden="true" />
         </div>
         <h2 className="text-lg font-semibold text-gray-900">
           {t("success_title")}
@@ -94,10 +94,8 @@ export function ForgotPasswordForm() {
           autoComplete="email"
           {...register("email")}
           placeholder={t("placeholder_email")}
-          className={`w-full rounded-lg border px-3 py-2.5 text-sm outline-none focus:ring-2 ${
-            errors.email
-              ? "border-red-300 focus:ring-red-100"
-              : "border-gray-200 focus:border-green-400 focus:ring-green-100"
+          className={`w-full rounded-lg bg-gray-50 px-3 py-2.5 text-sm outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30 ${
+            errors.email ? "ring-2 ring-primary-500/30" : ""
           }`}
         />
         {errors.email && (
@@ -109,7 +107,7 @@ export function ForgotPasswordForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="flex w-full items-center justify-center gap-2 rounded-full bg-green-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 py-3 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600 disabled:opacity-60"
       >
         {isSubmitting && (
           <Loader2 className="size-4 animate-spin" aria-hidden="true" />

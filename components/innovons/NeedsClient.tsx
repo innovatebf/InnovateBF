@@ -63,13 +63,13 @@ const DEFAULT_FILTERS: NeedFilters = {
 
 function CriticiteBadge({ level }: { level: 1 | 2 | 3 }) {
   const colors = {
-    1: "bg-secondary-50 text-secondary-600 border-secondary-200",
-    2: "bg-amber-50 text-amber-700 border-amber-200",
-    3: "bg-red-50 text-primary-600 border-red-200",
+    1: "bg-secondary-50 text-secondary-700",
+    2: "bg-accent-50 text-accent-700",
+    3: "bg-primary-50 text-primary-700",
   };
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium ${colors[level]}`}
+      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${colors[level]}`}
     >
       <AlertTriangle className="size-3" aria-hidden="true" />
       C{level}
@@ -84,10 +84,10 @@ function NeedCard({ need, locale }: { need: Need; locale: string }) {
   const crit = maxCriticite(need);
 
   return (
-    <article className="flex flex-col rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
+    <article className="flex flex-col rounded-xl bg-white p-5 shadow-[0_20px_40px_rgba(25,28,29,0.05)] transition-all hover:shadow-[0_20px_40px_rgba(25,28,29,0.10)] hover:bg-[#ffffff]">
       {/* Header: domaine + niveau */}
       <div className="flex flex-wrap items-center gap-2">
-        <span className="rounded-full bg-secondary-50 px-2.5 py-0.5 text-xs font-semibold text-secondary-600">
+        <span className="rounded-full bg-secondary-100 px-2.5 py-0.5 text-xs font-semibold text-secondary-700">
           {need.domaine}
         </span>
         <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">
@@ -122,7 +122,7 @@ function NeedCard({ need, locale }: { need: Need; locale: string }) {
       <div className="flex-1" />
 
       {/* Footer: stats + date + lien */}
-      <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3">
+      <div className="mt-4 flex items-center justify-between pt-3">
         <div className="flex items-center gap-3 text-xs text-gray-400">
           <span className="flex items-center gap-1">
             <Users className="size-3.5" aria-hidden="true" />
@@ -159,7 +159,7 @@ function FilterSection({
   children: React.ReactNode;
 }) {
   return (
-    <div className="border-b border-gray-100 pb-4">
+    <div className="pb-4">
       <button
         type="button"
         onClick={toggle}
@@ -204,7 +204,7 @@ function CheckboxGroup({
             type="checkbox"
             checked={selected.includes(opt)}
             onChange={() => toggle(opt)}
-            className="size-4 rounded border-gray-300 text-secondary-600 focus:ring-secondary-600"
+            className="size-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500/20"
           />
           {opt}
         </label>
@@ -301,7 +301,7 @@ export function NeedsClient({ initialNeeds, locale }: NeedsClientProps) {
           placeholder={t("filter_search")}
           value={filters.search}
           onChange={(e) => setFilters((f) => ({ ...f, search: e.target.value }))}
-          className="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-sm text-gray-700 placeholder:text-gray-400 focus:border-secondary-600 focus:outline-none focus:ring-1 focus:ring-secondary-600"
+          className="w-full rounded-lg bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-700 placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/30"
         />
       </div>
 
@@ -362,7 +362,7 @@ export function NeedsClient({ initialNeeds, locale }: NeedsClientProps) {
         <button
           type="button"
           onClick={resetFilters}
-          className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
         >
           <X className="size-4" aria-hidden="true" />
           {t("filter_reset")}
@@ -381,7 +381,7 @@ export function NeedsClient({ initialNeeds, locale }: NeedsClientProps) {
         <button
           type="button"
           onClick={() => setMobileFiltersOpen(true)}
-          className="inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 lg:hidden"
+          className="inline-flex items-center gap-2 rounded-xl bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 lg:hidden"
         >
           <Filter className="size-4" aria-hidden="true" />
           {t("filter_domaine")}
@@ -420,7 +420,7 @@ export function NeedsClient({ initialNeeds, locale }: NeedsClientProps) {
               <button
                 type="button"
                 onClick={() => setMobileFiltersOpen(false)}
-                className="mt-6 w-full rounded-lg bg-secondary-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-secondary-700"
+                className="mt-6 w-full rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-4 py-3 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600"
               >
                 {t("results_count", { count: filteredNeeds.length })}
               </button>
@@ -446,7 +446,7 @@ export function NeedsClient({ initialNeeds, locale }: NeedsClientProps) {
                 <button
                   type="button"
                   onClick={resetFilters}
-                  className="mt-4 rounded-lg bg-secondary-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-secondary-700"
+                  className="mt-4 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600"
                 >
                   {t("filter_reset")}
                 </button>

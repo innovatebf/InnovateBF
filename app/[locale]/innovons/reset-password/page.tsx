@@ -35,7 +35,7 @@ export default async function ResetPasswordPage({
         <div className="w-full max-w-md">
           {/* En-tete */}
           <div className="mb-8 text-center">
-            <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-green-600 text-sm font-black text-white">
+            <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-primary-500 text-sm font-black text-white">
               IE
             </div>
             <h1 className="mt-4 text-2xl font-bold text-gray-900">
@@ -47,11 +47,11 @@ export default async function ResetPasswordPage({
           </div>
 
           {/* Carte formulaire */}
-          <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
+          <div className="rounded-2xl bg-white p-8 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
             <Suspense
               fallback={
                 <div className="flex justify-center py-8">
-                  <Loader2 className="size-6 animate-spin text-green-600" />
+                  <Loader2 className="size-6 animate-spin text-primary-600" />
                 </div>
               }
             >
