@@ -40,7 +40,7 @@ export default async function AppelsPage({
     domaine: c.domaine ?? (c.need?.domaine ?? "—"),
     description: c.description ?? "",
     budget: c.budget_alloue ?? 0,
-    deadline: (c.deadline ?? "").slice(0, 10),
+    deadline: c.deadline ? new Date(c.deadline).toISOString().slice(0, 10) : "",
     statut: (c.statut ?? "OUVERT") as "OUVERT" | "FERME" | "SELECTIONNE",
     proposalsCount: c.nb_proposals ?? 0,
   }));
