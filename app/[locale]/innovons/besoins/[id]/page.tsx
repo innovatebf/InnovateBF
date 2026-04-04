@@ -12,10 +12,13 @@ import { getVoteScore, getComments } from "@/lib/innovons/forum-queries";
 import { Link } from "@/i18n/routing";
 import { Lightbulb } from "lucide-react";
 
-// ── Static params for mock slugs ────────────────────────────────────────────
+// ── Dynamic rendering — slugs from DB not known at build time ───────────────
+
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 export function generateStaticParams() {
-  return MOCK_NEEDS.map((need) => ({ id: need.slug }));
+  return [];
 }
 
 // ── Metadata ────────────────────────────────────────────────────────────────

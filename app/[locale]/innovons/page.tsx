@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
+
+export const dynamic = 'force-dynamic';
 import {
   FileText,
   Lightbulb,

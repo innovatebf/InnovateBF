@@ -3,6 +3,7 @@ import { IENavbar } from "@/components/innovons/IENavbar";
 import { NeedsClient } from "@/components/innovons/NeedsClient";
 import { getPublishedNeeds } from "@/lib/innovons/queries";
 
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
   params,
