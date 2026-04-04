@@ -46,21 +46,22 @@ function formatPopulation(n: number): string {
   return n.toLocaleString("fr-FR");
 }
 
+const DEFAULT_STATUS_CONFIG = { bg: "bg-gray-800", text: "text-gray-400", label: "Brouillon" };
 const STATUS_CONFIG: Record<string, { bg: string; text: string; label: string }> = {
-  BROUILLON: { bg: "bg-gray-800", text: "text-gray-400", label: "Brouillon" },
+  BROUILLON: DEFAULT_STATUS_CONFIG,
   VALIDATION: { bg: "bg-amber-900/30", text: "text-amber-400", label: "En attente" },
-  PUBLIE: { bg: "bg-green-900/30", text: "text-green-400", label: "Publie" },
+  PUBLIE: { bg: "bg-secondary-900/30", text: "text-secondary-400", label: "Publie" },
   ARCHIVE: { bg: "bg-red-900/30", text: "text-red-400", label: "Archive" },
   REVISION_REQUESTED: { bg: "bg-orange-900/30", text: "text-orange-400", label: "Revision demandee" },
   REVISION_DEMANDEE: { bg: "bg-orange-900/30", text: "text-orange-400", label: "Revision demandee" },
-  APPROVED: { bg: "bg-green-900/30", text: "text-green-400", label: "Approuve" },
+  APPROVED: { bg: "bg-secondary-900/30", text: "text-secondary-400", label: "Approuve" },
   REJETE: { bg: "bg-red-900/30", text: "text-red-400", label: "Rejete" },
   REJECTED: { bg: "bg-red-900/30", text: "text-red-400", label: "Rejete" },
 };
 
 function criticiteColor(c: ObstacleCriticite) {
   const map: Record<ObstacleCriticite, { bg: string; text: string; border: string }> = {
-    1: { bg: "bg-green-900/20", text: "text-green-400", border: "border-green-800" },
+    1: { bg: "bg-secondary-900/20", text: "text-secondary-400", border: "border-secondary-800" },
     2: { bg: "bg-amber-900/20", text: "text-amber-400", border: "border-amber-800" },
     3: { bg: "bg-red-900/20", text: "text-red-400", border: "border-red-800" },
   };
@@ -109,7 +110,7 @@ export default async function ModerationReviewPage({
   const authorName = moderationItem?.author_name ?? "Auteur inconnu";
   const authorEmail = moderationItem?.author_email ?? "";
 
-  const statusConfig = STATUS_CONFIG[need.statut] ?? STATUS_CONFIG.BROUILLON;
+  const statusConfig = STATUS_CONFIG[need.statut] ?? DEFAULT_STATUS_CONFIG;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -138,7 +139,7 @@ export default async function ModerationReviewPage({
           {/* Back link */}
           <Link
             href="/innovons/admin/moderation"
-            className="inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-green-400"
+            className="inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-secondary-400"
           >
             <ArrowLeft className="size-4" aria-hidden="true" />
             Retour a la file
@@ -167,7 +168,7 @@ export default async function ModerationReviewPage({
                 {need.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full bg-green-900/20 px-2 py-0.5 text-xs text-green-400"
+                    className="rounded-full bg-secondary-900/20 px-2 py-0.5 text-xs text-secondary-400"
                   >
                     {tag}
                   </span>
@@ -183,7 +184,7 @@ export default async function ModerationReviewPage({
               {/* Contexte strategique */}
               <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
                 <div className="mb-4 flex items-center gap-2">
-                  <Globe className="size-5 text-green-500" aria-hidden="true" />
+                  <Globe className="size-5 text-secondary-500" aria-hidden="true" />
                   <h2 className="text-base font-semibold text-white">
                     Contexte strategique
                   </h2>
@@ -194,9 +195,9 @@ export default async function ModerationReviewPage({
               </section>
 
               {/* Question centrale */}
-              <section className="rounded-xl border border-green-800/30 bg-green-900/10 p-6">
+              <section className="rounded-xl border border-secondary-800/30 bg-secondary-900/10 p-6">
                 <div className="mb-4 flex items-center gap-2">
-                  <Target className="size-5 text-green-500" aria-hidden="true" />
+                  <Target className="size-5 text-secondary-500" aria-hidden="true" />
                   <h2 className="text-base font-semibold text-white">
                     Question centrale
                   </h2>
@@ -248,7 +249,7 @@ export default async function ModerationReviewPage({
               {/* Resultats attendus */}
               <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
                 <div className="mb-4 flex items-center gap-2">
-                  <Lightbulb className="size-5 text-green-500" aria-hidden="true" />
+                  <Lightbulb className="size-5 text-secondary-500" aria-hidden="true" />
                   <h2 className="text-base font-semibold text-white">
                     Resultats attendus ({need.resultats.length})
                   </h2>
@@ -260,7 +261,7 @@ export default async function ModerationReviewPage({
                       className="rounded-xl border border-gray-800 bg-gray-800/30 p-4"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="rounded-full bg-green-900/30 px-2 py-0.5 text-xs font-medium text-green-400">
+                        <span className="rounded-full bg-secondary-900/30 px-2 py-0.5 text-xs font-medium text-secondary-400">
                           {NIVEAU_LABEL[res.niveau]}
                         </span>
                         <span className="rounded-full bg-gray-800 px-2 py-0.5 text-xs font-medium text-gray-400">
@@ -281,7 +282,7 @@ export default async function ModerationReviewPage({
               {/* Perimetre */}
               <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
                 <div className="mb-4 flex items-center gap-2">
-                  <MapPin className="size-5 text-green-500" aria-hidden="true" />
+                  <MapPin className="size-5 text-secondary-500" aria-hidden="true" />
                   <h2 className="text-base font-semibold text-white">
                     Perimetre
                   </h2>
@@ -306,7 +307,7 @@ export default async function ModerationReviewPage({
               {need.parties_prenantes.length > 0 && (
                 <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
                   <div className="mb-4 flex items-center gap-2">
-                    <Users className="size-5 text-green-500" aria-hidden="true" />
+                    <Users className="size-5 text-secondary-500" aria-hidden="true" />
                     <h2 className="text-base font-semibold text-white">
                       Parties prenantes
                     </h2>
@@ -325,7 +326,7 @@ export default async function ModerationReviewPage({
                         {need.parties_prenantes.map((pp) => (
                           <tr key={pp.id}>
                             <td className="py-3 pr-4">
-                              <span className="rounded-full bg-green-900/20 px-2 py-0.5 text-xs font-medium text-green-400">
+                              <span className="rounded-full bg-secondary-900/20 px-2 py-0.5 text-xs font-medium text-secondary-400">
                                 {pp.categorie}
                               </span>
                             </td>
@@ -339,7 +340,7 @@ export default async function ModerationReviewPage({
                               <span
                                 className={`rounded-full px-2 py-0.5 text-xs font-medium ${
                                   pp.position === "Actif"
-                                    ? "bg-green-900/20 text-green-400"
+                                    ? "bg-secondary-900/20 text-secondary-400"
                                     : pp.position === "Oppose"
                                       ? "bg-red-900/20 text-red-400"
                                       : "bg-gray-800 text-gray-400"
@@ -359,7 +360,7 @@ export default async function ModerationReviewPage({
               {/* Stats sidebar (mobile: inline) */}
               <div className="grid gap-4 sm:grid-cols-3 lg:hidden">
                 <div className="flex items-center gap-3 rounded-xl border border-gray-800 bg-gray-900/50 p-4">
-                  <Users className="size-5 text-green-500" aria-hidden="true" />
+                  <Users className="size-5 text-secondary-500" aria-hidden="true" />
                   <div>
                     <p className="text-xs text-gray-500">Population impactee</p>
                     <p className="text-lg font-bold text-white">
@@ -368,7 +369,7 @@ export default async function ModerationReviewPage({
                   </div>
                 </div>
                 <div className="flex items-center gap-3 rounded-xl border border-gray-800 bg-gray-900/50 p-4">
-                  <Banknote className="size-5 text-green-500" aria-hidden="true" />
+                  <Banknote className="size-5 text-secondary-500" aria-hidden="true" />
                   <div>
                     <p className="text-xs text-gray-500">Budget estime</p>
                     <p className="text-lg font-bold text-white">
@@ -391,7 +392,7 @@ export default async function ModerationReviewPage({
               {need.synthese_narrative && (
                 <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
                   <div className="mb-4 flex items-center gap-2">
-                    <Briefcase className="size-5 text-green-500" aria-hidden="true" />
+                    <Briefcase className="size-5 text-secondary-500" aria-hidden="true" />
                     <h2 className="text-base font-semibold text-white">
                       Synthese narrative
                     </h2>
@@ -409,8 +410,8 @@ export default async function ModerationReviewPage({
                 {/* Stats card - desktop only */}
                 <div className="hidden space-y-4 rounded-xl border border-gray-800 bg-gray-900/50 p-5 lg:block">
                   <div className="flex items-center gap-3">
-                    <div className="flex size-10 items-center justify-center rounded-lg bg-green-900/20">
-                      <Users className="size-5 text-green-500" aria-hidden="true" />
+                    <div className="flex size-10 items-center justify-center rounded-lg bg-secondary-900/20">
+                      <Users className="size-5 text-secondary-500" aria-hidden="true" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500">Population impactee</p>
@@ -420,8 +421,8 @@ export default async function ModerationReviewPage({
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="flex size-10 items-center justify-center rounded-lg bg-green-900/20">
-                      <Banknote className="size-5 text-green-500" aria-hidden="true" />
+                    <div className="flex size-10 items-center justify-center rounded-lg bg-secondary-900/20">
+                      <Banknote className="size-5 text-secondary-500" aria-hidden="true" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500">Budget estime</p>

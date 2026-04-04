@@ -13,11 +13,7 @@ export type ObstacleCriticite = 1 | 2 | 3;
 export type ObstacleControlabilite = "TOTALE" | "PARTIELLE" | "NULLE";
 export type ResultatNiveau = "OUTPUT" | "OUTCOME" | "IMPACT";
 export type ResultatHorizon = "COURT" | "MOYEN" | "LONG";
-export type UserRole =
-  | "UTILISATEUR"
-  | "ADMINISTRATEUR"
-  | "PARRAIN"
-  | "INNOVATEUR";
+export type UserRole = "admin" | "editor" | "guest";
 export type CallStatus = "OUVERT" | "FERME" | "SELECTIONNE";
 
 export interface Obstacle {
@@ -81,7 +77,8 @@ export interface Need {
   synthese_narrative: string;
   population_impact: number;
   budget: number;
-  auteur_id: string;
+  auteur_id?: string;
+  auteur_email?: string;
   created_at: string;
   published_at: string | null;
   updated_at: string;

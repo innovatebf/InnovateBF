@@ -12,10 +12,13 @@ import { getVoteScore, getComments } from "@/lib/innovons/forum-queries";
 import { Link } from "@/i18n/routing";
 import { Lightbulb } from "lucide-react";
 
-// ── Static params for mock slugs ────────────────────────────────────────────
+// ── Dynamic rendering — slugs from DB not known at build time ───────────────
+
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 export function generateStaticParams() {
-  return MOCK_NEEDS.map((need) => ({ id: need.slug }));
+  return [];
 }
 
 // ── Metadata ────────────────────────────────────────────────────────────────
@@ -112,7 +115,7 @@ export default async function NeedDetailPage({
         <div className="mx-auto max-w-5xl">
           {/* Badges */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-secondary-600/20 px-3 py-1 text-xs font-semibold text-green-400">
+            <span className="rounded-full bg-secondary-100 px-3 py-1 text-xs font-semibold text-secondary-700">
               {need.domaine}
             </span>
             <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-gray-300">
@@ -142,7 +145,7 @@ export default async function NeedDetailPage({
         <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8 text-center">
           <Link
             href={`/innovons/besoins/${need.slug ?? id}/proposer`}
-            className="inline-flex items-center gap-2.5 rounded-xl bg-green-600 px-8 py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-green-700 hover:shadow-xl"
+            className="inline-flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-8 py-4 text-base font-bold text-white shadow-[0_20px_40px_rgba(25,28,29,0.10)] transition-colors hover:from-primary-700 hover:to-primary-600"
           >
             <Lightbulb className="size-5" aria-hidden="true" />
             {t("propose_solution")}

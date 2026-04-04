@@ -1,14 +1,16 @@
 import { type NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
-import { auth } from "@/lib/auth";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-// Routes protégées (sans le préfixe de locale)
-const PROTECTED_PATHS = ["/innovons/mon-espace", "/innovons/admin"];
+// Tier 1: Routes requiring any authenticated user (cookie check only)
+const INTERNAL_PATHS = ["/innovons/mon-espace"];
 
-// Routes nécessitant le rôle ADMIN
+// Tier 2: Routes requiring editor or admin (cookie check here, role check in page/layout)
+const PRIVATE_PATHS = ["/innovons/besoins/deposer"];
+
+// Tier 3: Routes requiring admin (cookie check here, role check in page/layout)
 const ADMIN_PATHS = ["/innovons/admin"];
 
 function stripLocalePrefix(pathname: string): string {
@@ -21,24 +23,33 @@ function stripLocalePrefix(pathname: string): string {
   return pathname;
 }
 
-function isProtectedPath(pathname: string): boolean {
-  const strippedPath = stripLocalePrefix(pathname);
-  return PROTECTED_PATHS.some(
+function extractLocale(pathname: string): string {
+  const locales = routing.locales as readonly string[];
+  for (const locale of locales) {
+    if (pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`) {
+      return locale;
+    }
+  }
+  return routing.defaultLocale as string;
+}
+
+function matchesPathList(strippedPath: string, paths: string[]): boolean {
+  return paths.some(
     (p) => strippedPath === p || strippedPath.startsWith(p + "/")
   );
 }
 
-function isAdminPath(pathname: string): boolean {
-  const strippedPath = stripLocalePrefix(pathname);
-  return ADMIN_PATHS.some(
-    (p) => strippedPath === p || strippedPath.startsWith(p + "/")
+function hasSessionCookie(request: NextRequest): boolean {
+  return (
+    request.cookies.has("better-auth.session_token") ||
+    request.cookies.has("__Secure-better-auth.session_token")
   );
 }
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // 1. Laisser passer les assets, API et better-auth routes
+  // 1. Let assets, API, and better-auth routes pass through
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
@@ -47,62 +58,35 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 2. Vérifier si la route est protégée
-  if (isProtectedPath(pathname)) {
-    // Extraire la locale depuis le pathname
-    const locales = routing.locales as readonly string[];
-    let locale = routing.defaultLocale as string;
-    for (const l of locales) {
-      if (pathname.startsWith(`/${l}/`) || pathname === `/${l}`) {
-        locale = l;
-        break;
-      }
-    }
+  const strippedPath = stripLocalePrefix(pathname);
 
-    try {
-      const session = await auth.api.getSession({
-        headers: request.headers,
-      });
+  // 2. Check if path requires authentication (cookie-based check only)
+  const requiresAuth =
+    matchesPathList(strippedPath, INTERNAL_PATHS) ||
+    matchesPathList(strippedPath, PRIVATE_PATHS) ||
+    matchesPathList(strippedPath, ADMIN_PATHS) ||
+    strippedPath.includes("/proposer");
 
-      if (!session) {
-        const redirectUrl = new URL(
-          `/${locale}/innovons/connexion`,
-          request.url
-        );
-        redirectUrl.searchParams.set("redirect", pathname);
-        return NextResponse.redirect(redirectUrl);
-      }
-
-      // Vérification du rôle ADMIN pour les routes admin
-      if (isAdminPath(pathname)) {
-        const user = session.user as { role?: string };
-        if (!user.role || user.role !== "ADMINISTRATEUR") {
-          const monEspaceUrl = new URL(
-            `/${locale}/innovons/mon-espace`,
-            request.url
-          );
-          return NextResponse.redirect(monEspaceUrl);
-        }
-      }
-    } catch {
-      // En cas d'erreur (pas de session, token invalide), rediriger vers connexion
-      const redirectUrl = new URL(
-        `/${locale}/innovons/connexion`,
-        request.url
-      );
-      redirectUrl.searchParams.set("redirect", pathname);
-      return NextResponse.redirect(redirectUrl);
-    }
+  if (requiresAuth && !hasSessionCookie(request)) {
+    const locale = extractLocale(pathname);
+    const redirectUrl = new URL(
+      `/${locale}/innovons/connexion`,
+      request.url
+    );
+    redirectUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(redirectUrl);
   }
 
-  // 3. Appliquer le middleware next-intl (détection de locale, redirections)
+  // 3. Role enforcement beyond "is logged in" is deferred to layouts/pages (Tier 2)
+
+  // 4. Apply next-intl middleware (locale detection, redirections)
   return intlMiddleware(request);
 }
 
 export const config = {
-  // Matcher pour tous les chemins sauf:
-  // - Les routes API (/api, /trpc)
-  // - Les fichiers internes Next.js (/_next, /_vercel)
-  // - Les fichiers statiques (contenant un point comme favicon.ico)
+  // Matcher for all paths except:
+  // - API routes (/api, /trpc)
+  // - Next.js internals (/_next, /_vercel)
+  // - Static files (containing a dot like favicon.ico)
   matcher: ["/((?!api|trpc|_next|_vercel|.*\\..*).*)", "/"],
 };

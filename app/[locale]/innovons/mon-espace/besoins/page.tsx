@@ -2,12 +2,15 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { FileText, Plus, Eye, Pencil } from "lucide-react";
 import { getCurrentUser, getUserNeeds } from "@/lib/innovons/user-queries";
+import { hasMinRole } from "@/lib/auth/roles";
 import type { NeedStatus, ObstacleCriticite } from "@/lib/innovons/types";
+
+export const dynamic = 'force-dynamic';
 
 const STATUS_BADGE: Record<NeedStatus, string> = {
   BROUILLON: "bg-gray-100 text-gray-700",
   VALIDATION: "bg-amber-100 text-amber-700",
-  PUBLIE: "bg-green-100 text-green-700",
+  PUBLIE: "bg-[#006e2d]/10 text-[#16a34a]",
   ARCHIVE: "bg-red-100 text-red-700",
 };
 
@@ -40,7 +43,9 @@ export default async function MesBesoinsPage({
   const t = await getTranslations({ locale, namespace: "innovons.mon_espace" });
 
   const user = await getCurrentUser();
-  const needs = user ? await getUserNeeds(user.id) : [];
+  const needs = user ? await getUserNeeds(user.id, user.email) : [];
+  console.log('[mon-espace/besoins] user.role =', user?.role);
+  const canDeposit = hasMinRole(user?.role, 'editor');
 
   function getMaxCriticite(
     obstacles: { criticite: ObstacleCriticite }[],
@@ -57,7 +62,7 @@ export default async function MesBesoinsPage({
           <li>
             <Link
               href="/innovons/mon-espace"
-              className="hover:text-green-600"
+              className="hover:text-[#16a34a]"
             >
               {t("nav_dashboard")}
             </Link>
@@ -72,41 +77,47 @@ export default async function MesBesoinsPage({
         <h1 className="text-2xl font-bold text-gray-900">
           {t("besoins_title")}
         </h1>
-        <Link
-          href="/innovons/besoins/deposer"
-          className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
-        >
-          <Plus className="size-4" aria-hidden="true" />
-          {t("besoins_new")}
-        </Link>
+        {canDeposit && (
+          <Link
+            href="/innovons/besoins/deposer"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#b70011] to-[#dc2626] px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          >
+            <Plus className="size-4" aria-hidden="true" />
+            {t("besoins_new")}
+          </Link>
+        )}
       </div>
 
       {needs.length === 0 ? (
         /* Empty state */
-        <div className="flex flex-col items-center rounded-xl bg-white py-16 shadow-sm">
-          <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-gray-100">
+        <div className="flex flex-col items-center rounded-xl bg-white py-16 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
+          <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-[#e8eaeb]">
             <FileText className="size-8 text-gray-400" aria-hidden="true" />
           </div>
           <p className="mb-1 text-lg font-medium text-gray-900">
             {t("besoins_empty")}
           </p>
           <p className="mb-6 text-sm text-gray-500">
-            Commencez par deposer un besoin societal.
+            {canDeposit
+              ? "Commencez par déposer un besoin sociétal."
+              : "Aucun besoin soumis pour le moment."}
           </p>
-          <Link
-            href="/innovons/besoins/deposer"
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
-          >
-            <Plus className="size-4" aria-hidden="true" />
-            {t("besoins_empty_cta")}
-          </Link>
+          {canDeposit && (
+            <Link
+              href="/innovons/besoins/deposer"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#b70011] to-[#dc2626] px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            >
+              <Plus className="size-4" aria-hidden="true" />
+              {t("besoins_empty_cta")}
+            </Link>
+          )}
         </div>
       ) : (
         <>
           {/* Desktop table */}
-          <div className="hidden overflow-hidden rounded-xl bg-white shadow-sm md:block">
+          <div className="hidden overflow-hidden rounded-xl bg-white shadow-[0_20px_40px_rgba(25,28,29,0.05)] md:block">
             <table className="w-full text-left text-sm">
-              <thead className="border-b border-gray-100 bg-gray-50">
+              <thead className="bg-[#f8f9fa]">
                 <tr>
                   <th className="px-5 py-3 font-medium text-gray-500">
                     Titre
@@ -126,11 +137,11 @@ export default async function MesBesoinsPage({
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-[#f8f9fa]">
                 {needs.map((need) => {
                   const maxC = getMaxCriticite(need.obstacles);
                   return (
-                    <tr key={need.id} className="hover:bg-gray-50/50">
+                    <tr key={need.id} className="hover:bg-[#f8f9fa]/50">
                       <td className="max-w-xs truncate px-5 py-4 font-medium text-gray-900">
                         {need.titre}
                       </td>
@@ -158,7 +169,7 @@ export default async function MesBesoinsPage({
                         <div className="flex items-center gap-3">
                           <Link
                             href={`/innovons/besoins/${need.slug}`}
-                            className="inline-flex items-center gap-1 text-sm text-green-600 hover:text-green-700"
+                            className="inline-flex items-center gap-1 text-sm text-[#16a34a] hover:text-[#006e2d]"
                           >
                             <Eye className="size-3.5" aria-hidden="true" />
                             Voir
@@ -188,7 +199,7 @@ export default async function MesBesoinsPage({
               return (
                 <div
                   key={need.id}
-                  className="rounded-xl bg-white p-4 shadow-sm"
+                  className="rounded-xl bg-white p-4 shadow-[0_20px_40px_rgba(25,28,29,0.05)]"
                 >
                   <div className="mb-2 flex items-start justify-between gap-2">
                     <h3 className="text-sm font-semibold text-gray-900">
@@ -214,7 +225,7 @@ export default async function MesBesoinsPage({
                   <div className="flex items-center gap-3">
                     <Link
                       href={`/innovons/besoins/${need.slug}`}
-                      className="inline-flex items-center gap-1 text-sm font-medium text-green-600 hover:text-green-700"
+                      className="inline-flex items-center gap-1 text-sm font-medium text-[#16a34a] hover:text-[#006e2d]"
                     >
                       <Eye className="size-3.5" aria-hidden="true" />
                       Voir

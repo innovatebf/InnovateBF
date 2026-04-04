@@ -51,7 +51,7 @@ export function DomainsOverview() {
             return (
               <Link
                 key={domain}
-                href={`/domains/${domain}`}
+                href={domain === "platform" ? "/innovons" : domain === "conference" ? "/innovons/conference" : domain === "observatory" ? "/innovons/observatoire" : `/domains/${domain}`}
                 className="group relative flex flex-col overflow-hidden rounded-3xl bg-white p-8 shadow-sm ring-1 ring-gray-200/50 transition-all hover:-translate-y-1 hover:shadow-xl hover:ring-primary-500/50"
               >
                 {/* Icon */}

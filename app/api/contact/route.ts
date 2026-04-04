@@ -3,7 +3,7 @@ import { Resend } from "resend";
 import { contactSchema } from "@/lib/schemas/contact";
 import { ZodError } from "zod";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const getResend = () => new Resend(process.env.RESEND_API_KEY ?? "re_placeholder");
 
 // Simple in-memory rate limiting
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     const data = contactSchema.parse(body);
 
     // Send email via Resend
-    const { data: emailData, error } = await resend.emails.send({
+    const { data: emailData, error } = await getResend().emails.send({
       from: "InnovateBF <onboarding@resend.dev>", // Use resend.dev domain for testing
       to: [process.env.CONTACT_EMAIL || "contact@innovatebf.org"],
       replyTo: data.email,

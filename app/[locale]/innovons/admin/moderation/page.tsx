@@ -59,15 +59,15 @@ function ModerationTable({
   const filtered =
     filter === "all"
       ? needs
-      : filter === "REVISION_REQUESTED"
-        ? needs.filter((n) => n.statut === "REVISION_REQUESTED" || n.statut === "REVISION_DEMANDEE")
+      : filter === "REVISION_DEMANDEE"
+        ? needs.filter((n) => n.statut === "REVISION_DEMANDEE")
         : needs.filter((n) => n.statut === filter);
 
   if (filtered.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-xl border border-gray-800 bg-gray-900/50 py-16">
+      <div className="flex flex-col items-center justify-center rounded-xl bg-white/5 py-16 shadow-[0_20px_40px_rgba(25,28,29,0.2)]">
         <CheckCircle2
-          className="size-12 text-green-500"
+          className="size-12 text-secondary-600"
           aria-hidden="true"
         />
         <p className="mt-4 text-lg font-semibold text-gray-200">
@@ -81,10 +81,10 @@ function ModerationTable({
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-gray-800 bg-gray-900/50">
+    <div className="overflow-x-auto rounded-xl bg-white/5 shadow-[0_20px_40px_rgba(25,28,29,0.2)]">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-gray-800 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+          <tr className="border-b border-white/5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
             <th className="px-5 py-3">Titre</th>
             <th className="px-5 py-3">Domaine</th>
             <th className="px-5 py-3">Niveau</th>
@@ -119,7 +119,7 @@ function ModerationTable({
               <td className="px-5 py-4">
                 <Link
                   href={`/innovons/admin/moderation/${need.id}`}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-green-600/20 px-3 py-1.5 text-xs font-medium text-green-400 transition-colors hover:bg-green-600/30"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-secondary-600/20 px-3 py-1.5 text-xs font-medium text-secondary-400 transition-colors hover:bg-secondary-600/30"
                 >
                   <Eye className="size-3.5" aria-hidden="true" />
                   Examiner
@@ -151,7 +151,7 @@ export default async function ModerationQueuePage({
     (n) => n.statut === "VALIDATION",
   ).length;
   const revisionCount = queue.filter(
-    (n) => n.statut === "REVISION_REQUESTED" || n.statut === "REVISION_DEMANDEE",
+    (n) => n.statut === "REVISION_DEMANDEE",
   ).length;
 
   const activeFilter = filtre ?? "all";
@@ -174,7 +174,7 @@ export default async function ModerationQueuePage({
           {/* Header */}
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-lg bg-green-600">
+              <div className="flex size-10 items-center justify-center rounded-lg bg-secondary-600">
                 <FileWarning className="size-5 text-white" aria-hidden="true" />
               </div>
               <div>
@@ -216,7 +216,7 @@ export default async function ModerationQueuePage({
                 <span
                   className={`ml-1.5 inline-flex items-center justify-center rounded-full px-1.5 py-0.5 text-xs ${
                     activeFilter === tab.key
-                      ? "bg-green-600/30 text-green-400"
+                      ? "bg-secondary-600/30 text-secondary-400"
                       : "bg-gray-800 text-gray-500"
                   }`}
                 >

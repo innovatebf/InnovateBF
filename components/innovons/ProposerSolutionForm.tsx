@@ -69,15 +69,15 @@ export function ProposerSolutionForm({
 
   if (submitted) {
     return (
-      <div className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-sm text-center">
-        <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-green-100">
-          <CheckCircle2 className="size-8 text-green-600" aria-hidden="true" />
+      <div className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-[0_20px_40px_rgba(25,28,29,0.05)] text-center">
+        <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-secondary-50">
+          <CheckCircle2 className="size-8 text-secondary-600" aria-hidden="true" />
         </div>
         <h2 className="text-2xl font-bold text-gray-900">{t("success_title")}</h2>
         <p className="mt-2 text-gray-600">{t("success_message")}</p>
         <Link
           href={`/innovons/besoins/${needSlug}`}
-          className="mt-6 inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
+          className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600"
         >
           <ArrowLeft className="size-4" aria-hidden="true" />
           {t("back_to_need")}
@@ -111,9 +111,9 @@ export function ProposerSolutionForm({
       )}
 
       {/* Titre */}
-      <div className="rounded-xl bg-white p-6 shadow-sm">
+      <div className="rounded-xl bg-white p-6 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
         <h3 className="mb-4 text-lg font-semibold text-gray-900">
-          {t("subtitle")} : <span className="text-green-600">{needTitle}</span>
+          {t("subtitle")} : <span className="text-secondary-600">{needTitle}</span>
         </h3>
 
         <div className="space-y-5">
@@ -126,7 +126,7 @@ export function ProposerSolutionForm({
               id="titre"
               type="text"
               {...register("titre", { required: "Champ requis", minLength: { value: 5, message: "Minimum 5 caracteres" } })}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none"
+              className="w-full rounded-lg bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
             />
             {errors.titre && (
               <p className="mt-1 text-xs text-red-600">{errors.titre.message}</p>
@@ -142,7 +142,7 @@ export function ProposerSolutionForm({
               id="description"
               rows={5}
               {...register("description", { required: "Champ requis", minLength: { value: 50, message: "Minimum 50 caracteres" } })}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none"
+              className="w-full rounded-lg bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
             />
             {errors.description && (
               <p className="mt-1 text-xs text-red-600">{errors.description.message}</p>
@@ -158,7 +158,7 @@ export function ProposerSolutionForm({
               id="approche"
               rows={4}
               {...register("approche", { required: "Champ requis", minLength: { value: 30, message: "Minimum 30 caracteres" } })}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none"
+              className="w-full rounded-lg bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
             />
             {errors.approche && (
               <p className="mt-1 text-xs text-red-600">{errors.approche.message}</p>
@@ -174,7 +174,7 @@ export function ProposerSolutionForm({
               id="equipe"
               rows={3}
               {...register("equipe")}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none"
+              className="w-full rounded-lg bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
             />
           </div>
 
@@ -189,7 +189,7 @@ export function ProposerSolutionForm({
                 type="number"
                 min="0"
                 {...register("budget_estime")}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none"
+                className="w-full rounded-lg bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
               />
             </div>
             <div>
@@ -199,7 +199,7 @@ export function ProposerSolutionForm({
               <select
                 id="delai"
                 {...register("delai")}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none"
+                className="w-full rounded-lg bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
               >
                 <option value="">--</option>
                 {delaiOptions.map((opt) => (
@@ -214,7 +214,7 @@ export function ProposerSolutionForm({
       </div>
 
       {/* Porteur info */}
-      <div className="rounded-xl bg-white p-6 shadow-sm">
+      <div className="rounded-xl bg-white p-6 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
         <h3 className="mb-4 text-lg font-semibold text-gray-900">
           Informations du porteur
         </h3>
@@ -228,7 +228,7 @@ export function ProposerSolutionForm({
                 id="porteur_nom"
                 type="text"
                 {...register("porteur_nom", { required: "Nom requis", minLength: { value: 2, message: "Minimum 2 caracteres" } })}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none"
+                className="w-full rounded-lg bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
               />
               {errors.porteur_nom && (
                 <p className="mt-1 text-xs text-red-600">{errors.porteur_nom.message}</p>
@@ -242,7 +242,7 @@ export function ProposerSolutionForm({
                 id="porteur_email"
                 type="email"
                 {...register("porteur_email", { required: "Email requis", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Email invalide" } })}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none"
+                className="w-full rounded-lg bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
               />
               {errors.porteur_email && (
                 <p className="mt-1 text-xs text-red-600">{errors.porteur_email.message}</p>
@@ -257,7 +257,7 @@ export function ProposerSolutionForm({
               id="porteur_organisation"
               type="text"
               {...register("porteur_organisation")}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 transition-colors focus:border-green-500 focus:ring-2 focus:ring-green-500/20 focus:outline-none"
+              className="w-full rounded-lg bg-gray-50 px-4 py-2.5 text-sm text-gray-900 outline-none transition-colors focus:bg-white focus:ring-2 focus:ring-primary-500/30"
             />
           </div>
         </div>
@@ -268,7 +268,7 @@ export function ProposerSolutionForm({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (
             <>

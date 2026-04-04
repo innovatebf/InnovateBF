@@ -5,6 +5,7 @@ import {
   sendNeedRejectedEmail,
   sendRevisionRequestedEmail,
 } from "@/lib/innovons/email";
+import { requireRoleForApi } from "@/lib/auth/guards";
 
 interface ModerationRequestBody {
   needId: string;
@@ -18,6 +19,10 @@ interface ModerationRequestBody {
 }
 
 export async function POST(req: NextRequest) {
+  // RBAC: admin only
+  const auth = await requireRoleForApi('admin');
+  if (auth.error) return auth.error;
+
   try {
     const body = (await req.json()) as ModerationRequestBody;
     const {

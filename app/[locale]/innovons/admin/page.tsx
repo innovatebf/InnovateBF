@@ -24,7 +24,7 @@ const RECENT_ACTIVITY = [
     action: "Besoin approuve",
     detail: "Digitalisation des services de sante communautaire",
     time: "Il y a 2 heures",
-    color: "text-green-400",
+    color: "text-[#16a34a]",
   },
   {
     id: "act-2",
@@ -64,8 +64,8 @@ export default async function AdminDashboardPage({
       label: "Publies",
       value: stats.published,
       icon: CheckCircle2,
-      color: "text-green-400",
-      bgColor: "bg-green-400/10",
+      color: "text-[#16a34a]",
+      bgColor: "bg-[#006e2d]/15",
     },
     {
       label: "Revisions",
@@ -99,6 +99,11 @@ export default async function AdminDashboardPage({
       href: "/innovons/admin/appels",
       description: "Creer et gerer les appels a solutions",
     },
+    {
+      label: "Gérer les utilisateurs",
+      href: "/innovons/admin/utilisateurs",
+      description: "Attribuer les rôles éditeur et admin",
+    },
   ];
 
   return (
@@ -118,7 +123,7 @@ export default async function AdminDashboardPage({
         {statCards.map(({ label, value, icon: Icon, color, bgColor }) => (
           <div
             key={label}
-            className="flex items-center gap-4 rounded-xl bg-gray-900 p-5 shadow-sm"
+            className="flex items-center gap-4 rounded-xl bg-white/5 p-5 shadow-[0_20px_40px_rgba(25,28,29,0.2)]"
           >
             <div
               className={`flex size-10 items-center justify-center rounded-lg ${bgColor}`}
@@ -143,15 +148,15 @@ export default async function AdminDashboardPage({
             <Link
               key={href}
               href={href}
-              className="group flex flex-col justify-between rounded-xl bg-gray-900 p-5 shadow-sm transition-colors hover:bg-gray-800"
+              className="group flex flex-col justify-between rounded-xl bg-white/5 p-5 shadow-[0_20px_40px_rgba(25,28,29,0.2)] transition-colors hover:bg-white/10"
             >
               <div>
-                <h3 className="text-sm font-semibold text-white group-hover:text-green-400">
+                <h3 className="text-sm font-semibold text-white group-hover:text-[#16a34a]">
                   {label}
                 </h3>
                 <p className="mt-1 text-xs text-gray-400">{description}</p>
               </div>
-              <div className="mt-4 flex items-center gap-1 text-xs font-medium text-green-400">
+              <div className="mt-4 flex items-center gap-1 text-xs font-medium text-[#16a34a]">
                 Acceder
                 <ArrowRight
                   className="size-3.5 transition-transform group-hover:translate-x-1"
@@ -169,7 +174,7 @@ export default async function AdminDashboardPage({
           <Activity className="size-5 text-gray-400" aria-hidden="true" />
           Activite recente
         </h2>
-        <div className="divide-y divide-white/5 rounded-xl bg-gray-900 shadow-sm">
+        <div className="rounded-xl bg-white/5 shadow-[0_20px_40px_rgba(25,28,29,0.2)]">
           {RECENT_ACTIVITY.map(({ id, action, detail, time, color }) => (
             <div
               key={id}

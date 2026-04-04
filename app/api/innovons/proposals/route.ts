@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 
 function isNeonConfigured(): boolean {
   return Boolean(
@@ -9,6 +9,8 @@ function isNeonConfigured(): boolean {
 }
 
 export async function POST(req: NextRequest) {
+  // Ouvert au public — le porteur_nom et porteur_email identifient le soumissionnaire
+
   try {
     const body = await req.json();
 
@@ -47,7 +49,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = await sql`
+    const result = await getSql()`
       INSERT INTO ie_proposals (
         need_id, titre, description, approche, equipe,
         budget_estime, delai, porteur_nom, porteur_email, porteur_organisation,

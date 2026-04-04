@@ -36,9 +36,9 @@ const ACTION_OPTIONS: ActionOption[] = [
     label: "Approuver",
     description: "Le besoin sera publie sur la plateforme",
     icon: CheckCircle,
-    selectedBg: "bg-green-900/20",
-    selectedBorder: "border-green-600",
-    selectedText: "text-green-400",
+    selectedBg: "bg-secondary-900/20",
+    selectedBorder: "border-secondary-500",
+    selectedText: "text-secondary-400",
   },
   {
     value: "REVISION_REQUESTED",
@@ -123,7 +123,7 @@ export function ModerationActionPanel({
 
   return (
     <>
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
+      <div className="rounded-xl bg-[#191c1d] p-5 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
         {/* Header */}
         <h3 className="text-base font-semibold text-white">
           Decision de moderation
@@ -147,7 +147,7 @@ export function ModerationActionPanel({
                 className={`flex w-full items-start gap-3 rounded-lg border p-3 text-left transition-all ${
                   isSelected
                     ? `${option.selectedBg} ${option.selectedBorder}`
-                    : "border-gray-800 bg-gray-800/30 hover:border-gray-700"
+                    : "border-white/10 bg-white/5 hover:border-white/20"
                 } disabled:cursor-not-allowed disabled:opacity-50`}
               >
                 {/* Radio indicator */}
@@ -155,17 +155,17 @@ export function ModerationActionPanel({
                   className={`mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border-2 ${
                     isSelected
                       ? option.selectedBorder
-                      : "border-gray-600"
+                      : "border-white/30"
                   }`}
                 >
                   {isSelected && (
                     <div
                       className={`size-2.5 rounded-full ${
                         option.value === "APPROVED"
-                          ? "bg-green-500"
+                          ? "bg-secondary-500"
                           : option.value === "REVISION_REQUESTED"
                             ? "bg-amber-500"
-                            : "bg-red-500"
+                            : "bg-primary-600"
                       }`}
                     />
                   )}
@@ -175,7 +175,7 @@ export function ModerationActionPanel({
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <Icon
-                      className={`size-4 ${isSelected ? option.selectedText : "text-gray-500"}`}
+                      className={`size-4 ${isSelected ? option.selectedText : "text-gray-400"}`}
                       aria-hidden="true"
                     />
                     <span
@@ -208,7 +208,7 @@ export function ModerationActionPanel({
             disabled={isSubmitting}
             placeholder="Justifiez votre decision (min. 20 caracteres)..."
             rows={4}
-            className="mt-2 w-full resize-none rounded-lg border border-gray-800 bg-gray-800/50 px-3 py-2.5 text-sm text-gray-200 placeholder:text-gray-600 focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-2 w-full resize-none rounded-lg bg-white/10 px-3 py-2.5 text-sm text-gray-200 placeholder:text-gray-600 outline-none focus:bg-white/15 focus:ring-2 focus:ring-primary-500/30 disabled:cursor-not-allowed disabled:opacity-50"
           />
           <div className="mt-1.5 flex items-center justify-between">
             <p
@@ -224,7 +224,7 @@ export function ModerationActionPanel({
             </p>
             <span
               className={`text-xs ${
-                isCommentValid ? "text-green-500" : "text-gray-600"
+                isCommentValid ? "text-secondary-500" : "text-gray-600"
               }`}
             >
               {comment.trim().length}/{MIN_COMMENT_LENGTH}
@@ -240,7 +240,7 @@ export function ModerationActionPanel({
               checked={sendEmail}
               onChange={(e) => setSendEmail(e.target.checked)}
               disabled={isSubmitting}
-              className="mt-0.5 size-4 rounded border-gray-700 bg-gray-800 text-green-600 focus:ring-green-600 focus:ring-offset-0 disabled:cursor-not-allowed"
+              className="mt-0.5 size-4 rounded border-white/20 bg-white/10 text-primary-600 focus:ring-primary-500/30 focus:ring-offset-0 disabled:cursor-not-allowed"
             />
             <span className="flex items-center gap-1.5 text-sm text-gray-400">
               <Mail className="size-3.5" aria-hidden="true" />
@@ -254,7 +254,7 @@ export function ModerationActionPanel({
           type="button"
           onClick={handleSubmit}
           disabled={!canSubmit}
-          className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-gray-800 disabled:text-gray-600"
+          className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-4 py-3 text-sm font-semibold text-white transition-colors hover:from-primary-700 hover:to-primary-600 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {isSubmitting ? (
             <>
@@ -273,11 +273,11 @@ export function ModerationActionPanel({
       {/* Toast notification */}
       {showToast && (
         <div
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-lg border border-green-800 bg-green-900/90 px-5 py-3 text-sm font-medium text-green-300 shadow-lg backdrop-blur-sm"
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-xl bg-secondary-800/90 px-5 py-3 text-sm font-medium text-white shadow-[0_20px_40px_rgba(25,28,29,0.15)] backdrop-blur-[16px]"
           role="status"
           aria-live="polite"
         >
-          <CheckCircle className="size-4 text-green-400" aria-hidden="true" />
+          <CheckCircle className="size-4 text-white" aria-hidden="true" />
           Decision enregistree
         </div>
       )}

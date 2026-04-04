@@ -33,7 +33,7 @@ export default async function InscriptionPage({
       <div className="mx-auto max-w-lg px-4 py-12">
         {/* En-tete */}
         <div className="mb-8 text-center">
-          <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-green-600 text-sm font-black text-white">
+          <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-primary-500 text-sm font-black text-white">
             IE
           </div>
           <h1 className="mt-4 text-2xl font-bold text-gray-900">
@@ -45,14 +45,14 @@ export default async function InscriptionPage({
         </div>
 
         {/* Carte formulaire */}
-        <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
+        <div className="rounded-2xl bg-white p-8 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
           <InscriptionForm />
 
           <p className="mt-5 text-center text-sm text-gray-500">
             {t("has_account")}{" "}
             <Link
               href="/innovons/connexion"
-              className="font-semibold text-green-600 hover:underline"
+              className="font-semibold text-primary-600 hover:underline"
             >
               {t("login_link")}
             </Link>

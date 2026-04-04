@@ -1,8 +1,9 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { EditNeedForm } from "@/components/innovons/EditNeedForm";
 import { getNeedBySlug } from "@/lib/innovons/queries";
+import { getServerSession } from "@/lib/auth/server";
 import { MOCK_NEEDS } from "@/lib/innovons/mock-data";
 import type { Need } from "@/lib/innovons/types";
 
@@ -53,6 +54,15 @@ export default async function ModifierBesoinPage({
   const need = await getNeedById(id);
   if (!need) notFound();
 
+  // Auth & ownership check
+  const session = await getServerSession();
+  if (!session) {
+    redirect(`/${locale}/innovons/connexion`);
+  }
+  if (need.auteur_email && need.auteur_email !== session.user.email) {
+    notFound();
+  }
+
   // Only allow editing BROUILLON or VALIDATION
   if (need.statut !== "BROUILLON" && need.statut !== "VALIDATION") {
     notFound();
@@ -69,7 +79,7 @@ export default async function ModifierBesoinPage({
           <li>
             <Link
               href="/innovons/mon-espace"
-              className="hover:text-green-600"
+              className="hover:text-[#16a34a]"
             >
               {tEspace("nav_dashboard")}
             </Link>
@@ -78,7 +88,7 @@ export default async function ModifierBesoinPage({
           <li>
             <Link
               href="/innovons/mon-espace/besoins"
-              className="hover:text-green-600"
+              className="hover:text-[#16a34a]"
             >
               {tEspace("besoins_title")}
             </Link>

@@ -72,7 +72,7 @@ export default async function DomainsPage({
             return (
               <Link
                 key={domain}
-                href={`/domains/${domain}`}
+                href={domain === "platform" ? "/innovons" : domain === "conference" ? "/innovons/conference" : domain === "observatory" ? "/innovons/observatoire" : `/domains/${domain}`}
                 className="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-8 shadow-md ring-1 ring-gray-200 transition-all hover:shadow-xl hover:ring-primary-500"
               >
                 <div className="mb-6 inline-flex size-12 items-center justify-center rounded-lg bg-primary-100 text-primary-600 transition-colors group-hover:bg-primary-600 group-hover:text-white">

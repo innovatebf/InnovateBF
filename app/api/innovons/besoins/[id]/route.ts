@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import sql from "@/lib/db/neon";
+import { getSql } from "@/lib/db/neon";
 import { MOCK_NEEDS } from "@/lib/innovons/mock-data";
+import { requireRoleForApi } from "@/lib/auth/guards";
 
 function isNeonConfigured(): boolean {
   return Boolean(
@@ -28,14 +29,14 @@ export async function GET(
     }
 
     // Try by ID first, then by slug
-    let result = await sql`
+    let result = await getSql()`
       SELECT * FROM ie_needs WHERE id::text = ${id}
-    `;
+    ` as any[];
 
     if (!result || result.length === 0) {
-      result = await sql`
+      result = await getSql()`
         SELECT * FROM ie_needs WHERE slug = ${id}
-      `;
+      ` as any[];
     }
 
     if (!result || result.length === 0) {
@@ -61,6 +62,10 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  // RBAC: editor or admin only
+  const auth = await requireRoleForApi('editor');
+  if (auth.error) return auth.error;
+
   try {
     const { id } = await params;
     const body = await req.json();
@@ -69,6 +74,15 @@ export async function PATCH(
       const need = MOCK_NEEDS.find((n) => n.id === id || n.slug === id);
       if (!need) {
         return NextResponse.json({ error: "Besoin non trouve" }, { status: 404 });
+      }
+      // Ownership check: allow if user is admin or owner
+      const userEmail = (auth.session.user as { email?: string }).email;
+      const userRole = (auth.session.user as { role?: string }).role;
+      if (userRole !== 'admin' && userEmail !== (need as unknown as Record<string, unknown>).auteur_email) {
+        return NextResponse.json(
+          { error: "Vous ne pouvez modifier que vos propres besoins" },
+          { status: 403 },
+        );
       }
       if (need.statut !== "BROUILLON" && need.statut !== "VALIDATION") {
         return NextResponse.json(
@@ -84,12 +98,12 @@ export async function PATCH(
     }
 
     // Check status before updating
-    const existing = await sql`
-      SELECT id, statut FROM ie_needs WHERE id::text = ${id} OR slug = ${id}
-    `;
+    const existing = await getSql()`
+      SELECT id, statut, auteur_email FROM ie_needs WHERE id::text = ${id} OR slug = ${id}
+    ` as any[];
 
     if (!existing || existing.length === 0) {
-      // Fallback mock (dev sans données Neon)
+      // Fallback mock (dev sans donnees Neon)
       const mockNeed =
         MOCK_NEEDS.find((n) => n.id === id) ??
         MOCK_NEEDS.find((n) => n.slug === id);
@@ -109,7 +123,18 @@ export async function PATCH(
       });
     }
 
-    const existingNeed = existing[0] as { id: string; statut: string };
+    const existingNeed = existing[0] as { id: string; statut: string; auteur_email?: string };
+
+    // Ownership check: allow if user is admin or owner
+    const userEmail = (auth.session.user as { email?: string }).email;
+    const userRole = (auth.session.user as { role?: string }).role;
+    if (userRole !== 'admin' && userEmail !== existingNeed.auteur_email) {
+      return NextResponse.json(
+        { error: "Vous ne pouvez modifier que vos propres besoins" },
+        { status: 403 },
+      );
+    }
+
     const currentStatus = existingNeed.statut;
     if (currentStatus !== "BROUILLON" && currentStatus !== "VALIDATION") {
       return NextResponse.json(
@@ -153,7 +178,7 @@ export async function PATCH(
     const contexte_strategique = updates["contexte_strategique"] ?? null;
     const synthese_narrative = updates["synthese_narrative"] ?? null;
 
-    const result = await sql`
+    const result = await getSql()`
       UPDATE ie_needs SET
         titre = COALESCE(${titre}, titre),
         domaine = COALESCE(${domaine}, domaine),
@@ -165,7 +190,7 @@ export async function PATCH(
         updated_at = NOW()
       WHERE id = ${needId}
       RETURNING *
-    `;
+    ` as any[];
 
     return NextResponse.json({ success: true, need: result[0] });
   } catch (error) {

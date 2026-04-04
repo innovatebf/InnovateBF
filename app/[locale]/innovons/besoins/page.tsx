@@ -2,7 +2,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { IENavbar } from "@/components/innovons/IENavbar";
 import { NeedsClient } from "@/components/innovons/NeedsClient";
 import { getPublishedNeeds } from "@/lib/innovons/queries";
-import { DOMAINES } from "@/lib/innovons/mock-data";
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
   params,
@@ -29,8 +30,7 @@ export default async function BesoinsPage({
   const needs = await getPublishedNeeds();
 
   // Compute unique domaines from actual data
-  const domainesPresents = new Set(needs.map((n) => n.domaine));
-  const nbDomaines = domainesPresents.size || DOMAINES.length;
+  const nbDomaines = new Set(needs.map((n) => n.domaine)).size;
 
   return (
     <div className="min-h-screen">

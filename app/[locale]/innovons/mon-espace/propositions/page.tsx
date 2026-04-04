@@ -4,9 +4,11 @@ import { Lightbulb } from "lucide-react";
 import { getCurrentUser, getUserProposals } from "@/lib/innovons/user-queries";
 import type { Proposal } from "@/lib/innovons/types";
 
+export const dynamic = 'force-dynamic';
+
 const PROPOSAL_STATUS_BADGE: Record<Proposal["statut"], string> = {
   EN_ATTENTE: "bg-amber-100 text-amber-700",
-  RETENU: "bg-green-100 text-green-700",
+  RETENU: "bg-[#006e2d]/10 text-[#16a34a]",
   REJETE: "bg-red-100 text-red-700",
 };
 
@@ -36,7 +38,7 @@ export default async function MesPropositionsPage({
           <li>
             <Link
               href="/innovons/mon-espace"
-              className="hover:text-green-600"
+              className="hover:text-[#16a34a]"
             >
               {t("nav_dashboard")}
             </Link>
@@ -55,8 +57,8 @@ export default async function MesPropositionsPage({
 
       {proposals.length === 0 ? (
         /* Empty state */
-        <div className="flex flex-col items-center rounded-xl bg-white py-16 shadow-sm">
-          <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-gray-100">
+        <div className="flex flex-col items-center rounded-xl bg-white py-16 shadow-[0_20px_40px_rgba(25,28,29,0.05)]">
+          <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-[#e8eaeb]">
             <Lightbulb
               className="size-8 text-gray-400"
               aria-hidden="true"
@@ -70,7 +72,7 @@ export default async function MesPropositionsPage({
           </p>
           <Link
             href="/innovons/appels"
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-green-700"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#b70011] to-[#dc2626] px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
           >
             {t("cta_browse")}
           </Link>
@@ -78,9 +80,9 @@ export default async function MesPropositionsPage({
       ) : (
         <>
           {/* Desktop table */}
-          <div className="hidden overflow-hidden rounded-xl bg-white shadow-sm md:block">
+          <div className="hidden overflow-hidden rounded-xl bg-white shadow-[0_20px_40px_rgba(25,28,29,0.05)] md:block">
             <table className="w-full text-left text-sm">
-              <thead className="border-b border-gray-100 bg-gray-50">
+              <thead className="bg-[#f8f9fa]">
                 <tr>
                   <th className="px-5 py-3 font-medium text-gray-500">
                     Titre
@@ -96,9 +98,9 @@ export default async function MesPropositionsPage({
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-[#f8f9fa]">
                 {proposals.map((proposal) => (
-                  <tr key={proposal.id} className="hover:bg-gray-50/50">
+                  <tr key={proposal.id} className="hover:bg-[#f8f9fa]/50">
                     <td className="max-w-xs truncate px-5 py-4 font-medium text-gray-900">
                       {proposal.titre}
                     </td>
@@ -128,7 +130,7 @@ export default async function MesPropositionsPage({
             {proposals.map((proposal) => (
               <div
                 key={proposal.id}
-                className="rounded-xl bg-white p-4 shadow-sm"
+                className="rounded-xl bg-white p-4 shadow-[0_20px_40px_rgba(25,28,29,0.05)]"
               >
                 <div className="mb-2 flex items-start justify-between gap-2">
                   <h3 className="text-sm font-semibold text-gray-900">

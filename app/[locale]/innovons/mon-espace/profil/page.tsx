@@ -3,6 +3,8 @@ import { Link } from "@/i18n/routing";
 import { getCurrentUser } from "@/lib/innovons/user-queries";
 import { ProfilForm } from "@/components/innovons/ProfilForm";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProfilPage({
   params,
 }: {
@@ -22,7 +24,7 @@ export default async function ProfilPage({
           <li>
             <Link
               href="/innovons/mon-espace"
-              className="hover:text-green-600"
+              className="hover:text-[#16a34a]"
             >
               {t("nav_dashboard")}
             </Link>
@@ -39,7 +41,7 @@ export default async function ProfilPage({
       {user && (
         <ProfilForm
           initialData={{
-            full_name: user.full_name,
+            full_name: user.name,
             organisation: user.organisation ?? "",
             bio: user.bio ?? "",
             role: user.role,

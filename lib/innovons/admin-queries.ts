@@ -1,18 +1,17 @@
 import type { Need, NeedStatus } from "./types";
 import { MOCK_NEEDS } from "./mock-data";
+import { getSql } from "@/lib/db/neon";
 
-// Statuts etendus pour la moderation (ajoute REJETE et REVISION_DEMANDEE)
-// Ces statuts sont definis dans la migration 004_admin_moderation.sql
-// et doivent etre ajoutes au type NeedStatus dans types.ts lors de l'integration.
+// Statuts etendus pour la moderation
 type ModerationNeedStatus = NeedStatus | "REJETE" | "REVISION_DEMANDEE";
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
-function isSupabaseConfigured(): boolean {
+function isNeonConfigured(): boolean {
   return Boolean(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
-      !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("your-project"),
+    process.env.DATABASE_URL &&
+      !process.env.DATABASE_URL.includes("your-") &&
+      !process.env.DATABASE_URL.includes("placeholder"),
   );
 }
 
@@ -66,184 +65,153 @@ const MOCK_MODERATION_QUEUE: ModerationItem[] = MOCK_NEEDS.filter(
     statut: n.statut,
     created_at: n.created_at,
     updated_at: n.updated_at,
-    author_name: [
+    author_name: (([
       "Amadou Traore",
       "Fatima Ouedraogo",
       "Boukary Compaore",
       "Mariam Sawadogo",
       "Ibrahim Kabore",
-    ][i % 5],
+    ][i % 5]) as string),
     author_email: `user${i + 1}@example.com`,
-    moderation_count: Math.floor(Math.random() * 3),
+    moderation_count: 0,
   }));
 
 const MOCK_MODERATION_STATS: ModerationStats = {
-  pending: 12,
-  published: 89,
-  rejected: 8,
-  revision: 7,
-  total: 116,
+  pending: 0,
+  published: 0,
+  rejected: 0,
+  revision: 0,
+  total: 0,
 };
 
 // ── Queries ─────────────────────────────────────────────────────────────────
 
 /**
  * Retourne la file de moderation (besoins en attente de validation).
- * Fallback sur les donnees mock si Supabase n'est pas configure.
  */
 export async function getModerationQueue(): Promise<ModerationItem[]> {
-  if (!isSupabaseConfigured()) return MOCK_MODERATION_QUEUE;
+  if (!isNeonConfigured()) return MOCK_MODERATION_QUEUE;
 
   try {
-    const { createClient } = await import("@/lib/supabase/server");
-    const supabase = await createClient();
-
-    const { data, error } = await supabase
-      .from("ie_moderation_queue")
-      .select("*")
-      .order("created_at", { ascending: true });
-
-    if (error) {
-      console.error("[getModerationQueue] Supabase error:", error.message);
-      return MOCK_MODERATION_QUEUE;
-    }
-
-    return (data as ModerationItem[]) ?? [];
+    const rows = await getSql()`
+      SELECT
+        n.id,
+        n.slug,
+        n.titre,
+        n.domaine,
+        n.niveau,
+        n.statut,
+        n.created_at,
+        n.updated_at,
+        COALESCE(u.name, n.auteur_email, 'Inconnu') AS author_name,
+        COALESCE(n.auteur_email, '') AS author_email,
+        0 AS moderation_count
+      FROM ie_needs n
+      LEFT JOIN "user" u ON u.email = n.auteur_email
+      WHERE n.statut = 'VALIDATION'
+      ORDER BY n.created_at ASC
+    `;
+    return rows as unknown as ModerationItem[];
   } catch (err) {
-    console.error("[getModerationQueue] Unexpected error:", err);
-    return MOCK_MODERATION_QUEUE;
+    console.error("[getModerationQueue] Neon error:", err);
+    return [];
   }
 }
 
 /**
- * Retourne les statistiques de moderation.
- * Fallback sur les donnees mock si Supabase n'est pas configure.
+ * Retourne les statistiques de moderation depuis Neon.
  */
 export async function getModerationStats(): Promise<ModerationStats> {
-  if (!isSupabaseConfigured()) return MOCK_MODERATION_STATS;
+  if (!isNeonConfigured()) return MOCK_MODERATION_STATS;
 
   try {
-    const { createClient } = await import("@/lib/supabase/server");
-    const supabase = await createClient();
-
-    const { data, error } = await supabase
-      .from("ie_needs")
-      .select("statut");
-
-    if (error) {
-      console.error("[getModerationStats] Supabase error:", error.message);
-      return MOCK_MODERATION_STATS;
-    }
-
-    const needs = data ?? [];
+    const rows = await getSql()`
+      SELECT
+        COUNT(*) FILTER (WHERE statut = 'VALIDATION')::int        AS pending,
+        COUNT(*) FILTER (WHERE statut = 'PUBLIE')::int            AS published,
+        COUNT(*) FILTER (WHERE statut = 'REJETE')::int            AS rejected,
+        COUNT(*) FILTER (WHERE statut = 'REVISION_DEMANDEE')::int AS revision,
+        COUNT(*)::int                                             AS total
+      FROM ie_needs
+    `;
+    const row = rows[0] as {
+      pending: number;
+      published: number;
+      rejected: number;
+      revision: number;
+      total: number;
+    } | undefined;
     return {
-      pending: needs.filter((n) => n.statut === "VALIDATION").length,
-      published: needs.filter((n) => n.statut === "PUBLIE").length,
-      rejected: needs.filter((n) => n.statut === "REJETE").length,
-      revision: needs.filter((n) => n.statut === "REVISION_DEMANDEE").length,
-      total: needs.length,
+      pending: Number(row?.pending) || 0,
+      published: Number(row?.published) || 0,
+      rejected: Number(row?.rejected) || 0,
+      revision: Number(row?.revision) || 0,
+      total: Number(row?.total) || 0,
     };
   } catch (err) {
-    console.error("[getModerationStats] Unexpected error:", err);
+    console.error("[getModerationStats] Neon error:", err);
     return MOCK_MODERATION_STATS;
   }
 }
 
 /**
  * Retourne un besoin par id ou slug pour la revue de moderation.
- * Fallback sur les donnees mock si Supabase n'est pas configure.
  */
 export async function getNeedForReview(id: string): Promise<Need | null> {
-  if (!isSupabaseConfigured()) {
-    return MOCK_NEEDS.find((n) => n.id === id || n.slug === id) ?? MOCK_NEEDS[0];
+  if (!isNeonConfigured()) {
+    return MOCK_NEEDS.find((n) => n.id === id || n.slug === id) ?? MOCK_NEEDS[0] ?? null;
   }
 
   try {
-    const { createClient } = await import("@/lib/supabase/server");
-    const supabase = await createClient();
-
-    const { data, error } = await supabase
-      .from("ie_needs")
-      .select("*")
-      .or(`id.eq.${id},slug.eq.${id}`)
-      .single();
-
-    if (error) {
-      console.error("[getNeedForReview] Supabase error:", error.message);
-      return MOCK_NEEDS.find((n) => n.id === id || n.slug === id) ?? MOCK_NEEDS[0];
-    }
-
-    return (data as Need) ?? null;
+    const rows = await getSql()`
+      SELECT * FROM ie_needs
+      WHERE id = ${id} OR slug = ${id}
+      LIMIT 1
+    `;
+    if (rows[0]) return rows[0] as unknown as Need;
+    return MOCK_NEEDS.find((n) => n.id === id || n.slug === id) ?? null;
   } catch (err) {
-    console.error("[getNeedForReview] Unexpected error:", err);
-    return MOCK_NEEDS[0];
+    console.error("[getNeedForReview] Neon error:", err);
+    return MOCK_NEEDS.find((n) => n.id === id || n.slug === id) ?? null;
   }
 }
 
 /**
  * Soumet une action de moderation (approbation, rejet, demande de revision).
- * Met a jour le statut du besoin et insere un commentaire de moderation.
- * Fallback mock si Supabase n'est pas configure.
  */
 export async function submitModerationAction(
   action: ModerationAction,
 ): Promise<{ success: boolean; error?: string }> {
-  if (!isSupabaseConfigured()) {
-    // Mock : simuler un delai et retourner succes
-    await new Promise((resolve) => setTimeout(resolve, 500));
+  if (!isNeonConfigured()) {
+    await new Promise((resolve) => setTimeout(resolve, 300));
     return { success: true };
   }
 
+  const statusMap: Record<ModerationActionType, ModerationNeedStatus> = {
+    APPROVED: "PUBLIE",
+    REJECTED: "REJETE",
+    REVISION_REQUESTED: "REVISION_DEMANDEE",
+  };
+  const newStatus = statusMap[action.action];
+
   try {
-    const { createClient } = await import("@/lib/supabase/server");
-    const supabase = await createClient();
-
-    // Mapper l'action vers un statut de besoin (conventions francaises)
-    const statusMap: Record<ModerationActionType, ModerationNeedStatus> = {
-      APPROVED: "PUBLIE",
-      REJECTED: "REJETE",
-      REVISION_REQUESTED: "REVISION_DEMANDEE",
-    };
-    const newStatus = statusMap[action.action];
-
-    // Mettre a jour le statut du besoin
-    const updateData: Record<string, string> = {
-      statut: newStatus,
-      updated_at: new Date().toISOString(),
-    };
-
-    // Si approuve, definir la date de publication
     if (action.action === "APPROVED") {
-      updateData.published_at = new Date().toISOString();
+      await getSql()`
+        UPDATE ie_needs
+        SET statut = ${newStatus}, updated_at = NOW(), published_at = NOW()
+        WHERE id = ${action.needId}
+      `;
+    } else {
+      await getSql()`
+        UPDATE ie_needs
+        SET statut = ${newStatus}, updated_at = NOW()
+        WHERE id = ${action.needId}
+      `;
     }
-
-    const { error: updateError } = await supabase
-      .from("ie_needs")
-      .update(updateData)
-      .eq("id", action.needId);
-
-    if (updateError) throw updateError;
-
-    // Inserer le commentaire de moderation
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    const { error: commentError } = await supabase
-      .from("ie_moderation_comments")
-      .insert({
-        need_id: action.needId,
-        admin_id: user?.id,
-        action: action.action,
-        comment: action.comment,
-      });
-
-    if (commentError) throw commentError;
-
     return { success: true };
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Erreur inconnue";
-    console.error("[submitModerationAction] Error:", message);
+    console.error("[submitModerationAction] Neon error:", message);
     return { success: false, error: message };
   }
 }
