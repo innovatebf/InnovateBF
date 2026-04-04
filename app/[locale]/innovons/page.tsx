@@ -180,16 +180,14 @@ export default async function InnovonsPage({
               </ul>
             </div>
 
-            {/* Colonne droite — image (placeholder stylise en attendant les assets CMS) */}
-            <div
-              className="aspect-[4/3] overflow-hidden rounded-2xl bg-gradient-to-br from-gray-200 via-gray-300 to-gray-200"
-              aria-hidden="true"
-            >
-              <div className="flex h-full w-full items-center justify-center">
-                <span className="text-sm text-gray-400">
-                  {t("mission.image_placeholder")}
-                </span>
-              </div>
+            {/* Colonne droite — illustration mission */}
+            <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
+              <img
+                src="/mission-innovation.svg"
+                alt="Communauté burkinabè innovant ensemble — énergie solaire, numérique et collaboration"
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>
