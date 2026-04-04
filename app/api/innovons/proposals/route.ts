@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSql } from "@/lib/db/neon";
-import { requireRoleForApi } from "@/lib/auth/guards";
 
 function isNeonConfigured(): boolean {
   return Boolean(
@@ -10,9 +9,7 @@ function isNeonConfigured(): boolean {
 }
 
 export async function POST(req: NextRequest) {
-  // RBAC: editor or admin only
-  const auth = await requireRoleForApi('editor');
-  if (auth.error) return auth.error;
+  // Ouvert au public — le porteur_nom et porteur_email identifient le soumissionnaire
 
   try {
     const body = await req.json();
