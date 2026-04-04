@@ -22,6 +22,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Length validation
+    if (body.titre.trim().length < 5) {
+      return NextResponse.json(
+        { error: "Le titre doit comporter au moins 5 caractères" },
+        { status: 400 },
+      );
+    }
+    if (body.description.trim().length < 20) {
+      return NextResponse.json(
+        { error: "La description doit comporter au moins 20 caractères" },
+        { status: 400 },
+      );
+    }
+
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(body.porteur_email)) {
@@ -46,6 +60,15 @@ export async function POST(req: NextRequest) {
           mock: true,
         },
         { status: 201 },
+      );
+    }
+
+    // Verify need_id exists in DB
+    const needCheck = await getSql()`SELECT id FROM ie_needs WHERE id = ${body.need_id} LIMIT 1`;
+    if (needCheck.length === 0) {
+      return NextResponse.json(
+        { error: "Besoin introuvable" },
+        { status: 404 },
       );
     }
 
