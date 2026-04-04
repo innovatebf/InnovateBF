@@ -69,16 +69,6 @@ export function DomainsOverview() {
                   {tDomains(`${domain}.short_description`)}
                 </p>
 
-                {/* Arrow indicator */}
-                <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-primary-600">
-                  <span>En savoir plus</span>
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform group-hover:translate-x-1"
-                  >
-                    →
-                  </span>
-                </div>
               </Link>
             );
           })}
