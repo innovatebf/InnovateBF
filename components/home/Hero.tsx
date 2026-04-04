@@ -39,16 +39,6 @@ export function Hero() {
             </Link>
           </Button>
 
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="rounded-full px-8 py-6 text-base font-semibold"
-          >
-            <Link href="/about">
-              {tCommon("readMore")}
-            </Link>
-          </Button>
         </div>
       </div>
 
