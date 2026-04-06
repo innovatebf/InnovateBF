@@ -39,3 +39,6 @@ next-env.d.ts
 # MCP configuration (local only)
 .mcp.json
 requirements/.Rhistory
+
+# pdf
+ docs/pdf/*

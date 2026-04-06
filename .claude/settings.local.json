@@ -30,14 +30,32 @@
       "Bash(git log:*)",
       "Bash(gh issue view:*)",
       "WebFetch(domain:*)",
-      "Skill(*)"
+      "Skill(*)",
+      "WebFetch(domain:www.innovatebf.org)",
+      "Bash(npm run:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3001)",
+      "Bash(rm \"C:/dev/AI/claude/InnovateBF/app/[locale]/domains/conference/page.tsx\")",
+      "Bash(rmdir \"C:/dev/AI/claude/InnovateBF/app/[locale]/domains/conference\")",
+      "Bash(rm \"C:/dev/AI/claude/InnovateBF/app/[locale]/domains/observatory/page.tsx\")",
+      "Bash(rmdir \"C:/dev/AI/claude/InnovateBF/app/[locale]/domains/observatory\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3002)",
+      "Bash(node -e ':*)",
+      "Bash(where pdftotext:*)",
+      "Bash(where mutool:*)",
+      "Bash(python3 -c \"import pdfminer; print\\('pdfminer ok'\\)\")",
+      "Bash(pdftotext:*)",
+      "Bash(node -e \"const d=require\\('/dev/stdin'\\); const a=d?.domains?.analysis; console.log\\(JSON.stringify\\(a,null,2\\)\\)\")",
+      "Bash(node -e \" const fs=require\\('fs'\\); const d=JSON.parse\\(fs.readFileSync\\('C:/dev/AI/claude/InnovateBF/messages/fr.json','utf8'\\)\\); console.log\\(JSON.stringify\\(d?.domains?.analysis||d?.domains,null,2\\)\\); \")",
+      "Bash(node:*)",
+      "Bash(curl:*)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(gh pr create --title 'feat: migrate to Neon DB, harmonise routes & enrich /domains/analysis' --body ':*)"
     ],
     "deny": []
   },
-  "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": [
-    "supabase"
-  ],
+  "enableAllProjectMcpServers": false,
+  "enabledMcpjsonServers": [],
   "enabledPlugins": {
     "claude-code-setup@claude-plugins-official": true,
     "vercel@claude-plugins-official": true,
