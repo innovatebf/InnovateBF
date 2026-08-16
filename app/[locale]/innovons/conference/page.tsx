@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { IENavbar } from "@/components/innovons/IENavbar";
 import { ConferenceTabs } from "@/components/innovons/ConferenceTabs";
+import { Ebc26FeaturedCard } from "@/components/home/Ebc26FeaturedCard";
 
 export async function generateMetadata({
   params,
@@ -172,6 +173,9 @@ export default async function ConferencePage({
           </div>
         </div>
       </section>
+
+      {/* Call for projects */}
+      <Ebc26FeaturedCard />
 
       {/* Programme */}
       <section className="bg-gray-50 px-4 py-16 lg:px-8 lg:py-20">
