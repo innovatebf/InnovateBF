@@ -638,5 +638,175 @@
       "error": "Erreur lors de la mise à jour",
       "cancel": "Annuler"
     }
+  },
+  "candidatures": {
+    "appel": {
+      "titre": "Candidature Projets EBC'26",
+      "conference": "Conférence EBC2026 — 13–14 novembre 2026, CEA-UNB, Bobo-Dioulasso",
+      "cta_soumettre": "Soumettre un projet",
+      "cloture_le": "Clôture des candidatures le {date}",
+      "intro": "Présentez votre projet innovant au concours EBC'26. Les meilleurs seront présentés lors de la conférence et distingués par les Awards.",
+      "gratuit": "La candidature est gratuite."
+    },
+    "wizard": {
+      "etape": "Étape {courante} sur {total}",
+      "precedent": "Précédent",
+      "suivant": "Suivant",
+      "soumettre": "Soumettre ma candidature",
+      "avertissement_session": "Vos réponses ne sont pas enregistrées tant que vous n'avez pas soumis. Ne fermez pas cet onglet avant d'avoir terminé.",
+      "caracteres_restants": "{n} caractères restants"
+    },
+    "step_porteur": {
+      "titre": "Porteur du projet",
+      "nom_label": "Nom du porteur ou de l'équipe",
+      "structure_label": "Structure de rattachement",
+      "statut_label": "Statut",
+      "email_label": "Adresse email",
+      "telephone_label": "Téléphone (facultatif)",
+      "pays_ville_label": "Pays et ville",
+      "affil_label": "Êtes-vous affilié à une structure organisatrice ?",
+      "affil_aide": "Structures organisatrices : CITADEL, BSB, UNB, Abamix, Sankora.",
+      "affil_precision_label": "Précisez la structure"
+    },
+    "step_projet": {
+      "titre": "Présentation du projet",
+      "titre_label": "Titre du projet",
+      "domaine_label": "Domaine",
+      "categorie_label": "Catégorie",
+      "resume_label": "Résumé du projet",
+      "probleme_label": "Problème endogène adressé"
+    },
+    "step_technique": {
+      "titre": "Dossier technique",
+      "description_label": "Description technique",
+      "innovation_label": "Caractère innovant et différenciation",
+      "trl_label": "Niveau de maturité technologique (TRL)",
+      "faisabilite_label": "Faisabilité (ressources, calendrier, risques)"
+    },
+    "step_impact": {
+      "titre": "Impact attendu",
+      "societal_label": "Impact sociétal",
+      "economique_label": "Impact économique",
+      "environnemental_label": "Impact environnemental (facultatif)",
+      "endogene_label": "Contribution au développement endogène"
+    },
+    "step_pieces": {
+      "titre": "Pièces jointes",
+      "aide": "Collez un lien vers votre démonstrateur (Google Drive, YouTube, GitHub…).",
+      "demonstrateur_label": "Lien démonstrateur (facultatif)",
+      "references_label": "Références et publications"
+    },
+    "step_presentation": {
+      "titre": "Modalités de présentation",
+      "mode_label": "Mode de présentation prévu",
+      "mode_sur_place": "Sur place",
+      "mode_distanciel": "À distance",
+      "mode_indifferent": "Indifférent",
+      "besoins_label": "Besoins logistiques",
+      "diaspora_label": "Je suis basé hors du Burkina Faso"
+    },
+    "step_declarations": {
+      "titre": "Déclarations et consentements",
+      "originalite_label": "Je déclare que ce projet est le travail propre de mon équipe et ne porte pas atteinte aux droits de tiers.",
+      "conflit_label": "Je déclare l'absence de conflit d'intérêts non signalé.",
+      "consent_traitement_label": "J'accepte le traitement de mes données aux fins de l'évaluation (obligatoire).",
+      "consent_publication_label": "J'autorise la publication du titre et du résumé de mon projet.",
+      "consent_communication_label": "J'accepte de recevoir des communications d'InnovateBF.",
+      "canal_label": "Comment avez-vous connu l'appel ?"
+    },
+    "recapitulatif": {
+      "titre": "Vérifiez votre candidature",
+      "modifier": "Modifier",
+      "confirmer_avant": "Cochez les déclarations obligatoires pour soumettre."
+    },
+    "confirmation": {
+      "titre": "Candidature reçue",
+      "numero": "Votre numéro de dossier : {numero}",
+      "email_envoye": "Un lien de suivi vous a été envoyé par email.",
+      "copier_lien": "Copier le lien de suivi",
+      "delais": "Vous pouvez suivre l'état de votre dossier et compléter des pièces manquantes sous 72 heures."
+    },
+    "suivi": {
+      "titre": "Suivi de votre dossier",
+      "statut_label": "Statut",
+      "soumis_le": "Soumis le {date}",
+      "regulariser": "Compléter les pièces manquantes",
+      "demander_effacement": "Demander l'effacement de mes données",
+      "statuts": {
+        "soumis": "Dossier soumis",
+        "recu": "Dossier reçu",
+        "incomplet": "Pièces manquantes",
+        "recevable": "En cours d'évaluation",
+        "en_evaluation": "En cours d'évaluation",
+        "non_recevable": "Dossier non recevable",
+        "retenu": "Décision communiquée",
+        "non_retenu": "Décision communiquée",
+        "notifie": "Décision communiquée"
+      }
+    },
+    "regularisation": {
+      "titre": "Compléter votre dossier",
+      "aide": "Déposez uniquement les pièces manquantes indiquées.",
+      "confirmer": "Envoyer les pièces"
+    },
+    "erreurs": {
+      "champ_requis": "Ce champ est obligatoire.",
+      "trop_long": "Texte trop long.",
+      "email_invalide": "Adresse email invalide.",
+      "reseau": "Votre candidature n'a pas pu être envoyée. Vérifiez votre connexion et réessayez.",
+      "clos": "L'appel à candidatures est clôturé."
+    },
+    "trl": {
+      "n1": "1 — Principes de base observés",
+      "n2": "2 — Concept technologique formulé",
+      "n3": "3 — Preuve de concept expérimentale",
+      "n4": "4 — Validation en laboratoire",
+      "n5": "5 — Validation en environnement représentatif",
+      "n6": "6 — Démonstrateur en environnement représentatif",
+      "n7": "7 — Prototype en conditions réelles",
+      "n8": "8 — Système complet qualifié",
+      "n9": "9 — Système éprouvé en exploitation"
+    },
+    "domaines": {
+      "agriculture": "Agriculture",
+      "education": "Éducation",
+      "energie": "Énergie",
+      "environnement": "Environnement",
+      "femmes": "Femmes",
+      "industrie": "Industrie",
+      "numerique": "Numérique",
+      "sante": "Santé"
+    },
+    "categories": {
+      "ia": "Intelligence artificielle",
+      "iot": "Internet des objets (IoT)",
+      "big_data": "Big Data",
+      "embarque_robotique": "Systèmes embarqués et robotique",
+      "impact_societal": "Impact sociétal",
+      "developpement_endogene": "Développement endogène",
+      "jeune_innovateur": "Jeune innovateur",
+      "startup_innovante": "Startup innovante",
+      "projet_academique": "Projet académique"
+    },
+    "statuts_porteur": {
+      "etudiant": "Étudiant",
+      "chercheur": "Chercheur",
+      "enseignant": "Enseignant",
+      "startup": "Startup",
+      "industriel": "Industriel",
+      "structure_academique": "Structure académique",
+      "autre": "Autre"
+    },
+    "canaux": {
+      "site_web": "Site web InnovateBF",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "whatsapp": "WhatsApp",
+      "radio": "Radio",
+      "relais_institutionnel": "Relais institutionnel",
+      "mobilisation_etudiante": "Mobilisation étudiante",
+      "diaspora": "Réseau diaspora",
+      "autre": "Autre"
+    }
   }
 }

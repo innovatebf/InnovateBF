@@ -638,5 +638,175 @@
       "error": "Error updating need",
       "cancel": "Cancel"
     }
+  },
+  "candidatures": {
+    "appel": {
+      "titre": "EBC'26 Project Application",
+      "conference": "EBC2026 Conference — 13–14 November 2026, CEA-UNB, Bobo-Dioulasso",
+      "cta_soumettre": "Submit a project",
+      "cloture_le": "Applications close on {date}",
+      "intro": "Present your innovative project to the EBC'26 competition. The best will be showcased at the conference and honoured with the Awards.",
+      "gratuit": "Applying is free of charge."
+    },
+    "wizard": {
+      "etape": "Step {courante} of {total}",
+      "precedent": "Back",
+      "suivant": "Next",
+      "soumettre": "Submit my application",
+      "avertissement_session": "Your answers are not saved until you submit. Do not close this tab before you finish.",
+      "caracteres_restants": "{n} characters left"
+    },
+    "step_porteur": {
+      "titre": "Project applicant",
+      "nom_label": "Applicant or team name",
+      "structure_label": "Affiliation",
+      "statut_label": "Status",
+      "email_label": "Email address",
+      "telephone_label": "Phone (optional)",
+      "pays_ville_label": "Country and city",
+      "affil_label": "Are you affiliated with an organising body?",
+      "affil_aide": "Organising bodies: CITADEL, BSB, UNB, Abamix, Sankora.",
+      "affil_precision_label": "Specify the body"
+    },
+    "step_projet": {
+      "titre": "Project overview",
+      "titre_label": "Project title",
+      "domaine_label": "Domain",
+      "categorie_label": "Category",
+      "resume_label": "Project summary",
+      "probleme_label": "Endogenous problem addressed"
+    },
+    "step_technique": {
+      "titre": "Technical file",
+      "description_label": "Technical description",
+      "innovation_label": "Innovation and differentiation",
+      "trl_label": "Technology Readiness Level (TRL)",
+      "faisabilite_label": "Feasibility (resources, timeline, risks)"
+    },
+    "step_impact": {
+      "titre": "Expected impact",
+      "societal_label": "Societal impact",
+      "economique_label": "Economic impact",
+      "environnemental_label": "Environmental impact (optional)",
+      "endogene_label": "Contribution to endogenous development"
+    },
+    "step_pieces": {
+      "titre": "Attachments",
+      "aide": "Paste a link to your demonstrator (Google Drive, YouTube, GitHub…).",
+      "demonstrateur_label": "Demonstrator link (optional)",
+      "references_label": "References and publications"
+    },
+    "step_presentation": {
+      "titre": "Presentation arrangements",
+      "mode_label": "Planned presentation mode",
+      "mode_sur_place": "On site",
+      "mode_distanciel": "Remote",
+      "mode_indifferent": "No preference",
+      "besoins_label": "Logistics needs",
+      "diaspora_label": "I am based outside Burkina Faso"
+    },
+    "step_declarations": {
+      "titre": "Declarations and consent",
+      "originalite_label": "I declare that this project is my team's own work and does not infringe the rights of third parties.",
+      "conflit_label": "I declare that there is no undisclosed conflict of interest.",
+      "consent_traitement_label": "I agree to the processing of my data for evaluation purposes (required).",
+      "consent_publication_label": "I authorise publication of my project title and summary.",
+      "consent_communication_label": "I agree to receive communications from InnovateBF.",
+      "canal_label": "How did you hear about the call?"
+    },
+    "recapitulatif": {
+      "titre": "Review your application",
+      "modifier": "Edit",
+      "confirmer_avant": "Tick the required declarations to submit."
+    },
+    "confirmation": {
+      "titre": "Application received",
+      "numero": "Your reference number: {numero}",
+      "email_envoye": "A tracking link has been sent to your email.",
+      "copier_lien": "Copy the tracking link",
+      "delais": "You can track your application and add missing documents within 72 hours."
+    },
+    "suivi": {
+      "titre": "Track your application",
+      "statut_label": "Status",
+      "soumis_le": "Submitted on {date}",
+      "regulariser": "Add missing documents",
+      "demander_effacement": "Request deletion of my data",
+      "statuts": {
+        "soumis": "Application submitted",
+        "recu": "Application received",
+        "incomplet": "Missing documents",
+        "recevable": "Under evaluation",
+        "en_evaluation": "Under evaluation",
+        "non_recevable": "Application not eligible",
+        "retenu": "Decision communicated",
+        "non_retenu": "Decision communicated",
+        "notifie": "Decision communicated"
+      }
+    },
+    "regularisation": {
+      "titre": "Complete your application",
+      "aide": "Only upload the missing documents indicated.",
+      "confirmer": "Send documents"
+    },
+    "erreurs": {
+      "champ_requis": "This field is required.",
+      "trop_long": "Text is too long.",
+      "email_invalide": "Invalid email address.",
+      "reseau": "Your application could not be sent. Check your connection and try again.",
+      "clos": "The call for applications is closed."
+    },
+    "trl": {
+      "n1": "1 — Basic principles observed",
+      "n2": "2 — Technology concept formulated",
+      "n3": "3 — Experimental proof of concept",
+      "n4": "4 — Validation in laboratory",
+      "n5": "5 — Validation in a relevant environment",
+      "n6": "6 — Demonstrator in a relevant environment",
+      "n7": "7 — Prototype in operational conditions",
+      "n8": "8 — Complete, qualified system",
+      "n9": "9 — System proven in operation"
+    },
+    "domaines": {
+      "agriculture": "Agriculture",
+      "education": "Education",
+      "energie": "Energy",
+      "environnement": "Environment",
+      "femmes": "Women",
+      "industrie": "Industry",
+      "numerique": "Digital",
+      "sante": "Health"
+    },
+    "categories": {
+      "ia": "Artificial intelligence",
+      "iot": "Internet of Things (IoT)",
+      "big_data": "Big Data",
+      "embarque_robotique": "Embedded systems and robotics",
+      "impact_societal": "Societal impact",
+      "developpement_endogene": "Endogenous development",
+      "jeune_innovateur": "Young innovator",
+      "startup_innovante": "Innovative startup",
+      "projet_academique": "Academic project"
+    },
+    "statuts_porteur": {
+      "etudiant": "Student",
+      "chercheur": "Researcher",
+      "enseignant": "Teacher",
+      "startup": "Startup",
+      "industriel": "Industrial",
+      "structure_academique": "Academic institution",
+      "autre": "Other"
+    },
+    "canaux": {
+      "site_web": "InnovateBF website",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "whatsapp": "WhatsApp",
+      "radio": "Radio",
+      "relais_institutionnel": "Institutional relay",
+      "mobilisation_etudiante": "Student mobilisation",
+      "diaspora": "Diaspora network",
+      "autre": "Other"
+    }
   }
 }
