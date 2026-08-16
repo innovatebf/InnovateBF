@@ -25,7 +25,12 @@
     "newsletter_subtitle": "Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités",
     "newsletter_placeholder": "Votre adresse email",
     "newsletter_cta": "S'inscrire",
-    "newsletter_soon": "Bientôt disponible"
+    "newsletter_soon": "Bientôt disponible",
+    "ebc26_badge": "Appel à projets ouvert",
+    "ebc26_deadline": "Clôture des candidatures le 31 octobre 2026",
+    "ebc26_voir": "En savoir plus",
+    "ebc26_tracks_label": "Catégories primées",
+    "ebc26_et_plus": "et plus encore…"
   },
   "domains": {
     "analysis": {
@@ -419,8 +424,8 @@
     "conference": {
       "page_title": "Conférence EBC 2026",
       "tagline": "Échangeons, Bâtissons, Contribuons",
-      "date": "15-16 Octobre 2026",
-      "location": "Ouagadougou, Burkina Faso",
+      "date": "13–14 novembre 2026",
+      "location": "CEA-UNB, Bobo-Dioulasso",
       "register": "S'inscrire à la conférence",
       "day1": "Jour 1",
       "day2": "Jour 2",

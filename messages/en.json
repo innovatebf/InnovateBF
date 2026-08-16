@@ -25,7 +25,12 @@
     "newsletter_subtitle": "Subscribe to our newsletter to receive our latest news",
     "newsletter_placeholder": "Your email address",
     "newsletter_cta": "Subscribe",
-    "newsletter_soon": "Coming soon"
+    "newsletter_soon": "Coming soon",
+    "ebc26_badge": "Open call for projects",
+    "ebc26_deadline": "Applications close on October 31, 2026",
+    "ebc26_voir": "Learn more",
+    "ebc26_tracks_label": "Award categories",
+    "ebc26_et_plus": "and more…"
   },
   "domains": {
     "analysis": {
@@ -419,8 +424,8 @@
     "conference": {
       "page_title": "EBC 2026 Conference",
       "tagline": "Exchange, Build, Contribute",
-      "date": "October 15-16, 2026",
-      "location": "Ouagadougou, Burkina Faso",
+      "date": "13–14 November 2026",
+      "location": "CEA-UNB, Bobo-Dioulasso",
       "register": "Register for the conference",
       "day1": "Day 1",
       "day2": "Day 2",

@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/home/Hero";
+import { Ebc26FeaturedCard } from "@/components/home/Ebc26FeaturedCard";
 import { DomainsOverview } from "@/components/home/DomainsOverview";
 import { NewsletterSignup } from "@/components/home/NewsletterSignup";
 
@@ -28,6 +29,7 @@ export default async function HomePage({
   return (
     <>
       <Hero />
+      <Ebc26FeaturedCard />
       <DomainsOverview />
       <NewsletterSignup />
     </>
