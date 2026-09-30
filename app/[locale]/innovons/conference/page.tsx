@@ -100,14 +100,14 @@ export default async function ConferencePage({
       {/* Hero */}
       <section className="bg-[#0D0D0D] px-4 py-20 text-white lg:px-8 lg:py-32">
         <div className="mx-auto max-w-5xl text-center">
-          {/* EBC Logo */}
-          <div className="mx-auto mb-8">
+          {/* EBC Logo — white badge card on dark hero */}
+          <div className="mx-auto mb-10 inline-flex items-center justify-center rounded-2xl bg-white px-8 py-5 shadow-[0_8px_40px_rgba(183,0,17,0.45)]">
             <Image
               src="/LogoEBC2026.png"
-              alt="EBC 2026"
-              width={120}
+              alt="EBC 2026 — Conférence scientifique pour l'innovation technologique"
+              width={200}
               height={120}
-              className="mx-auto"
+              className="h-auto w-[200px]"
               priority
             />
           </div>
