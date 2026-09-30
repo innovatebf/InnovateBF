@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/routing";
+import Image from "next/image";
 import {
   Users,
   Mic,
@@ -100,8 +101,15 @@ export default async function ConferencePage({
       <section className="bg-[#0D0D0D] px-4 py-20 text-white lg:px-8 lg:py-32">
         <div className="mx-auto max-w-5xl text-center">
           {/* EBC Logo */}
-          <div className="mx-auto mb-8 flex size-20 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-600 to-primary-500 text-2xl font-black text-white shadow-[0_20px_40px_rgba(183,0,17,0.3)]">
-            EBC
+          <div className="mx-auto mb-8">
+            <Image
+              src="/LogoEBC2026.png"
+              alt="EBC 2026"
+              width={120}
+              height={120}
+              className="mx-auto"
+              priority
+            />
           </div>
 
           <h1 className="text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
