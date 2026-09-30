@@ -71,28 +71,16 @@ export function Ebc26FeaturedCard() {
             </div>
           </div>
 
-          {/* Right: EBC logo + poster */}
-          <div className="flex flex-col items-center gap-6">
-            {/* Event logo — brand anchor; multiply blends white bg into crimson */}
+          {/* Right: EBC logo — brand anchor; multiply blends white bg into crimson */}
+          <div className="flex items-center justify-center">
             <Image
               src="/LogoEBC2026.png"
               alt="EBC 2026 — Conférence scientifique"
-              width={260}
-              height={260}
+              width={280}
+              height={280}
               className="mx-auto mix-blend-multiply"
               priority
             />
-
-            {/* Official poster — shown as a physical flyer */}
-            <div className="-rotate-1 overflow-hidden rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-              <Image
-                src="/appelEBC2026.jpeg"
-                alt="Palmarès officiel EBC 2026"
-                width={400}
-                height={560}
-                className="w-full object-cover"
-              />
-            </div>
           </div>
         </div>
       </div>
