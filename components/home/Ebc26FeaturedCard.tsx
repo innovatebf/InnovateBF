@@ -81,13 +81,13 @@ export function Ebc26FeaturedCard() {
 
           {/* Right: Banner image */}
           <div className="flex flex-col gap-4">
-            <div className="overflow-hidden rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.3)]">
+            <div className="overflow-hidden rounded-2xl">
               <Image
                 src="/appelEBC2026.jpeg"
                 alt="Appel à projets EBC 2026"
                 width={640}
                 height={400}
-                className="w-full object-cover"
+                className="w-full object-cover mix-blend-multiply"
                 priority
               />
             </div>
