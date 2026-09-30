@@ -3,17 +3,9 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { Trophy, CalendarCheck, ArrowRight } from "lucide-react";
 
-const AWARD_TRACKS = [
-  "ia",
-  "impact_societal",
-  "startup_innovante",
-  "jeune_innovateur",
-] as const;
-
 export function Ebc26FeaturedCard() {
   const t = useTranslations("home");
   const tAppel = useTranslations("candidatures.appel");
-  const tCats = useTranslations("candidatures.categories");
 
   return (
     <section
@@ -79,32 +71,27 @@ export function Ebc26FeaturedCard() {
             </div>
           </div>
 
-          {/* Right: Banner image */}
-          <div className="flex flex-col gap-4">
-            <div className="overflow-hidden rounded-2xl">
+          {/* Right: EBC logo + poster */}
+          <div className="flex flex-col items-center gap-6">
+            {/* Event logo — brand anchor; multiply blends white bg into crimson */}
+            <Image
+              src="/LogoEBC2026.png"
+              alt="EBC 2026 — Conférence scientifique"
+              width={260}
+              height={260}
+              className="mx-auto mix-blend-multiply"
+              priority
+            />
+
+            {/* Official poster — shown as a physical flyer */}
+            <div className="-rotate-1 overflow-hidden rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
               <Image
                 src="/appelEBC2026.jpeg"
-                alt="Appel à projets EBC 2026"
-                width={640}
-                height={400}
-                className="w-full object-cover mix-blend-multiply"
-                priority
+                alt="Palmarès officiel EBC 2026"
+                width={400}
+                height={560}
+                className="w-full object-cover"
               />
-            </div>
-            <div className="flex flex-col gap-2">
-              <p className="text-xs font-semibold uppercase tracking-widest text-white/80">
-                {t("ebc26_tracks_label")}
-              </p>
-              {AWARD_TRACKS.map((track) => (
-                <div
-                  key={track}
-                  className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-sm"
-                >
-                  <span className="size-2 shrink-0 rounded-full bg-white/60" aria-hidden="true" />
-                  <span className="text-sm font-medium text-white">{tCats(track)}</span>
-                </div>
-              ))}
-              <p className="text-right text-xs text-white/80">{t("ebc26_et_plus")}</p>
             </div>
           </div>
         </div>
