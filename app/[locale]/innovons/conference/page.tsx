@@ -106,7 +106,7 @@ export default async function ConferencePage({
               src="/LogoEBC2026.png"
               alt="EBC 2026 — Conférence scientifique pour l'innovation technologique"
               width={200}
-              height={120}
+              height={200}
               className="h-auto w-[200px]"
               priority
             />

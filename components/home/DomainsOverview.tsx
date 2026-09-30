@@ -30,6 +30,7 @@ const domains = [
 export function DomainsOverview() {
   const t = useTranslations("home");
   const tDomains = useTranslations("domains");
+  const tCommon = useTranslations("common");
 
   return (
     <section className="bg-gray-50 px-6 py-24 sm:py-32">
@@ -71,7 +72,7 @@ export function DomainsOverview() {
 
                 {/* Arrow indicator */}
                 <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-primary-600">
-                  <span>En savoir plus</span>
+                  <span>{tCommon("readMore")}</span>
                   <span
                     aria-hidden="true"
                     className="transition-transform group-hover:translate-x-1"

@@ -13,7 +13,7 @@ export function Hero() {
         {/* Badge */}
         <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary-600 to-secondary-600 px-4 py-2 text-sm text-white shadow-lg">
           <Lightbulb className="size-4" />
-          <span>Innovation & Technologie Endogène</span>
+          <span>{t("hero_badge")}</span>
         </div>
 
         {/* Main heading */}
