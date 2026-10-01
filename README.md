@@ -192,7 +192,7 @@ Objectifs Lighthouse:
 
 ## Support
 
-Pour toute question ou problème:
+Pour toute question ou problème contactez nous:
 - Email: contact@innovatebf.org
 - GitHub Issues: [URL repository]
 
