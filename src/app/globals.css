@@ -1,0 +1,286 @@
+@import "tailwindcss";
+
+/*
+ * Design system InnovateBF, fidèle à la maquette validée (2026) :
+ * bleu nuit, bleu vif et orange sur fonds bleu très clair, Plus Jakarta Sans,
+ * signature manuscrite en Caveat, cartes et boutons très arrondis.
+ * Les anciens noms de jetons (faso, ink, paper…) sont conservés : ils pointent
+ * vers la nouvelle palette, ce qui harmonise d'un coup toutes les pages.
+ */
+@theme {
+  --color-paper: #f8fbfe;
+  --color-paper-2: #eef4fb;
+  --color-ink: #0b1a3f;
+  --color-ink-2: #46546f;
+  --color-ink-3: #6b7a94;
+  --color-rule: #dfe7f2;
+  --color-line: #c5d2e3;
+  --color-faso: #0a3a8f;
+  --color-faso-dark: #072a6b;
+  --color-faso-tint: #e6effc;
+  --color-ember: #c0362c;
+
+  --color-navy: #072a6b;
+  --color-navy-900: #071a4a;
+  --color-blue: #1a6fe8;
+  --color-sky: #eaf3fe;
+  --color-orange: #f2531c;
+  --color-green: #07b47a;
+
+  --radius-*: initial;
+  --radius-none: 0;
+  --radius-sm: 8px;
+  --radius-btn: 9999px;
+  --radius-lg: 14px;
+  --radius-card: 20px;
+  --radius-full: 9999px;
+}
+
+/* Les alias historiques (serif, roboto, antonio…) pointent tous vers la police de la maquette */
+@theme inline {
+  --font-sans: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
+  --font-roboto: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-jakarta-heading), var(--font-jakarta), Arial, sans-serif;
+  --font-serif-text: var(--font-jakarta-heading), var(--font-jakarta), Arial, sans-serif;
+  --font-merri: var(--font-jakarta), Arial, sans-serif;
+  --font-antonio: var(--font-jakarta-heading), var(--font-jakarta), Arial, sans-serif;
+  --font-barlow: var(--font-jakarta-heading), var(--font-jakarta), Arial, sans-serif;
+  --font-script: var(--font-caveat), "Segoe Script", cursive;
+}
+
+/*
+ * Unités « pixel de maquette » (la maquette fait 836 px de large) :
+ * --lu (mise en page : colonnes, marges latérales) suit la largeur de l'écran
+ * jusqu'à 1440 px ; --u (textes, hauteurs, espacements verticaux) est plafonné
+ * à 1200 px pour que les textes ne grossissent pas sur les grands écrans.
+ * Les unités cqw se résolvent par rapport au conteneur .page (voir layout).
+ */
+:root {
+  --lu: calc(min(100cqw, 1440px) / 836);
+  --u: calc(min(100cqw, 1200px) / 836);
+
+  /* Arrondis, ombres et courbes d'animation communs à tout le site */
+  --r-sm: 8px;
+  --r-btn: 9999px;
+  --r-field: 12px;
+  --r-table: 16px;
+  --r-card: 20px;
+  --shadow-card: 0 1px 2px rgb(11 26 63 / 0.04), 0 12px 32px -18px rgb(11 26 63 / 0.22);
+  --shadow-hover: 0 2px 6px rgb(11 26 63 / 0.06), 0 26px 48px -24px rgb(7 42 107 / 0.4);
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    font-synthesis: none;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 2px;
+  }
+  [id] {
+    scroll-margin-top: 7rem;
+  }
+}
+
+@layer components {
+  .page {
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    /* Les animations d'entrée (glissement latéral) ne créent jamais de défilement horizontal */
+    overflow-x: clip;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: calc(836 * var(--lu));
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .wrap { padding-inline: 2rem; }
+  }
+  /* Aligné sur les marges de l'en-tête et de l'accueil (maquette) */
+  @media (min-width: 1024px) {
+    .wrap { padding-inline: calc(37 * var(--lu)); }
+  }
+
+  /* Intitulé de section : trait orange puis libellé bleu nuit (maquette) */
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-navy);
+  }
+  .label::before {
+    content: "";
+    flex: none;
+    width: 1.75rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-orange);
+  }
+  .tracked {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .lead {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--color-ink-3);
+  }
+
+  /* Anciennes capitales d'affiche : même famille, en gras */
+  .poster {
+    font-family: var(--font-barlow);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .condensed {
+    font-family: var(--font-antonio);
+    font-weight: 700;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 2.875rem;
+    padding: 0 1.4rem;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    border: 1.5px solid transparent;
+    border-radius: var(--r-btn);
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s var(--ease-out), box-shadow 0.2s;
+    white-space: nowrap;
+  }
+  .btn svg { transition: transform 0.25s var(--ease-out); }
+  .btn:hover svg { transform: translateX(3px); }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--color-navy); color: #fff; box-shadow: 0 10px 24px -14px rgb(7 42 107 / 0.8); }
+  .btn-primary:hover { background: var(--color-faso); transform: translateY(-1px); box-shadow: 0 14px 28px -14px rgb(7 42 107 / 0.85); }
+  .btn-line { background: #fff; color: var(--color-navy); border-color: var(--color-rule); box-shadow: 0 6px 18px -12px rgb(11 26 63 / 0.35); }
+  .btn-line:hover { border-color: var(--color-navy); }
+  .btn[aria-disabled="true"] {
+    background: var(--color-paper-2);
+    border-color: var(--color-rule);
+    color: var(--color-ink-3);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.15s;
+  }
+  .more:hover { text-decoration-color: currentColor; }
+
+  .prose-ibf p { margin-top: 1rem; color: var(--color-ink-2); }
+  .prose-ibf p:first-child { margin-top: 0; }
+  .prose-ibf h2 { margin-top: 2.25rem; font-size: 1.375rem; }
+
+  /* Photo dans un cadre arrondi : léger zoom au survol */
+  .zoom-media {
+    overflow: hidden;
+    border-radius: var(--r-card);
+  }
+  .zoom-media img {
+    transition: transform 0.9s var(--ease-out);
+  }
+  .zoom-media:hover img {
+    transform: scale(1.045);
+  }
+}
+
+/*
+ * Apparition au défilement : les éléments marqués data-reveal apparaissent
+ * quand ils entrent à l'écran (voir components/RevealObserver.tsx).
+ * La classe .reveal-on n'est posée que si JavaScript s'exécute : sans JS,
+ * tout reste visible. Désactivé si l'utilisateur limite les animations.
+ */
+.reveal-on [data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.8s var(--ease-out),
+    transform 0.8s var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+.reveal-on [data-reveal="fade"] { transform: none; }
+.reveal-on [data-reveal="left"] { transform: translateX(-26px); }
+.reveal-on [data-reveal="right"] { transform: translateX(26px); }
+.reveal-on [data-reveal="zoom"] { transform: scale(0.96); }
+.reveal-on [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Entrée lente des grandes photos (effet « Ken Burns » discret) */
+@keyframes settle {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
+}
+.settle img {
+  animation: settle 2.4s var(--ease-out) both;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(7 180 122 / 0.45); }
+  50% { box-shadow: 0 0 0 6px rgb(7 180 122 / 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .settle img,
+  .zoom-media img,
+  .btn,
+  .btn svg {
+    animation: none;
+    transition: none;
+  }
+  html { scroll-behavior: auto; }
+}

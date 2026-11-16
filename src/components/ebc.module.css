@@ -1,0 +1,464 @@
+/*
+ * Blocs EBC partagés entre l'accueil et la page Conférence :
+ * bande « Patronage » et affiche verte.
+ * Mobile d'abord ; à partir de 1024 px, mesures de la maquette en unités --u.
+ */
+
+/* ---------- Bande Patronage : trois cartes blanches ---------- */
+
+.patron {
+  position: relative;
+  z-index: 2;
+}
+.patronInner {
+  max-width: calc(836 * var(--lu));
+  margin-inline: auto;
+  padding: 0 16px 48px;
+}
+.patronLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--color-navy);
+}
+.patronLabel::before {
+  content: "";
+  flex: none;
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-orange);
+}
+.patronItems {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+.patronItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border: 1px solid #e3eaf4;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 18px 40px -34px rgb(11 26 63 / 0.55);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s;
+}
+.patronItem:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+.patronEmblem {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  padding: 9px;
+  border-radius: 9999px;
+  background: #f3f7fc;
+  object-fit: contain;
+}
+.patronPortrait {
+  position: relative;
+  flex-shrink: 0;
+  width: 76px;
+  height: 76px;
+}
+.patronPhoto {
+  width: 100%;
+  height: 100%;
+  border: 3px solid #fff;
+  border-radius: 9999px;
+  object-fit: cover;
+  box-shadow: 0 10px 24px -14px rgb(11 26 63 / 0.6);
+}
+.patronBadge {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 30px;
+  height: 30px;
+  padding: 4px;
+  border: 2px solid #fff;
+  border-radius: 9999px;
+  background: #f3f7fc;
+  object-fit: contain;
+}
+.patronMinister {
+  margin-top: 6px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13.5px;
+  letter-spacing: 0.01em;
+  color: var(--color-navy);
+}
+.patronRole {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: #fde9e1;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #c2410c;
+}
+.patronName {
+  margin-top: 8px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14.5px;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+.patronLine { display: inline; }
+
+@media (min-width: 640px) {
+  .patronInner { padding-inline: 28px; }
+}
+@media (min-width: 1024px) {
+  .patronInner { padding: 0 calc(37 * var(--lu)) 64px; }
+  .patronItems { grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
+}
+
+/* ---------- Affiche verte ---------- */
+
+.poster {
+  background: linear-gradient(120deg, #072a6b 0%, var(--color-faso) 60%);
+  color: #fff;
+  overflow: hidden;
+}
+.posterTop {
+  max-width: calc(836 * var(--lu));
+  margin-inline: auto;
+  padding: 40px 16px 0;
+  display: flex;
+  flex-direction: column;
+}
+.slogan {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-barlow);
+  font-weight: 800;
+  font-size: clamp(42px, 11.4vw, 66px);
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.posterPhoto {
+  position: relative;
+  margin: 28px -16px 0;
+  aspect-ratio: 16 / 9;
+}
+.posterPhoto img {
+  filter: grayscale(1) contrast(1.05);
+}
+.posterTint {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 42, 107, 0.55);
+  mix-blend-mode: multiply;
+}
+.posterFade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, var(--color-faso) 0%, transparent 35%);
+}
+.dates {
+  padding: 28px 0 36px;
+}
+.datesDays {
+  font-family: var(--font-antonio);
+  font-weight: 700;
+  font-size: 80px;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+.datesMonth {
+  margin-top: 6px;
+  font-family: var(--font-antonio);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.datesCity {
+  margin-top: 14px;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 17px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.datesBar {
+  display: block;
+  margin-top: 12px;
+  width: 40px;
+  height: 3px;
+  background: #fff;
+}
+.datesVenue {
+  margin-top: 12px;
+  font-family: var(--font-roboto);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+}
+.posterNav {
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+.posterNav ul {
+  max-width: calc(836 * var(--lu));
+  margin-inline: auto;
+  padding-inline: 16px;
+  display: grid;
+}
+.posterNav li + li {
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+.navItem {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 16px 0;
+  transition: opacity 0.15s;
+}
+.navItem:hover .navLabel svg {
+  transform: translateX(4px);
+}
+.navLabel svg {
+  transition: transform 0.25s var(--ease-out);
+}
+.navItem .navLabel {
+  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 0 1.5px;
+  transition: background-size 0.35s var(--ease-out);
+}
+.navItem:hover .navLabel {
+  background-size: 100% 1.5px;
+}
+.navNum {
+  font-family: var(--font-antonio);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1;
+}
+.navLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+@media (min-width: 640px) {
+  .posterNav ul { grid-template-columns: 1fr 1fr; column-gap: 24px; }
+  .posterNav li + li { border-top: 0; }
+  .posterNav li { border-bottom: 1px solid rgba(255, 255, 255, 0.25); }
+}
+
+/* Tablette : slogan et dates côte à côte, photo en bandeau */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .patronInner { padding-inline: 32px; }
+  .posterTop {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 32px;
+    align-items: center;
+    padding: 40px 32px 0;
+  }
+  .slogan { grid-column: 1; grid-row: 1; }
+  .dates { grid-column: 2; grid-row: 1; padding: 0; }
+  .posterPhoto {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 32px -32px 0;
+    aspect-ratio: 21 / 9;
+  }
+  .posterNav ul { padding-inline: 32px; }
+}
+
+@media (min-width: 1024px) {
+  .posterTop {
+    display: grid;
+    grid-template-columns: calc(323 * var(--lu)) calc(266 * var(--lu)) 1fr;
+    height: calc(190 * var(--u));
+    padding: 0 0 0 calc(37 * var(--lu));
+  }
+  .slogan {
+    padding-top: calc(17 * var(--u));
+    font-size: calc(56 * var(--u));
+    line-height: calc(53 * var(--u));
+    white-space: nowrap;
+  }
+  .posterPhoto {
+    margin: 0;
+    aspect-ratio: auto;
+  }
+  .posterFade {
+    background: linear-gradient(to right, var(--color-faso) 0%, rgba(10, 58, 143, 0.6) 14%, transparent 30%);
+  }
+  .dates {
+    border-left: 1px solid rgba(255, 255, 255, 0.35);
+    padding: calc(27 * var(--u)) 0 0 calc(22 * var(--u));
+  }
+  .datesDays {
+    font-size: calc(62 * var(--u));
+    line-height: calc(62 * var(--u));
+  }
+  .datesMonth {
+    margin-top: calc(2 * var(--u));
+    font-size: calc(22.5 * var(--u));
+  }
+  .datesCity {
+    margin-top: calc(9 * var(--u));
+    font-size: calc(12 * var(--u));
+  }
+  .datesBar {
+    margin-top: calc(8 * var(--u));
+    width: calc(22 * var(--u));
+    height: calc(2 * var(--u));
+  }
+  .datesVenue {
+    margin-top: calc(8 * var(--u));
+    font-size: max(10px, calc(7.4 * var(--u)));
+  }
+
+  .posterNav ul {
+    grid-template-columns: calc(160 * var(--lu)) calc(135 * var(--lu)) calc(162 * var(--lu)) calc(150 * var(--lu)) 1fr;
+    column-gap: 0;
+    height: calc(56 * var(--u));
+    padding: 0 calc(36 * var(--lu)) 0 calc(37 * var(--lu));
+  }
+  .posterNav li {
+    border-bottom: 0;
+    margin-block: calc(9 * var(--u));
+  }
+  .posterNav li + li {
+    border-left: 1px solid rgba(255, 255, 255, 0.45);
+  }
+  .posterNav li + li .navItem {
+    padding-left: calc(17 * var(--lu));
+  }
+  .navItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(3 * var(--u));
+    padding: calc(3 * var(--u)) 0 0;
+    height: 100%;
+  }
+  .navNum {
+    font-size: calc(16.5 * var(--u));
+  }
+  .navLabel {
+    gap: calc(6 * var(--u));
+    font-size: max(14px, calc(11.8 * var(--u)));
+  }
+}
+
+/* ---------- Murs de logos (page Conférence) ---------- */
+
+.groups {
+  display: grid;
+  gap: 28px;
+}
+.groupTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-navy);
+}
+.groupTitle::before {
+  content: "";
+  flex: none;
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-orange);
+}
+.wall {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.tileWide {
+  grid-column: span 2;
+}
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #e3eaf4;
+  border-radius: 22px;
+  text-align: center;
+  box-shadow: 0 16px 34px -30px rgb(11 26 63 / 0.55);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s, border-color 0.35s;
+}
+.tile:hover {
+  transform: translateY(-4px);
+  border-color: #d3e1f4;
+  box-shadow: var(--shadow-hover);
+}
+.tileLogo {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 64px;
+  object-fit: contain;
+}
+.tileBadge {
+  width: auto;
+  height: 46px;
+}
+.tileCaption {
+  margin-top: 8px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 13.5px;
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+.soon {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px 24px;
+  background: rgb(255 255 255 / 0.8);
+  border: 1.5px dashed #c6d6ee;
+  border-radius: 22px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--color-ink-3);
+}
+.soon b {
+  color: var(--color-ink);
+}
+
+@media (min-width: 640px) {
+  .wall { grid-template-columns: repeat(3, 1fr); }
+  .soon { flex-direction: row; align-items: center; justify-content: space-between; }
+}
+
+@media (min-width: 1024px) {
+  .groups { gap: calc(20 * var(--u)); }
+  .groupTitle { margin-bottom: calc(9 * var(--u)); font-size: max(13px, calc(8.6 * var(--u))); }
+  .wall { grid-template-columns: repeat(6, 1fr); gap: calc(8 * var(--u)); }
+  .tile { height: calc(78 * var(--u)); padding: calc(10 * var(--u)); }
+  .tileLogo { max-height: calc(46 * var(--u)); }
+  .tileBadge { height: calc(32 * var(--u)); }
+  .tileCaption { margin-top: calc(3 * var(--u)); font-size: max(12px, calc(9.2 * var(--u))); }
+  .soon { padding: 22px 28px; font-size: 15px; }
+}

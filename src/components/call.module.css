@@ -1,0 +1,177 @@
+/*
+ * Section « Appel à projets » (page Conférence) : grande carte arrondie avec
+ * photo, statut, date de clôture, bouton de candidature et encadré bleu nuit.
+ */
+
+.call {
+  padding-block: 60px;
+}
+@media (min-width: 1024px) {
+  .call { padding-block: 84px; }
+}
+.frame {
+  max-width: calc(836 * var(--lu));
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+@media (min-width: 640px) {
+  .frame { padding-inline: 28px; }
+}
+@media (min-width: 1024px) {
+  .frame { padding-inline: calc(37 * var(--lu)); }
+}
+
+.card {
+  display: grid;
+  gap: 24px;
+  padding: 16px;
+  border: 1px solid #e3eaf4;
+  border-radius: 32px;
+  background: #fff;
+  box-shadow: 0 40px 70px -54px rgb(7 26 74 / 0.6);
+}
+@media (min-width: 1024px) {
+  .card {
+    grid-template-columns: 0.9fr 1.2fr 0.75fr;
+    align-items: stretch;
+    gap: 36px;
+    padding: 18px;
+  }
+}
+
+.media {
+  position: relative;
+  min-height: 240px;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #dfe9f7;
+}
+.status {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.94);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-ink);
+  box-shadow: 0 10px 24px -14px rgb(7 26 74 / 0.6);
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  background: var(--color-green);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+.statusOff .dot {
+  background: #9aa6ba;
+  animation: none;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 6px 8px;
+}
+@media (min-width: 1024px) {
+  .main { padding: 18px 0; }
+}
+.title {
+  margin-top: 14px;
+  font-size: clamp(26px, 2.5vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.028em;
+  color: #0a1030;
+}
+.text {
+  max-width: 34rem;
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-ink-3);
+}
+.facts {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+}
+@media (min-width: 640px) {
+  .facts { grid-template-columns: 1fr 1fr; }
+}
+.fact {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  column-gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #f4f8fd;
+}
+.factIcon {
+  grid-row: span 2;
+  width: 38px;
+  height: 38px;
+  padding: 9px;
+  border-radius: 9999px;
+  background: #fff;
+  color: var(--color-blue);
+}
+.fact dt {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-ink-3);
+}
+.fact dd {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+.fact dd::first-letter { text-transform: uppercase; }
+.actions {
+  margin-top: 24px;
+}
+
+.box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  padding: 28px 26px;
+  border-radius: 24px;
+  background:
+    radial-gradient(16rem 12rem at 100% 0%, rgb(43 139 255 / 0.45), transparent 70%),
+    linear-gradient(150deg, #061f52, #0a3a8f);
+  color: #fff;
+}
+.boxWords {
+  display: grid;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(24px, 2.2vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.boxBar {
+  display: block;
+  width: 36px;
+  height: 3px;
+  margin-top: 18px;
+  border-radius: 3px;
+  background: var(--color-orange);
+}
+.boxText {
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.82);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot { animation: none; }
+}

@@ -1,0 +1,292 @@
+/*
+ * Programme (frise par jour) et explorateur de stands, langage de la maquette 2026 :
+ * onglets en pilule, cartes blanches arrondies, temps forts soulignés en orange.
+ */
+
+/* ---------- Onglets et filtres en pilule ---------- */
+
+.tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid #e1eaf6;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow: 0 16px 34px -30px rgb(11 26 63 / 0.55);
+}
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--color-ink-2);
+  transition: background-color 0.25s, color 0.25s;
+}
+.tab:hover { background: #f1f5fb; color: var(--color-ink); }
+.tab[aria-selected="true"],
+.tab[aria-pressed="true"] {
+  background: var(--color-navy);
+  color: #fff;
+  box-shadow: 0 10px 22px -14px rgb(7 42 107 / 0.9);
+}
+.tabKicker {
+  font-family: var(--font-serif);
+  font-weight: 700;
+}
+.tabDate {
+  font-weight: 500;
+  opacity: 0.8;
+}
+.tabDate::first-letter { text-transform: uppercase; }
+.count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 9999px;
+  background: #eef3fa;
+  font-size: 12px;
+  color: var(--color-ink-3);
+}
+.tab[aria-pressed="true"] .count {
+  background: rgb(255 255 255 / 0.18);
+  color: #fff;
+}
+
+/* ---------- Programme : frise ---------- */
+
+.timeline {
+  display: grid;
+  gap: 14px;
+  max-width: 60rem;
+  margin-top: 32px;
+}
+.slot {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 14px;
+}
+@media (min-width: 640px) {
+  .slot { grid-template-columns: 84px 1fr; gap: 22px; }
+}
+.slot:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: 34px;
+  bottom: -14px;
+  left: calc(64px + 7px);
+  width: 2px;
+  background: #dfe8f5;
+}
+@media (min-width: 640px) {
+  .slot:not(:last-child)::before { left: calc(84px + 11px); }
+}
+.slotTime {
+  padding-top: 18px;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--color-navy-900);
+  white-space: nowrap;
+}
+.slotEnd {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--color-ink-3);
+}
+.slotCard {
+  position: relative;
+  padding: 16px 20px 18px 34px;
+  border: 1px solid #e3eaf4;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 14px 30px -28px rgb(11 26 63 / 0.55);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s;
+}
+.slotCard:hover { transform: translateX(4px); box-shadow: var(--shadow-hover); }
+.slotCard::before {
+  content: "";
+  position: absolute;
+  top: 22px;
+  left: -8px;
+  width: 16px;
+  height: 16px;
+  border: 3px solid #fff;
+  border-radius: 9999px;
+  background: var(--color-blue);
+  box-shadow: 0 0 0 1px #cfe0fb;
+}
+@media (min-width: 640px) {
+  .slotCard::before { left: -12px; }
+}
+.slotHot .slotCard {
+  border-color: #fbd5c6;
+  background: linear-gradient(120deg, #fff7f3 0%, #fff 55%);
+}
+.slotHot .slotCard::before { background: var(--color-orange); box-shadow: 0 0 0 1px #fbd5c6; }
+.slotPause .slotCard {
+  border-style: dashed;
+  background: #f8fafd;
+  box-shadow: none;
+}
+.slotPause .slotCard::before { background: #b8c4d6; box-shadow: none; }
+.slotTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.kind {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: #eef4fd;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-blue);
+}
+.kindYouth {
+  background: #dcf5ec;
+  color: #069a68;
+}
+.hot {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: #fde6dc;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #c2410c;
+}
+.slotTitle {
+  font-size: 16.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+.slotDetail {
+  margin-top: 4px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--color-ink-3);
+}
+.slotPoints {
+  display: grid;
+  gap: 3px;
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-ink-3);
+}
+.slotPoint {
+  position: relative;
+  padding-left: 14px;
+}
+.slotPoint::before {
+  content: "•";
+  position: absolute;
+  left: 2px;
+  color: var(--color-navy);
+}
+.slotPointNumbered { padding-left: 14px; }
+.slotPointHead {
+  margin-top: 6px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+.slotSpeaker {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+/* ---------- Stands : grille de cartes ---------- */
+
+.standGrid {
+  display: grid;
+  gap: 14px;
+  margin-top: 28px;
+}
+@media (min-width: 640px) {
+  .standGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .standGrid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+}
+.stand {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  height: 100%;
+  padding: 18px;
+  border: 1px solid #e3eaf4;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 14px 30px -28px rgb(11 26 63 / 0.55);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s;
+}
+.stand:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+.standIcon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 9999px;
+}
+.standName {
+  display: block;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-ink);
+}
+.standDetail {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-ink-3);
+}
+.standCat {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.organisateurs { background: #dceafe; color: var(--color-blue); }
+.inventeurs { background: #fde6dc; color: var(--color-orange); }
+.citadel { background: #e9e3fd; color: #6d4ae0; }
+.etudiants { background: #dcf5ec; color: #069a68; }
+.entreprises { background: #e8edf5; color: var(--color-navy); }
+.jeunesse { background: #fdf3d6; color: #8a5a00; }
+.catOrganisateurs { color: var(--color-blue); }
+.catInventeurs { color: var(--color-orange); }
+.catCitadel { color: #6d4ae0; }
+.catEtudiants { color: #069a68; }
+.catEntreprises { color: var(--color-navy); }
+.catJeunesse { color: #8a5a00; }
